@@ -1,6 +1,6 @@
 ﻿namespace PseudoDb.ClientDesktop
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.DatabaseTreeView = new System.Windows.Forms.TreeView();
+            this.SuspendLayout();
+            // 
+            // DatabaseTreeView
+            // 
+            this.DatabaseTreeView.Location = new System.Drawing.Point(3, 24);
+            this.DatabaseTreeView.Name = "DatabaseTreeView";
+            this.DatabaseTreeView.Size = new System.Drawing.Size(163, 325);
+            this.DatabaseTreeView.TabIndex = 0;
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(736, 389);
+            this.Controls.Add(this.DatabaseTreeView);
+            this.Name = "MainForm";
+            this.Text = "PseudoDBClient";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.TreeView DatabaseTreeView;
     }
 }
 
