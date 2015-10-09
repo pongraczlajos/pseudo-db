@@ -19,6 +19,11 @@ namespace PseudoDb.ClientDesktop
             LoadDatabaseTree();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void LoadDatabaseTree()
         {
             DatabaseTree = new TreeNode("Databases");
@@ -44,36 +49,63 @@ namespace PseudoDb.ClientDesktop
 
             //Add event handlers
             DatabaseTreeView.NodeMouseClick += DatabaseTreeView_NodeMouseClick;
+
         }
 
         private void DatabaseTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             TreeNode sendeNode = ((TreeView)sender).SelectedNode;
+            //select the currently clicked item in the view
+            DatabaseTreeView.SelectedNode = e.Node;
+
             if (e.Button == MouseButtons.Right)
             {
                 //determine on which level was clicked
                 int clickLevel = e.Node.Level;
-                MessageBox.Show("Right clicked "+clickLevel);
+                ContextMenuStrip rightClickMenu = new ContextMenuStrip();
                 switch(clickLevel)
                 {
                     case 0://the root node
-                        //TODO implement the right click pop up menu with the create new db option
+                        ToolStripMenuItem item1 = new ToolStripMenuItem("Create new database");
+                        item1.Click += OnCreateNewDbMenuItemClick;
+                        rightClickMenu.Items.Add(item1);
                         break;
                     case 1://database node
-                        //TODO implement the right click pop up menu with the crate new table option
+                        ToolStripMenuItem item2 = new ToolStripMenuItem("Create new table");
+                        item2.Click += OnCreateNewTableMenuItemClick;
+                        rightClickMenu.Items.Add(item2);
                         break;
                     case 2://table node
                         break;
                 }
+                if(rightClickMenu.Items.Count > 0)
+                {
+                    rightClickMenu.Show(this, e.X, e.Y+25);
+                }
             }
-            //select the currently clicked item in the view
-            DatabaseTreeView.SelectedNode = e.Node;
         }
-        
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void OnCreateNewTableMenuItemClick(object sender, EventArgs e)
         {
+            MessageBox.Show("create new table");
+        }
+
+        private void OnCreateNewDbMenuItemClick(object sender, EventArgs e)
+        {
+            NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
+            newDatabaseForm.ShowDialog(this);
+            switch (newDatabaseForm.DialogResult)
+            {
+                case DialogResult.OK:
+                    MessageBox.Show(newDatabaseForm.DatabaseName);
+                    break;
+                case DialogResult.Cancel:
+                    MessageBox.Show("Cancel");
+                    break;
+            }
+            
             
         }
+
     }
 }
