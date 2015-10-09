@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace PseudoDb.ClientDesktop
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form 
     {
         private TreeNode DatabaseTree;
         public MainForm()
