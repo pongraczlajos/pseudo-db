@@ -87,7 +87,8 @@ namespace PseudoDb.ClientDesktop
 
         private void OnCreateNewTableMenuItemClick(object sender, EventArgs e)
         {
-            MessageBox.Show("create new table");
+            var newTableForm = new NewTableForm();
+            newTableForm.ShowDialog(this);
         }
 
         private void OnCreateNewDbMenuItemClick(object sender, EventArgs e)
