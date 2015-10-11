@@ -73,7 +73,7 @@ namespace PseudoDb.ClientDesktop.Forms
                 }
                 if(rightClickMenu.Items.Count > 0)
                 {
-                    rightClickMenu.Show(this, e.X, e.Y+25);
+                    rightClickMenu.Show(this, e.X, e.Y+30);
                 }
             }
         }
