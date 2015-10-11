@@ -97,6 +97,10 @@
             // ReferencedTable
             // 
             this.ReferencedTable.HeaderText = "Referenced Table";
+            this.ReferencedTable.Items.AddRange(new object[] {
+            "A",
+            "B",
+            "C"});
             this.ReferencedTable.Name = "ReferencedTable";
             // 
             // ReferencedField
