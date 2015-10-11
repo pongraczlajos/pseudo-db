@@ -1,4 +1,4 @@
-﻿namespace PseudoDb.ClientDesktop
+﻿namespace PseudoDb.ClientDesktop.Forms
 {
     partial class NewDatabaseForm
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PseudoDb.ClientDesktop
+namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class NewTableForm : Form
     {

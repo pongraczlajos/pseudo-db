@@ -1,4 +1,4 @@
-﻿namespace PseudoDb.ClientDesktop
+﻿namespace PseudoDb.ClientDesktop.Forms
 {
     partial class NewTableForm
     {
@@ -33,10 +33,9 @@
             this.CreateTableDataGridView = new System.Windows.Forms.DataGridView();
             this.FieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FIeldType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Size = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PK = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.FK = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ReferencedTable = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ReferencedField = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Nullable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.CreateTableDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,13 +61,12 @@
             this.CreateTableDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FieldName,
             this.FIeldType,
+            this.Size,
             this.PK,
-            this.FK,
-            this.ReferencedTable,
-            this.ReferencedField});
+            this.Nullable});
             this.CreateTableDataGridView.Location = new System.Drawing.Point(15, 50);
             this.CreateTableDataGridView.Name = "CreateTableDataGridView";
-            this.CreateTableDataGridView.Size = new System.Drawing.Size(645, 281);
+            this.CreateTableDataGridView.Size = new System.Drawing.Size(560, 281);
             this.CreateTableDataGridView.TabIndex = 2;
             // 
             // FieldName
@@ -84,36 +82,31 @@
             "String"});
             this.FIeldType.Name = "FIeldType";
             // 
+            // Size
+            // 
+            this.Size.HeaderText = "Size";
+            this.Size.Name = "Size";
+            // 
             // PK
             // 
             this.PK.HeaderText = "PK";
             this.PK.Name = "PK";
             // 
-            // FK
+            // Nullable
             // 
-            this.FK.HeaderText = "FK";
-            this.FK.Name = "FK";
-            // 
-            // ReferencedTable
-            // 
-            this.ReferencedTable.HeaderText = "Referenced Table";
-            this.ReferencedTable.Name = "ReferencedTable";
-            // 
-            // ReferencedField
-            // 
-            this.ReferencedField.HeaderText = "Referenced Field";
-            this.ReferencedField.Name = "ReferencedField";
+            this.Nullable.HeaderText = "Nullable";
+            this.Nullable.Name = "Nullable";
             // 
             // NewTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(786, 368);
+            this.ClientSize = new System.Drawing.Size(584, 361);
             this.Controls.Add(this.CreateTableDataGridView);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TableNameTextBox);
             this.Name = "NewTableForm";
-            this.Text = "NewTableForm";
+            this.Text = "Table Design";
             ((System.ComponentModel.ISupportInitialize)(this.CreateTableDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -127,9 +120,8 @@
         private System.Windows.Forms.DataGridView CreateTableDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn FieldName;
         private System.Windows.Forms.DataGridViewComboBoxColumn FIeldType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Size;
         private System.Windows.Forms.DataGridViewCheckBoxColumn PK;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn FK;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ReferencedTable;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ReferencedField;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Nullable;
     }
 }
