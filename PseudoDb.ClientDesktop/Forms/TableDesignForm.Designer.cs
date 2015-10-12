@@ -36,6 +36,8 @@
             this.Size = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PK = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Nullable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.CreateTableButton = new System.Windows.Forms.Button();
+            this.CancelButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CreateTableDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,15 +99,37 @@
             this.Nullable.HeaderText = "Nullable";
             this.Nullable.Name = "Nullable";
             // 
-            // NewTableForm
+            // CreateTableButton
+            // 
+            this.CreateTableButton.Location = new System.Drawing.Point(497, 337);
+            this.CreateTableButton.Name = "CreateTableButton";
+            this.CreateTableButton.Size = new System.Drawing.Size(75, 23);
+            this.CreateTableButton.TabIndex = 3;
+            this.CreateTableButton.Text = "Create";
+            this.CreateTableButton.UseVisualStyleBackColor = true;
+            this.CreateTableButton.Click += new System.EventHandler(this.CreateTableButton_Click);
+            // 
+            // CancelButton
+            // 
+            this.CancelButton.Location = new System.Drawing.Point(405, 337);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelButton.TabIndex = 4;
+            this.CancelButton.Text = "Cancel";
+            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
+            // TableDesignForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.CreateTableButton);
             this.Controls.Add(this.CreateTableDataGridView);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TableNameTextBox);
-            this.Name = "NewTableForm";
+            this.Name = "TableDesignForm";
             this.Text = "Table Design";
             ((System.ComponentModel.ISupportInitialize)(this.CreateTableDataGridView)).EndInit();
             this.ResumeLayout(false);
@@ -123,5 +147,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Size;
         private System.Windows.Forms.DataGridViewCheckBoxColumn PK;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Nullable;
+        private System.Windows.Forms.Button CreateTableButton;
+        private System.Windows.Forms.Button CancelButton;
     }
 }

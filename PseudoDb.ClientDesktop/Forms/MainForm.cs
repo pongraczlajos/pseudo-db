@@ -80,8 +80,15 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void OnCreateNewTableMenuItemClick(object sender, EventArgs e)
         {
-            var newTableForm = new TableDesignForm();
+            var newTableForm = new TableDesignForm(DatabaseTreeView.SelectedNode.Text.ToString());
             newTableForm.ShowDialog(this);
+            switch (newTableForm.DialogResult) {
+                case DialogResult.OK:
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         private void OnCreateNewDbMenuItemClick(object sender, EventArgs e)

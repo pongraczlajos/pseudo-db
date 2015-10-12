@@ -8,6 +8,8 @@
 
         public int Size { get; set; }
 
+        public bool Nullable { get; set; }
+
         public Column()
         {
             Name = string.Empty;

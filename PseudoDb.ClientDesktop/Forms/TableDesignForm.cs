@@ -1,12 +1,24 @@
-﻿using System.Windows.Forms;
+﻿using PseudoDb.ClientDesktop.Model;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Collections;
+using System;
 
 namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class TableDesignForm : Form
     {
-        public TableDesignForm()
+        private Table table { get; set; }
+
+        private String DatabaseName;
+        private TableDesignForm() { }
+
+        public TableDesignForm(string DatabaseName)
         {
             InitializeComponent();
+
+            this.DatabaseName = DatabaseName;
+            DialogResult = DialogResult.Cancel;
             CreateTableDataGridView.CellValueChanged += new DataGridViewCellEventHandler(CreateTableDataGridView_CellValueChanged);
             CreateTableDataGridView.DataError += CreateTableDataGridView_DataError;
         }
@@ -35,6 +47,46 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void CreateTableDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
+        }
+
+        private void CreateTableButton_Click(object sender, System.EventArgs e)
+        {
+            //TODO: validate inputs
+            table = new Table();
+            table.Name = TableNameTextBox.Text.ToString();
+            
+                try {
+                for (int i = 0; i < CreateTableDataGridView.Rows.Count - 1; i++)
+                {
+
+                    Column column = new Column();
+                    column.Name = CreateTableDataGridView.Rows[i].Cells[0].Value.ToString();
+                    column.Type = DataTypeConverter.ToDataType(CreateTableDataGridView.Rows[i].Cells[1].Value.ToString());
+                    column.Size = Int32.Parse(CreateTableDataGridView.Rows[i].Cells[2].Value.ToString());
+                    bool pk = (bool)((DataGridViewCheckBoxCell)CreateTableDataGridView.Rows[i].Cells[3]).FormattedValue;
+                    column.Nullable = (bool)((DataGridViewCheckBoxCell)CreateTableDataGridView.Rows[i].Cells[4]).FormattedValue;
+
+                    if (pk)
+                    {
+                        table.PrimaryKey.Add(column.Name);
+                    }
+
+                    table.Columns.Add(column);
+
+                }
+            }
+            catch (NullReferenceException ex1)
+            {
+                MessageBox.Show("Complete all cells!\n!"+ ex1.Message);
+            }
+
+            DialogResult = DialogResult.OK;
+        }
+
+        private void CancelButton_Click(object sender, System.EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }
