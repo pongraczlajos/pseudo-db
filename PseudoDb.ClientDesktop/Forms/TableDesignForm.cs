@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace PseudoDb.ClientDesktop.Forms
 {
-    public partial class NewTableForm : Form
+    public partial class TableDesignForm : Form
     {
-        public NewTableForm()
+        public TableDesignForm()
         {
             InitializeComponent();
-            CreateTableDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.CreateTableDataGridView_CellValueChanged);
+            CreateTableDataGridView.CellValueChanged += new DataGridViewCellEventHandler(CreateTableDataGridView_CellValueChanged);
             CreateTableDataGridView.DataError += CreateTableDataGridView_DataError;
         }
-
-
 
         private void CreateTableDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {

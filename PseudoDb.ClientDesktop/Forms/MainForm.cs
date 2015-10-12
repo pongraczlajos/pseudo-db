@@ -80,7 +80,7 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void OnCreateNewTableMenuItemClick(object sender, EventArgs e)
         {
-            var newTableForm = new NewTableForm();
+            var newTableForm = new TableDesignForm();
             newTableForm.ShowDialog(this);
         }
 

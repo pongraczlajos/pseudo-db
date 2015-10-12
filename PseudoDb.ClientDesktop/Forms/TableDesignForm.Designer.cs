@@ -1,6 +1,6 @@
 ﻿namespace PseudoDb.ClientDesktop.Forms
 {
-    partial class NewTableForm
+    partial class TableDesignForm
     {
         /// <summary>
         /// Required designer variable.
