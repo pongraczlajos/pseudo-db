@@ -66,11 +66,11 @@
             // toolStripContainer.ContentPanel
             // 
             this.toolStripContainer.ContentPanel.Controls.Add(this.splitContainer);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(984, 514);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(984, 515);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer.Name = "toolStripContainer";
-            this.toolStripContainer.Size = new System.Drawing.Size(984, 561);
+            this.toolStripContainer.Size = new System.Drawing.Size(984, 562);
             this.toolStripContainer.TabIndex = 0;
             // 
             // toolStripContainer.TopToolStripPanel
@@ -95,8 +95,8 @@
             // 
             this.splitContainer.Panel1.Controls.Add(this.objectExplorerGroupBox);
             this.splitContainer.Panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.splitContainer.Size = new System.Drawing.Size(984, 514);
-            this.splitContainer.SplitterDistance = 327;
+            this.splitContainer.Size = new System.Drawing.Size(984, 515);
+            this.splitContainer.SplitterDistance = 318;
             this.splitContainer.TabIndex = 0;
             // 
             // objectExplorerGroupBox
@@ -105,7 +105,7 @@
             this.objectExplorerGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectExplorerGroupBox.Location = new System.Drawing.Point(3, 3);
             this.objectExplorerGroupBox.Name = "objectExplorerGroupBox";
-            this.objectExplorerGroupBox.Size = new System.Drawing.Size(321, 508);
+            this.objectExplorerGroupBox.Size = new System.Drawing.Size(312, 509);
             this.objectExplorerGroupBox.TabIndex = 0;
             this.objectExplorerGroupBox.TabStop = false;
             this.objectExplorerGroupBox.Text = "Object Explorer";
@@ -115,7 +115,7 @@
             this.DatabaseTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DatabaseTreeView.Location = new System.Drawing.Point(3, 16);
             this.DatabaseTreeView.Name = "DatabaseTreeView";
-            this.DatabaseTreeView.Size = new System.Drawing.Size(315, 489);
+            this.DatabaseTreeView.Size = new System.Drawing.Size(306, 490);
             this.DatabaseTreeView.TabIndex = 2;
             // 
             // toolStrip
@@ -219,14 +219,14 @@
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "He&lp";
             // 
-            // MainWindow
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 561);
+            this.ClientSize = new System.Drawing.Size(984, 562);
             this.Controls.Add(this.toolStripContainer);
             this.MinimumSize = new System.Drawing.Size(1000, 600);
-            this.Name = "MainWindow";
+            this.Name = "MainForm";
             this.Text = "PseudoDB Development Studio";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.toolStripContainer.BottomToolStripPanel.ResumeLayout(false);

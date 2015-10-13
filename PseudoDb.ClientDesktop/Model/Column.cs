@@ -1,6 +1,6 @@
 ﻿namespace PseudoDb.ClientDesktop.Model
 {
-    class Column
+    public class Column
     {
         public string Name { get; set; }
 

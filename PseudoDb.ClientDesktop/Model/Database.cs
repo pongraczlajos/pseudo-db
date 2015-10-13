@@ -16,5 +16,12 @@ namespace PseudoDb.ClientDesktop.Model
             Tables = new List<Table>();
             Relationships = new List<Association>();
         }
+
+        public Database(string Name)
+        {
+            this.Name = Name;
+            Tables = new List<Table>();
+            Relationships = new List<Association>();
+        }
     }
 }

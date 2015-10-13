@@ -13,6 +13,11 @@ namespace PseudoDb.ClientDesktop.Forms
         private String DatabaseName;
         private TableDesignForm() { }
 
+        public Table GetTable()
+        {
+            return table;
+        }
+
         public TableDesignForm(string DatabaseName)
         {
             InitializeComponent();

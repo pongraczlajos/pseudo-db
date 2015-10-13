@@ -2,7 +2,7 @@
 
 namespace PseudoDb.ClientDesktop.Model
 {
-    class Table
+    public class Table
     {
         public string Name { get; set; }
 
@@ -13,6 +13,13 @@ namespace PseudoDb.ClientDesktop.Model
         public Table()
         {
             Name = string.Empty;
+            PrimaryKey = new List<string>();
+            Columns = new List<Column>();
+        }
+
+        public Table(string Name)
+        {
+            this.Name = Name;
             PrimaryKey = new List<string>();
             Columns = new List<Column>();
         }

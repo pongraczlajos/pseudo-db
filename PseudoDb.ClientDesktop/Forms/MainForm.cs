@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PseudoDb.ClientDesktop.Model;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace PseudoDb.ClientDesktop.Forms
@@ -6,14 +8,94 @@ namespace PseudoDb.ClientDesktop.Forms
     public partial class MainForm : Form 
     {
         private TreeNode DatabaseTree;
+
+        private List<Database> databases;
+
         public MainForm()
         {
             InitializeComponent();
-            LoadDatabaseTree();
+            
+            InitDatabases();
+            //TODO: get databases
+            BuildDatabaseTree();
+            //LoadDatabaseTree();
+        }
+
+        private void InitDatabases()
+        {
+            databases = new List<Database>();
+            var db1 = new Database();
+            db1.Name = "Database1";
+            {
+                var t1 = new Table();
+                t1.Name = "Table 1";
+                var t2 = new Table();
+                t2.Name = "Table 2";
+                var t3 = new Table();
+                t3.Name = "Table 3";
+                db1.Tables.Add(t1);
+                db1.Tables.Add(t2);
+                db1.Tables.Add(t3);
+
+            }
+            databases.Add(db1);
+
+            var db2 = new Database();
+            db2.Name = "Database2";
+            {
+                var t1 = new Table();
+                t1.Name = "Table 1";
+                var t2 = new Table();
+                t2.Name = "Table 2";
+                var t3 = new Table();
+                t3.Name = "Table 3";
+                db2.Tables.Add(t1);
+                db2.Tables.Add(t2);
+                db2.Tables.Add(t3);
+            }
+            databases.Add(db2);
+
+            var db3 = new Database();
+            db3.Name = "Database3";
+            {
+                var t1 = new Table();
+                t1.Name = "Table 1";
+                var t2 = new Table();
+                t2.Name = "Table 2";
+                var t3 = new Table();
+                t3.Name = "Table 3";
+                db3.Tables.Add(t1);
+                db3.Tables.Add(t2);
+                db3.Tables.Add(t3);
+            }
+            databases.Add(db3);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void BuildDatabaseTree()
+        {
+            DatabaseTree = new TreeNode("Databases");
+
+            foreach(var db in databases)
+            {
+                TreeNode dbNode = new TreeNode(db.Name);
+                foreach(var table in db.Tables)
+                {
+                    TreeNode tbNode = new TreeNode(table.Name);
+                    dbNode.Nodes.Add(tbNode);
+                }
+                DatabaseTree.Nodes.Add(dbNode);
+            }
+
+            DatabaseTreeView.Nodes.Add(DatabaseTree);
+            DatabaseTreeView.Refresh();
+
+            //Add event handlers
+            DatabaseTreeView.NodeMouseClick += DatabaseTreeView_NodeMouseClick;
 
         }
 
@@ -84,7 +166,19 @@ namespace PseudoDb.ClientDesktop.Forms
             newTableForm.ShowDialog(this);
             switch (newTableForm.DialogResult) {
                 case DialogResult.OK:
-                    break;
+                    Table tb = newTableForm.GetTable();
+                    //TODO: test if this table can be created, and add to this db
+                    databases.Find(a => a.Name == DatabaseTreeView.SelectedNode.Text.ToString()).Tables.Add(tb);
+                    
+                    foreach(TreeNode node in DatabaseTree.Nodes)
+                    {
+                        if (node.Text.Equals(DatabaseTreeView.SelectedNode.Text.ToString()))
+                        {
+                            node.Nodes.Add(new TreeNode(tb.Name));
+                            break;//foreach
+                        }
+                    }
+                    break;//switch
                 default:
                     break;
             }
@@ -98,15 +192,14 @@ namespace PseudoDb.ClientDesktop.Forms
             switch (newDatabaseForm.DialogResult)
             {
                 case DialogResult.OK:
-                    MessageBox.Show(newDatabaseForm.DatabaseName);
+                    //TODO: Test if this database can be create!
+                    DatabaseTree.Nodes.Add(new TreeNode(newDatabaseForm.DatabaseName));
+                    databases.Add(new Database(newDatabaseForm.DatabaseName));
                     break;
                 case DialogResult.Cancel:
                     MessageBox.Show("Cancel");
                     break;
             }
-            
-            
         }
-
     }
 }
