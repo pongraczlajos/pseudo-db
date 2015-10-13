@@ -37,8 +37,14 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="YAXLib, Version=2.13.0.0, Culture=neutral, PublicKeyToken=7cc39f8266ad1835, processorArchitecture=MSIL">
+      <HintPath>..\packages\YAXLib.2.13\lib\YAXLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\XmlSerializer.cs" />
+    <Compile Include="Engine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +52,9 @@
       <Project>{b92d794f-3567-448a-bc80-c5c625663731}</Project>
       <Name>PseudoDb.Interfaces</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

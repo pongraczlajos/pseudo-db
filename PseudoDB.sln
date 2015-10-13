@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PseudoDb.ClientDesktop", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PseudoDb.Interfaces", "PseudoDb.Interfaces\PseudoDb.Interfaces.csproj", "{B92D794F-3567-448A-BC80-C5C625663731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PseudoDb", "PseudoDb\PseudoDb.csproj", "{25A33EA5-6E22-400A-881D-115EC1A1AD3E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{B92D794F-3567-448A-BC80-C5C625663731}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B92D794F-3567-448A-BC80-C5C625663731}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B92D794F-3567-448A-BC80-C5C625663731}.Release|Any CPU.Build.0 = Release|Any CPU
-		{25A33EA5-6E22-400A-881D-115EC1A1AD3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25A33EA5-6E22-400A-881D-115EC1A1AD3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25A33EA5-6E22-400A-881D-115EC1A1AD3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25A33EA5-6E22-400A-881D-115EC1A1AD3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +48,5 @@ Global
 		{5FA16461-2AEB-493D-BCDB-B9D8FACABB1A} = {2640FECD-2755-4F82-9637-85896D315566}
 		{4F679D35-DDDB-4EC4-B62E-D862C94E8B46} = {19A25AD5-E3C7-44D0-A0C7-927CB9DA335B}
 		{B92D794F-3567-448A-BC80-C5C625663731} = {2640FECD-2755-4F82-9637-85896D315566}
-		{25A33EA5-6E22-400A-881D-115EC1A1AD3E} = {2640FECD-2755-4F82-9637-85896D315566}
 	EndGlobalSection
 EndGlobal

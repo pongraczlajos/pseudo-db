@@ -1,53 +1,59 @@
 ﻿using PseudoDb.Interfaces.Metadata;
-using System;
+using PseudoDb.Interfaces.Query;
+using PseudoDb.Interfaces.Engine;
 
 namespace PseudoDb.QueryProcessor
 {
-    public class SchemaQuery
+    public class SchemaQuery : ISchemaQuery
     {
-        public SchemaQuery()
+        private Database database;
+
+        public IEngine Engine { get; set; }
+
+        public ISchemaQuery AddDatabase(string databaseName)
         {
+            return this;
         }
 
-        public bool AddDatabase(string databaseName)
+        public ISchemaQuery GetDatabase(string databaseName)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
-        public Database GetDatabase(string databaseName)
+        public ISchemaQuery DeleteDatabase(string databaseName)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
-        public bool DeleteDatabase(string databaseName)
+        public ISchemaQuery AddTable(string databaseName, string tableName)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
-        public bool AddTable(string databaseName, string tableName)
+        public ISchemaQuery GetTable(string databaseName, string tableName)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
-        public Table GetTable(string databaseName, string tableName)
+        public ISchemaQuery DeleteTable(string databaseName, string tableName)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
-        public bool DeleteTable(string databaseName, string tableName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AddOrUpdateColumn(string databaseName, string tableName, 
+        public ISchemaQuery AddOrUpdateColumn(string databaseName, string tableName,
             string columnName, DataType type, int size, bool nullable = false)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
-        public bool DeleteColumn(string databaseName, string tableName, string columnName)
+        public ISchemaQuery DeleteColumn(string databaseName, string tableName, string columnName)
         {
-            throw new NotImplementedException();
+            return this;
+        }
+
+        public Database Execute()
+        {
+            return database;
         }
     }
 }

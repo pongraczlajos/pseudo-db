@@ -54,8 +54,9 @@ namespace PseudoDb.ClientDesktop.Forms
             //TODO: validate inputs
             table = new Table();
             table.Name = TableNameTextBox.Text.ToString();
-            
-                try {
+
+            try
+            {
                 for (int i = 0; i < CreateTableDataGridView.Rows.Count - 1; i++)
                 {
 
@@ -75,9 +76,9 @@ namespace PseudoDb.ClientDesktop.Forms
 
                 }
             }
-            catch (NullReferenceException ex1)
+            catch (NullReferenceException exception)
             {
-                MessageBox.Show("Complete all cells!\n!"+ ex1.Message);
+                MessageBox.Show("Complete all cells!\n!"+ exception.Message);
             }
 
             DialogResult = DialogResult.OK;

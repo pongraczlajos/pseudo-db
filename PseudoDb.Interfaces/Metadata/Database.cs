@@ -23,11 +23,60 @@ namespace PseudoDb.Interfaces.Metadata
             Associations = new List<Association>();
         }
 
+        public void AddTable(string tableName)
+        {
+            Table table = new Table();
+            table.Name = tableName;
+
+            Tables.Add(table);
+        }
+
         public Table GetTable(string tableName)
         {
             CheckTableNameIsNull(tableName);
 
             return Tables.Where(table => table.Name.Equals(tableName)).FirstOrDefault();
+        }
+
+        public void RemoveTable(string tableName)
+        {
+            Table table = Tables.Where(t => t.Name.Equals(tableName)).FirstOrDefault();
+
+            if (table != null)
+            {
+                Tables.Remove(table);
+            }
+        }
+
+        public void AddAssociation(string associationName, string parent, string child,
+            Dictionary<string, string> mappings)
+        {
+            Association association = new Association();
+            association.Name = associationName;
+            association.Parent = parent;
+            association.Child = child;
+
+            foreach (var mapping in mappings)
+            {
+                association.ColumnMappings[mapping.Key] = mapping.Value;
+            }
+
+            Associations.Add(association);
+        }
+
+        public Association GetAssociation(string associationName)
+        {
+            return Associations.Where(a => a.Name.Equals(associationName)).FirstOrDefault();
+        }
+
+        public void RemoveAssociation(string associationName)
+        {
+            Association association = Associations.Where(a => a.Name.Equals(associationName)).FirstOrDefault();
+
+            if (association != null)
+            {
+                Associations.Remove(association);
+            }
         }
 
         public IEnumerable<Association> GetAssociationsWhereTableIsParent(string tableName)
