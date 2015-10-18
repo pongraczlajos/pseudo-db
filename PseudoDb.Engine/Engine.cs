@@ -4,16 +4,17 @@ using PseudoDb.Interfaces.Metadata;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System;
 
 namespace PseudoDb.Engine
 {
-    public class Engine : IEngine
+    public class DbEngine : IEngine
     {
         private static string Location = @"..\..\..\Databases";
 
         private List<Database> databases;
 
-        public Engine()
+        public DbEngine()
         {
             databases = new List<Database>();
 
@@ -55,6 +56,57 @@ namespace PseudoDb.Engine
         public void Execute(Database database)
         {
             XmlSerializer.Serialize<Database>(database, Location + string.Format(@"\{0}.xml", database.Name));
+        }
+
+        public List<Database> GetDatabases()
+        {
+            //databases = new List<Database>();
+            var db1 = new Database();
+            db1.Name = "Database1";
+            {
+                var t1 = new Table();
+                t1.Name = "Table 1";
+                var t2 = new Table();
+                t2.Name = "Table 2";
+                var t3 = new Table();
+                t3.Name = "Table 3";
+                db1.Tables.Add(t1);
+                db1.Tables.Add(t2);
+                db1.Tables.Add(t3);
+
+            }
+            databases.Add(db1);
+
+            var db2 = new Database();
+            db2.Name = "Database2";
+            {
+                var t1 = new Table();
+                t1.Name = "Table 1";
+                var t2 = new Table();
+                t2.Name = "Table 2";
+                var t3 = new Table();
+                t3.Name = "Table 3";
+                db2.Tables.Add(t1);
+                db2.Tables.Add(t2);
+                db2.Tables.Add(t3);
+            }
+            databases.Add(db2);
+
+            var db3 = new Database();
+            db3.Name = "Database3";
+            {
+                var t1 = new Table();
+                t1.Name = "Table 1";
+                var t2 = new Table();
+                t2.Name = "Table 2";
+                var t3 = new Table();
+                t3.Name = "Table 3";
+                db3.Tables.Add(t1);
+                db3.Tables.Add(t2);
+                db3.Tables.Add(t3);
+            }
+            databases.Add(db3);
+            return databases;
         }
     }
 }

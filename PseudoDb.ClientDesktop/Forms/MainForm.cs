@@ -2,75 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using PseudoDb.Engine;
 
 namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class MainForm : Form 
     {
         private TreeNode DatabaseTree;
+        private List<PseudoDb.Interfaces.Metadata.Database> databases;
+        private DbEngine Engine = new DbEngine();
 
-        private List<Database> databases;
 
         public MainForm()
         {
             InitializeComponent();
-            
-            InitDatabases();
-            //TODO: get databases
+            databases = Engine.GetDatabases();//db_engine call
             BuildDatabaseTree();
-            //LoadDatabaseTree();
         }
-
-        private void InitDatabases()
-        {
-            databases = new List<Database>();
-            var db1 = new Database();
-            db1.Name = "Database1";
-            {
-                var t1 = new Table();
-                t1.Name = "Table 1";
-                var t2 = new Table();
-                t2.Name = "Table 2";
-                var t3 = new Table();
-                t3.Name = "Table 3";
-                db1.Tables.Add(t1);
-                db1.Tables.Add(t2);
-                db1.Tables.Add(t3);
-
-            }
-            databases.Add(db1);
-
-            var db2 = new Database();
-            db2.Name = "Database2";
-            {
-                var t1 = new Table();
-                t1.Name = "Table 1";
-                var t2 = new Table();
-                t2.Name = "Table 2";
-                var t3 = new Table();
-                t3.Name = "Table 3";
-                db2.Tables.Add(t1);
-                db2.Tables.Add(t2);
-                db2.Tables.Add(t3);
-            }
-            databases.Add(db2);
-
-            var db3 = new Database();
-            db3.Name = "Database3";
-            {
-                var t1 = new Table();
-                t1.Name = "Table 1";
-                var t2 = new Table();
-                t2.Name = "Table 2";
-                var t3 = new Table();
-                t3.Name = "Table 3";
-                db3.Tables.Add(t1);
-                db3.Tables.Add(t2);
-                db3.Tables.Add(t3);
-            }
-            databases.Add(db3);
-        }
-
+        
         private void MainForm_Load(object sender, EventArgs e)
         {
 
@@ -166,7 +115,7 @@ namespace PseudoDb.ClientDesktop.Forms
             newTableForm.ShowDialog(this);
             switch (newTableForm.DialogResult) {
                 case DialogResult.OK:
-                    Table tb = newTableForm.GetTable();
+                    PseudoDb.Interfaces.Metadata.Table tb = newTableForm.GetTable();
                     //TODO: test if this table can be created, and add to this db
                     databases.Find(a => a.Name == DatabaseTreeView.SelectedNode.Text.ToString()).Tables.Add(tb);
                     
@@ -194,7 +143,7 @@ namespace PseudoDb.ClientDesktop.Forms
                 case DialogResult.OK:
                     //TODO: Test if this database can be create!
                     DatabaseTree.Nodes.Add(new TreeNode(newDatabaseForm.DatabaseName));
-                    databases.Add(new Database(newDatabaseForm.DatabaseName));
+                    databases.Add(new Interfaces.Metadata.Database(newDatabaseForm.DatabaseName));
                     break;
                 case DialogResult.Cancel:
                     MessageBox.Show("Cancel");

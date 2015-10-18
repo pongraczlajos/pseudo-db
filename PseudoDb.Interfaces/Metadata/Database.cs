@@ -23,6 +23,13 @@ namespace PseudoDb.Interfaces.Metadata
             Associations = new List<Association>();
         }
 
+        public Database(String Name)
+        {
+            this.Name = Name;
+            Tables = new List<Table>();
+            Associations = new List<Association>();
+        }
+
         public void AddTable(string tableName)
         {
             Table table = new Table();

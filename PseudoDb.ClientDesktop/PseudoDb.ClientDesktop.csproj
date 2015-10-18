@@ -47,6 +47,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PseudoDb.Engine">
+      <HintPath>..\PseudoDb.Engine\bin\Debug\PseudoDb.Engine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -129,6 +132,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PseudoDb.Interfaces\PseudoDb.Interfaces.csproj">
+      <Project>{B92D794F-3567-448A-BC80-C5C625663731}</Project>
+      <Name>PseudoDb.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

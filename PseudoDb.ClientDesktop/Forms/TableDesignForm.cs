@@ -8,12 +8,12 @@ namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class TableDesignForm : Form
     {
-        private Table table { get; set; }
+        private PseudoDb.Interfaces.Metadata.Table table { get; set; }
 
         private String DatabaseName;
         private TableDesignForm() { }
 
-        public Table GetTable()
+        public PseudoDb.Interfaces.Metadata.Table GetTable()
         {
             return table;
         }
@@ -57,7 +57,7 @@ namespace PseudoDb.ClientDesktop.Forms
         private void CreateTableButton_Click(object sender, System.EventArgs e)
         {
             //TODO: validate inputs
-            table = new Table();
+            table = new PseudoDb.Interfaces.Metadata.Table();
             table.Name = TableNameTextBox.Text.ToString();
 
             try
@@ -65,7 +65,7 @@ namespace PseudoDb.ClientDesktop.Forms
                 for (int i = 0; i < CreateTableDataGridView.Rows.Count - 1; i++)
                 {
 
-                    Column column = new Column();
+                    PseudoDb.Interfaces.Metadata.Column column = new PseudoDb.Interfaces.Metadata.Column();
                     column.Name = CreateTableDataGridView.Rows[i].Cells[0].Value.ToString();
                     column.Type = DataTypeConverter.ToDataType(CreateTableDataGridView.Rows[i].Cells[1].Value.ToString());
                     column.Size = Int32.Parse(CreateTableDataGridView.Rows[i].Cells[2].Value.ToString());

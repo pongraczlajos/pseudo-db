@@ -14,6 +14,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PseudoDb.QueryProcessor", "PseudoDb.QueryProcessor\PseudoDb.QueryProcessor.csproj", "{5FA16461-2AEB-493D-BCDB-B9D8FACABB1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PseudoDb.ClientDesktop", "PseudoDb.ClientDesktop\PseudoDb.ClientDesktop.csproj", "{4F679D35-DDDB-4EC4-B62E-D862C94E8B46}"
+	ProjectSection(ProjectDependencies) = postProject
+		{752608D2-7E1F-4440-BFCD-54645148CD9C} = {752608D2-7E1F-4440-BFCD-54645148CD9C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PseudoDb.Interfaces", "PseudoDb.Interfaces\PseudoDb.Interfaces.csproj", "{B92D794F-3567-448A-BC80-C5C625663731}"
 EndProject

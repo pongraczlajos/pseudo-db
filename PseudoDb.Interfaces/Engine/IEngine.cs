@@ -1,4 +1,5 @@
 ﻿using PseudoDb.Interfaces.Metadata;
+using System.Collections.Generic;
 
 namespace PseudoDb.Interfaces.Engine
 {
@@ -11,5 +12,7 @@ namespace PseudoDb.Interfaces.Engine
         void RemoveDatabase(string databaseName);
 
         void Execute(Database database);
+
+        List<Database> GetDatabases();
     }
 }

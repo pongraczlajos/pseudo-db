@@ -15,19 +15,20 @@ namespace PseudoDb.ClientDesktop.Model
 
     public static class DataTypeConverter
     {
-        public static DataType ToDataType(String typeName)
+        public static PseudoDb.Interfaces.Metadata.DataType ToDataType(String typeName)
         {
-            DataType type = DataType.Unknown;
+            PseudoDb.Interfaces.Metadata.DataType type = PseudoDb.Interfaces.Metadata.DataType.Unknown;
             switch (typeName)
             {
                 case "Int":
-                    type = DataType.Int;
+                    type = PseudoDb.Interfaces.Metadata.DataType.Integer;
                     break;
                 case "String":
-                    type = DataType.String;
+                    type = PseudoDb.Interfaces.Metadata.DataType.String;
                     break;
             }
             return type;
         }
+
     }
 }
