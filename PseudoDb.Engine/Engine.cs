@@ -60,52 +60,6 @@ namespace PseudoDb.Engine
 
         public List<Database> GetDatabases()
         {
-            //databases = new List<Database>();
-            var db1 = new Database();
-            db1.Name = "Database1";
-            {
-                var t1 = new Table();
-                t1.Name = "Table 1";
-                var t2 = new Table();
-                t2.Name = "Table 2";
-                var t3 = new Table();
-                t3.Name = "Table 3";
-                db1.Tables.Add(t1);
-                db1.Tables.Add(t2);
-                db1.Tables.Add(t3);
-
-            }
-            databases.Add(db1);
-
-            var db2 = new Database();
-            db2.Name = "Database2";
-            {
-                var t1 = new Table();
-                t1.Name = "Table 1";
-                var t2 = new Table();
-                t2.Name = "Table 2";
-                var t3 = new Table();
-                t3.Name = "Table 3";
-                db2.Tables.Add(t1);
-                db2.Tables.Add(t2);
-                db2.Tables.Add(t3);
-            }
-            databases.Add(db2);
-
-            var db3 = new Database();
-            db3.Name = "Database3";
-            {
-                var t1 = new Table();
-                t1.Name = "Table 1";
-                var t2 = new Table();
-                t2.Name = "Table 2";
-                var t3 = new Table();
-                t3.Name = "Table 3";
-                db3.Tables.Add(t1);
-                db3.Tables.Add(t2);
-                db3.Tables.Add(t3);
-            }
-            databases.Add(db3);
             return databases;
         }
     }

@@ -68,11 +68,6 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Column.cs" />
-    <Compile Include="Model\Database.cs" />
-    <Compile Include="Model\DataType.cs" />
-    <Compile Include="Model\Association.cs" />
-    <Compile Include="Model\Table.cs" />
     <Compile Include="Forms\NewDatabaseForm.cs">
       <SubType>Form</SubType>
     </Compile>

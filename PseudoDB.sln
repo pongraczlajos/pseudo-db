@@ -1,13 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{19A25AD5-E3C7-44D0-A0C7-927CB9DA335B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{2640FECD-2755-4F82-9637-85896D315566}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PseudoDb.Engine", "PseudoDb.Engine\PseudoDb.Engine.csproj", "{752608D2-7E1F-4440-BFCD-54645148CD9C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B92D794F-3567-448A-BC80-C5C625663731} = {B92D794F-3567-448A-BC80-C5C625663731}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{49F2853D-DDAE-46F1-8639-F6FF3CE0B0F1}"
 EndProject

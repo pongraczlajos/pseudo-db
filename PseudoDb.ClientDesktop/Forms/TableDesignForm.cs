@@ -1,14 +1,14 @@
-﻿using PseudoDb.ClientDesktop.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Collections;
 using System;
+using PseudoDb.Interfaces.Metadata;
 
 namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class TableDesignForm : Form
     {
-        private PseudoDb.Interfaces.Metadata.Table table { get; set; }
+        private Table table { get; set; }
 
         private String DatabaseName;
         private TableDesignForm() { }

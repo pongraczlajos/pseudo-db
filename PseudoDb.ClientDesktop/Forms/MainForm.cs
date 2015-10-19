@@ -1,15 +1,15 @@
-﻿using PseudoDb.ClientDesktop.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using PseudoDb.Engine;
+using PseudoDb.Interfaces.Metadata;
 
 namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class MainForm : Form 
     {
         private TreeNode DatabaseTree;
-        private List<PseudoDb.Interfaces.Metadata.Database> databases;
+        private List<Database> databases;
         private DbEngine Engine = new DbEngine();
 
 
