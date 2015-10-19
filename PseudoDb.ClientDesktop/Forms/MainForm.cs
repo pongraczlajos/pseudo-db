@@ -78,33 +78,43 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void DatabaseTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            // Select the currently clicked item in the tree view.
             TreeNode sendeNode = ((TreeView)sender).SelectedNode;
-            //select the currently clicked item in the view
             DatabaseTreeView.SelectedNode = e.Node;
 
             if (e.Button == MouseButtons.Right)
             {
-                //determine on which level was clicked
+                // Determine on which level was clicked.
                 int clickLevel = e.Node.Level;
                 ContextMenuStrip rightClickMenu = new ContextMenuStrip();
+
                 switch(clickLevel)
                 {
-                    case 0://the root node
-                        ToolStripMenuItem item1 = new ToolStripMenuItem("Create new database");
-                        item1.Click += OnCreateNewDbMenuItemClick;
-                        rightClickMenu.Items.Add(item1);
+                    // Root node
+                    case 0:
+                        ToolStripMenuItem createDbItem = new ToolStripMenuItem("Create new database");
+                        createDbItem.Click += OnCreateNewDbMenuItemClick;
+                        rightClickMenu.Items.Add(createDbItem);
                         break;
-                    case 1://database node
-                        ToolStripMenuItem item2 = new ToolStripMenuItem("Create new table");
-                        item2.Click += OnCreateNewTableMenuItemClick;
-                        rightClickMenu.Items.Add(item2);
+
+                    // Database node
+                    case 1:
+                        ToolStripMenuItem createTableItem = new ToolStripMenuItem("Create new table");
+                        createTableItem.Click += OnCreateNewTableMenuItemClick;
+                        rightClickMenu.Items.Add(createTableItem);
                         break;
-                    case 2://table node
+
+                    // Table node
+                    case 2:
+                        ToolStripMenuItem designTableItem = new ToolStripMenuItem("Design table");
+                        designTableItem.Click += OnDesignTableMenuItemClick;
+                        rightClickMenu.Items.Add(designTableItem);
                         break;
                 }
-                if(rightClickMenu.Items.Count > 0)
+
+                if (rightClickMenu.Items.Count > 0)
                 {
-                    rightClickMenu.Show(this, e.X, e.Y+30);
+                    rightClickMenu.Show(this, e.X, e.Y + 30);
                 }
             }
         }
@@ -115,19 +125,19 @@ namespace PseudoDb.ClientDesktop.Forms
             newTableForm.ShowDialog(this);
             switch (newTableForm.DialogResult) {
                 case DialogResult.OK:
-                    PseudoDb.Interfaces.Metadata.Table tb = newTableForm.GetTable();
+                    Table table = newTableForm.GetTable();
                     //TODO: test if this table can be created, and add to this db
-                    databases.Find(a => a.Name == DatabaseTreeView.SelectedNode.Text.ToString()).Tables.Add(tb);
+                    databases.Find(a => a.Name == DatabaseTreeView.SelectedNode.Text.ToString()).Tables.Add(table);
                     
                     foreach(TreeNode node in DatabaseTree.Nodes)
                     {
                         if (node.Text.Equals(DatabaseTreeView.SelectedNode.Text.ToString()))
                         {
-                            node.Nodes.Add(new TreeNode(tb.Name));
-                            break;//foreach
+                            node.Nodes.Add(new TreeNode(table.Name));
+                            break; //foreach
                         }
                     }
-                    break;//switch
+                    break; //switch
                 default:
                     break;
             }
@@ -149,6 +159,11 @@ namespace PseudoDb.ClientDesktop.Forms
                     MessageBox.Show("Cancel");
                     break;
             }
+        }
+
+        private void OnDesignTableMenuItemClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

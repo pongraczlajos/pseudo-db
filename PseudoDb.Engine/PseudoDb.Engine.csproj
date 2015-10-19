@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\XmlSerializer.cs" />
-    <Compile Include="Engine.cs" />
+    <Compile Include="DbEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

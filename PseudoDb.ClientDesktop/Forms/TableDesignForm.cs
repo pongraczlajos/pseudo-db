@@ -11,9 +11,12 @@ namespace PseudoDb.ClientDesktop.Forms
         private Table table { get; set; }
 
         private String DatabaseName;
-        private TableDesignForm() { }
 
-        public PseudoDb.Interfaces.Metadata.Table GetTable()
+        private TableDesignForm()
+        {
+        }
+
+        public Table GetTable()
         {
             return table;
         }
@@ -54,10 +57,11 @@ namespace PseudoDb.ClientDesktop.Forms
         {
         }
 
-        private void CreateTableButton_Click(object sender, System.EventArgs e)
+        private void SaveTableButton_Click(object sender, System.EventArgs e)
         {
             //TODO: validate inputs
-            table = new PseudoDb.Interfaces.Metadata.Table();
+
+            table = new Table();
             table.Name = TableNameTextBox.Text.ToString();
 
             try
@@ -65,7 +69,7 @@ namespace PseudoDb.ClientDesktop.Forms
                 for (int i = 0; i < CreateTableDataGridView.Rows.Count - 1; i++)
                 {
 
-                    PseudoDb.Interfaces.Metadata.Column column = new PseudoDb.Interfaces.Metadata.Column();
+                    Column column = new Column();
                     column.Name = CreateTableDataGridView.Rows[i].Cells[0].Value.ToString();
                     column.Type = DataTypeConverter.ToDataType(CreateTableDataGridView.Rows[i].Cells[1].Value.ToString());
                     column.Size = Int32.Parse(CreateTableDataGridView.Rows[i].Cells[2].Value.ToString());
@@ -83,7 +87,7 @@ namespace PseudoDb.ClientDesktop.Forms
             }
             catch (NullReferenceException exception)
             {
-                MessageBox.Show("Complete all cells!\n!"+ exception.Message);
+                MessageBox.Show("Complete all cells!\n!" + exception.Message);
             }
 
             DialogResult = DialogResult.OK;
@@ -93,6 +97,11 @@ namespace PseudoDb.ClientDesktop.Forms
         {
             DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void relationshipsButton_Click(object sender, EventArgs e)
+        {
+            var relationshipsForm = new RelationshipsForm("table name");
         }
     }
 }

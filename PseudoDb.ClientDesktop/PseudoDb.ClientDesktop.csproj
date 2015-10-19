@@ -74,6 +74,12 @@
     <Compile Include="Forms\NewDatabaseForm.Designer.cs">
       <DependentUpon>NewDatabaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RelationshipsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RelationshipsForm.Designer.cs">
+      <DependentUpon>RelationshipsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TableDesignForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewDatabaseForm.resx">
       <DependentUpon>NewDatabaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RelationshipsForm.resx">
+      <DependentUpon>RelationshipsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TableDesignForm.resx">
       <DependentUpon>TableDesignForm.cs</DependentUpon>

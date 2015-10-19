@@ -45,15 +45,26 @@
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.queryDesignerGroupBox = new System.Windows.Forms.GroupBox();
+            this.queryDesignerSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.queryDesignerTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             this.objectExplorerGroupBox.SuspendLayout();
             this.toolStrip.SuspendLayout();
+            this.queryDesignerGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.queryDesignerSplitContainer)).BeginInit();
+            this.queryDesignerSplitContainer.Panel1.SuspendLayout();
+            this.queryDesignerSplitContainer.SuspendLayout();
+            this.queryDesignerTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer
@@ -95,6 +106,11 @@
             // 
             this.splitContainer.Panel1.Controls.Add(this.objectExplorerGroupBox);
             this.splitContainer.Panel1.Padding = new System.Windows.Forms.Padding(3);
+            // 
+            // splitContainer.Panel2
+            // 
+            this.splitContainer.Panel2.Controls.Add(this.queryDesignerGroupBox);
+            this.splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(3);
             this.splitContainer.Size = new System.Drawing.Size(984, 515);
             this.splitContainer.SplitterDistance = 318;
             this.splitContainer.TabIndex = 0;
@@ -219,6 +235,62 @@
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "He&lp";
             // 
+            // queryDesignerGroupBox
+            // 
+            this.queryDesignerGroupBox.Controls.Add(this.queryDesignerSplitContainer);
+            this.queryDesignerGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.queryDesignerGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.queryDesignerGroupBox.Name = "queryDesignerGroupBox";
+            this.queryDesignerGroupBox.Size = new System.Drawing.Size(656, 509);
+            this.queryDesignerGroupBox.TabIndex = 0;
+            this.queryDesignerGroupBox.TabStop = false;
+            this.queryDesignerGroupBox.Text = "Visual Query Designer";
+            // 
+            // queryDesignerSplitContainer
+            // 
+            this.queryDesignerSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.queryDesignerSplitContainer.Location = new System.Drawing.Point(3, 16);
+            this.queryDesignerSplitContainer.Name = "queryDesignerSplitContainer";
+            this.queryDesignerSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // queryDesignerSplitContainer.Panel1
+            // 
+            this.queryDesignerSplitContainer.Panel1.Controls.Add(this.queryDesignerTabControl);
+            this.queryDesignerSplitContainer.Size = new System.Drawing.Size(650, 490);
+            this.queryDesignerSplitContainer.SplitterDistance = 215;
+            this.queryDesignerSplitContainer.TabIndex = 0;
+            // 
+            // queryDesignerTabControl
+            // 
+            this.queryDesignerTabControl.Controls.Add(this.tabPage1);
+            this.queryDesignerTabControl.Controls.Add(this.tabPage2);
+            this.queryDesignerTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.queryDesignerTabControl.Location = new System.Drawing.Point(0, 0);
+            this.queryDesignerTabControl.Name = "queryDesignerTabControl";
+            this.queryDesignerTabControl.SelectedIndex = 0;
+            this.queryDesignerTabControl.Size = new System.Drawing.Size(650, 215);
+            this.queryDesignerTabControl.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(642, 189);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(192, 74);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,11 +309,17 @@
             this.toolStripContainer.ResumeLayout(false);
             this.toolStripContainer.PerformLayout();
             this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             this.objectExplorerGroupBox.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            this.queryDesignerGroupBox.ResumeLayout(false);
+            this.queryDesignerSplitContainer.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.queryDesignerSplitContainer)).EndInit();
+            this.queryDesignerSplitContainer.ResumeLayout(false);
+            this.queryDesignerTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -264,6 +342,11 @@
         private System.Windows.Forms.ToolStripButton pasteToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
+        private System.Windows.Forms.GroupBox queryDesignerGroupBox;
+        private System.Windows.Forms.SplitContainer queryDesignerSplitContainer;
+        private System.Windows.Forms.TabControl queryDesignerTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 
