@@ -1,5 +1,48 @@
 <?xml version="1.0"?>
 <Database Name="A">
-  <Tables />
-  <Associations />
+  <Tables>
+    <Table Name="C">
+      <PrimaryKey>
+        <KeyMember>a</KeyMember>
+      </PrimaryKey>
+      <Columns>
+        <Column Name="a" Type="Integer" Size="1" Nullable="False" />
+        <Column Name="b" Type="String" Size="12" Nullable="False" />
+      </Columns>
+    </Table>
+    <Table Name="A">
+      <PrimaryKey>
+        <KeyMember>a</KeyMember>
+      </PrimaryKey>
+      <Columns>
+        <Column Name="a" Type="Integer" Size="0" Nullable="False" />
+        <Column Name="c" Type="String" Size="12" Nullable="False" />
+      </Columns>
+    </Table>
+    <Table Name="B">
+      <PrimaryKey>
+        <KeyMember>b</KeyMember>
+      </PrimaryKey>
+      <Columns>
+        <Column Name="b" Type="Integer" Size="0" Nullable="False" />
+        <Column Name="c" Type="String" Size="12" Nullable="False" />
+      </Columns>
+    </Table>
+  </Tables>
+  <Associations>
+    <Association Name="C_A_1">
+      <Parent>C</Parent>
+      <Child>A</Child>
+      <ColumnMappings>
+        <ColumnRef OnParent="a" OnChild="c" />
+      </ColumnMappings>
+    </Association>
+    <Association Name="B_A_1">
+      <Parent>B</Parent>
+      <Child>A</Child>
+      <ColumnMappings>
+        <ColumnRef OnParent="b" OnChild="c" />
+      </ColumnMappings>
+    </Association>
+  </Associations>
 </Database>

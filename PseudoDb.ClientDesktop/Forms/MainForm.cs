@@ -143,7 +143,7 @@ namespace PseudoDb.ClientDesktop.Forms
         private void OnCreateNewTableMenuItemClick(object sender, EventArgs e)
         {
             Database database = dbContext.SchemaQuery.GetDatabase(DatabaseTreeView.SelectedNode.Text.ToString());
-            var newTableForm = new TableDesignForm(database);
+            var newTableForm = new TableDesignForm(dbContext, database);
             newTableForm.ShowDialog(this);
 
             switch (newTableForm.DialogResult)
@@ -160,8 +160,8 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void OnDesignTableMenuItemClick(object sender, EventArgs e)
         {
-            Database database = dbContext.SchemaQuery.GetDatabase(DatabaseTreeView.SelectedNode.Text.ToString());
-            var newTableForm = new TableDesignForm(database, database.GetTable(DatabaseTreeView.SelectedNode.Text.ToString()));
+            Database database = dbContext.SchemaQuery.GetDatabase(DatabaseTreeView.SelectedNode.Parent.Text.ToString());
+            var newTableForm = new TableDesignForm(dbContext, database, database.GetTable(DatabaseTreeView.SelectedNode.Text.ToString()));
             newTableForm.ShowDialog(this);
 
             switch (newTableForm.DialogResult)

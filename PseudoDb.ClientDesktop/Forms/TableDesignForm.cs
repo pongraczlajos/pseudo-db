@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System;
 using PseudoDb.Interfaces.Metadata;
+using PseudoDb.Engine;
 
 namespace PseudoDb.ClientDesktop.Forms
 {
@@ -11,6 +12,8 @@ namespace PseudoDb.ClientDesktop.Forms
         private Table table { get; set; }
 
         private Database database;
+
+        private DatabaseContext dbContext;
 
         private TableDesignForm()
         {
@@ -21,10 +24,11 @@ namespace PseudoDb.ClientDesktop.Forms
             return table;
         }
 
-        public TableDesignForm(Database database, Table table = null)
+        public TableDesignForm(DatabaseContext dbContext, Database database, Table table = null)
         {
             InitializeComponent();
 
+            this.dbContext = dbContext;
             this.database = database;
             DialogResult = DialogResult.Cancel;
             TableDataGridView.CellValueChanged += new DataGridViewCellEventHandler(CreateTableDataGridView_CellValueChanged);
@@ -63,6 +67,10 @@ namespace PseudoDb.ClientDesktop.Forms
 
                     index++;
                 }
+            }
+            else
+            {
+                relationshipsButton.Enabled = false;
             }
         }
 
@@ -142,7 +150,17 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void relationshipsButton_Click(object sender, EventArgs e)
         {
-            var relationshipsForm = new RelationshipsForm("table name");
+            var relationshipsForm = new RelationshipsForm(dbContext, database, TableNameTextBox.Text);
+            relationshipsForm.ShowDialog(this);
+
+            switch (relationshipsForm.DialogResult)
+            {
+                case DialogResult.OK:
+                    dbContext.SchemaQuery.UpdateDatabase(database.Name);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

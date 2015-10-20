@@ -58,7 +58,7 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Table name";
             // 
-            // CreateTableDataGridView
+            // TableDataGridView
             // 
             this.TableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TableDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -68,7 +68,7 @@
             this.PK,
             this.Nullable});
             this.TableDataGridView.Location = new System.Drawing.Point(15, 50);
-            this.TableDataGridView.Name = "CreateTableDataGridView";
+            this.TableDataGridView.Name = "TableDataGridView";
             this.TableDataGridView.Size = new System.Drawing.Size(560, 281);
             this.TableDataGridView.TabIndex = 2;
             // 
@@ -122,9 +122,9 @@
             // 
             // relationshipsButton
             // 
-            this.relationshipsButton.Location = new System.Drawing.Point(497, 19);
+            this.relationshipsButton.Location = new System.Drawing.Point(486, 19);
             this.relationshipsButton.Name = "relationshipsButton";
-            this.relationshipsButton.Size = new System.Drawing.Size(75, 23);
+            this.relationshipsButton.Size = new System.Drawing.Size(86, 23);
             this.relationshipsButton.TabIndex = 5;
             this.relationshipsButton.Text = "Relationships";
             this.relationshipsButton.UseVisualStyleBackColor = true;
