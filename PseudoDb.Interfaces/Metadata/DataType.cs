@@ -11,7 +11,7 @@
     {
         public static DataType ToDataType(string typeName)
         {
-            DataType type = PseudoDb.Interfaces.Metadata.DataType.Unknown;
+            DataType type = DataType.Unknown;
 
             switch (typeName)
             {
@@ -24,6 +24,19 @@
             }
 
             return type;
+        }
+
+        public static object ToComboType(DataType dataType)
+        {
+            switch (dataType)
+            {
+                case DataType.Integer:
+                    return "Int";
+                case DataType.String:
+                    return "String";
+                default:
+                    return "Unknown";
+            }
         }
     }
 }

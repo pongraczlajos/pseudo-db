@@ -73,16 +73,24 @@ namespace PseudoDb.ClientDesktop.Forms
 
                     // Database node
                     case 1:
-                        ToolStripMenuItem createTableItem = new ToolStripMenuItem("Create new table");
-                        createTableItem.Click += OnCreateNewTableMenuItemClick;
-                        rightClickMenu.Items.Add(createTableItem);
+                        ToolStripMenuItem actionWithDbItem = new ToolStripMenuItem("Create new table");
+                        actionWithDbItem.Click += OnCreateNewTableMenuItemClick;
+                        rightClickMenu.Items.Add(actionWithDbItem);
+
+                        actionWithDbItem = new ToolStripMenuItem("Delete");
+                        actionWithDbItem.Click += OnDeleteDbMenuItemClick;
+                        rightClickMenu.Items.Add(actionWithDbItem);
                         break;
 
                     // Table node
                     case 2:
-                        ToolStripMenuItem designTableItem = new ToolStripMenuItem("Design table");
-                        designTableItem.Click += OnDesignTableMenuItemClick;
-                        rightClickMenu.Items.Add(designTableItem);
+                        ToolStripMenuItem actionWithTableItem = new ToolStripMenuItem("Design table");
+                        actionWithTableItem.Click += OnDesignTableMenuItemClick;
+                        rightClickMenu.Items.Add(actionWithTableItem);
+
+                        actionWithTableItem = new ToolStripMenuItem("Delete");
+                        actionWithTableItem.Click += OnDeleteTableMenuItemClick;
+                        rightClickMenu.Items.Add(actionWithTableItem);
                         break;
                 }
 
@@ -90,31 +98,6 @@ namespace PseudoDb.ClientDesktop.Forms
                 {
                     rightClickMenu.Show(this, e.X, e.Y + 30);
                 }
-            }
-        }
-
-        private void OnCreateNewTableMenuItemClick(object sender, EventArgs e)
-        {
-            Database database = dbContext.SchemaQuery.GetDatabase(DatabaseTreeView.SelectedNode.Text.ToString());
-            var newTableForm = new TableDesignForm(database);
-            newTableForm.ShowDialog(this);
-
-            switch (newTableForm.DialogResult) {
-                case DialogResult.OK:
-                    dbContext.SchemaQuery.UpdateDatabase(database.Name);
-                    Table table = newTableForm.GetTable();
-
-                    foreach(TreeNode node in DatabaseTree.Nodes)
-                    {
-                        if (node.Text.Equals(DatabaseTreeView.SelectedNode.Text.ToString()))
-                        {
-                            node.Nodes.Add(new TreeNode(table.Name));
-                            break;
-                        }
-                    }
-                    break;
-                default:
-                    break;
             }
         }
 
@@ -142,9 +125,74 @@ namespace PseudoDb.ClientDesktop.Forms
             }
         }
 
+        private void OnDeleteDbMenuItemClick(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Delete database?", "Delete database", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            switch (result)
+            {
+                case DialogResult.Yes:
+                    dbContext.SchemaQuery.RemoveDatabase(DatabaseTreeView.SelectedNode.Text.ToString());
+                    DatabaseTreeView.Nodes.Remove(DatabaseTreeView.SelectedNode);
+                    break;
+                case DialogResult.No:
+                    break;
+            }
+        }
+
+        private void OnCreateNewTableMenuItemClick(object sender, EventArgs e)
+        {
+            Database database = dbContext.SchemaQuery.GetDatabase(DatabaseTreeView.SelectedNode.Text.ToString());
+            var newTableForm = new TableDesignForm(database);
+            newTableForm.ShowDialog(this);
+
+            switch (newTableForm.DialogResult)
+            {
+                case DialogResult.OK:
+                    dbContext.SchemaQuery.UpdateDatabase(database.Name);
+                    Table table = newTableForm.GetTable();
+                    DatabaseTreeView.SelectedNode.Nodes.Add(new TreeNode(table.Name));
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void OnDesignTableMenuItemClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Database database = dbContext.SchemaQuery.GetDatabase(DatabaseTreeView.SelectedNode.Text.ToString());
+            var newTableForm = new TableDesignForm(database, database.GetTable(DatabaseTreeView.SelectedNode.Text.ToString()));
+            newTableForm.ShowDialog(this);
+
+            switch (newTableForm.DialogResult)
+            {
+                case DialogResult.OK:
+                    dbContext.SchemaQuery.UpdateDatabase(database.Name);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void OnDeleteTableMenuItemClick(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Delete table?", "Delete table", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            switch (result)
+            {
+                case DialogResult.Yes:
+                    string databaseName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
+                    Database database = dbContext.SchemaQuery.GetDatabase(databaseName);
+
+                    if (database.RemoveTable(DatabaseTreeView.SelectedNode.Text.ToString()))
+                    {
+                        dbContext.SchemaQuery.UpdateDatabase(database.Name);
+                        DatabaseTreeView.Nodes.Remove(DatabaseTreeView.SelectedNode);
+                    }
+                    break;
+                case DialogResult.No:
+                    break;
+            }
         }
     }
 }

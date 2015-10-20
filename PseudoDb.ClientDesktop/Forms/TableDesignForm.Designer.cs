@@ -30,7 +30,7 @@
         {
             this.TableNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.CreateTableDataGridView = new System.Windows.Forms.DataGridView();
+            this.TableDataGridView = new System.Windows.Forms.DataGridView();
             this.FieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FIeldType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Size = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,7 +39,7 @@
             this.SaveTableButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.relationshipsButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.CreateTableDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // TableNameTextBox
@@ -60,17 +60,17 @@
             // 
             // CreateTableDataGridView
             // 
-            this.CreateTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CreateTableDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TableDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FieldName,
             this.FIeldType,
             this.Size,
             this.PK,
             this.Nullable});
-            this.CreateTableDataGridView.Location = new System.Drawing.Point(15, 50);
-            this.CreateTableDataGridView.Name = "CreateTableDataGridView";
-            this.CreateTableDataGridView.Size = new System.Drawing.Size(560, 281);
-            this.CreateTableDataGridView.TabIndex = 2;
+            this.TableDataGridView.Location = new System.Drawing.Point(15, 50);
+            this.TableDataGridView.Name = "CreateTableDataGridView";
+            this.TableDataGridView.Size = new System.Drawing.Size(560, 281);
+            this.TableDataGridView.TabIndex = 2;
             // 
             // FieldName
             // 
@@ -138,12 +138,12 @@
             this.Controls.Add(this.relationshipsButton);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.SaveTableButton);
-            this.Controls.Add(this.CreateTableDataGridView);
+            this.Controls.Add(this.TableDataGridView);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TableNameTextBox);
             this.Name = "TableDesignForm";
             this.Text = "Table Design";
-            ((System.ComponentModel.ISupportInitialize)(this.CreateTableDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -153,7 +153,7 @@
 
         private System.Windows.Forms.TextBox TableNameTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView CreateTableDataGridView;
+        private System.Windows.Forms.DataGridView TableDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn FieldName;
         private System.Windows.Forms.DataGridViewComboBoxColumn FIeldType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Size;

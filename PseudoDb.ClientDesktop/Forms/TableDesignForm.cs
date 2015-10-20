@@ -21,14 +21,49 @@ namespace PseudoDb.ClientDesktop.Forms
             return table;
         }
 
-        public TableDesignForm(Database database)
+        public TableDesignForm(Database database, Table table = null)
         {
             InitializeComponent();
 
             this.database = database;
             DialogResult = DialogResult.Cancel;
-            CreateTableDataGridView.CellValueChanged += new DataGridViewCellEventHandler(CreateTableDataGridView_CellValueChanged);
-            CreateTableDataGridView.DataError += CreateTableDataGridView_DataError;
+            TableDataGridView.CellValueChanged += new DataGridViewCellEventHandler(CreateTableDataGridView_CellValueChanged);
+            TableDataGridView.DataError += CreateTableDataGridView_DataError;
+
+            if (table != null)
+            {
+                TableNameTextBox.Text = table.Name;
+                TableNameTextBox.Enabled = false;
+                TableDataGridView.Rows.Add(table.Columns.Count - 1);
+
+                int index = 0;
+                foreach (var column in table.Columns)
+                {
+                    TableDataGridView.Rows[index].Cells[0].Value = column.Name;
+                    TableDataGridView.Rows[index].Cells[1].Value = DataTypeConverter.ToComboType(column.Type);
+                    TableDataGridView.Rows[index].Cells[2].Value = column.Size;
+
+                    if (table.PrimaryKey.Contains(column.Name))
+                    {
+                        TableDataGridView.Rows[index].Cells[3].Value = true;
+                    }
+                    else
+                    {
+                        TableDataGridView.Rows[index].Cells[3].Value = false;
+                    }
+
+                    if (column.Nullable)
+                    {
+                        TableDataGridView.Rows[index].Cells[4].Value = true;
+                    }
+                    else
+                    {
+                        TableDataGridView.Rows[index].Cells[4].Value = false;
+                    }
+
+                    index++;
+                }
+            }
         }
 
         private void CreateTableDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -66,15 +101,15 @@ namespace PseudoDb.ClientDesktop.Forms
 
             try
             {
-                for (int i = 0; i < CreateTableDataGridView.Rows.Count - 1; i++)
+                for (int i = 0; i < TableDataGridView.Rows.Count - 1; i++)
                 {
 
                     Column column = new Column();
-                    column.Name = CreateTableDataGridView.Rows[i].Cells[0].Value.ToString();
-                    column.Type = DataTypeConverter.ToDataType(CreateTableDataGridView.Rows[i].Cells[1].Value.ToString());
-                    column.Size = Int32.Parse(CreateTableDataGridView.Rows[i].Cells[2].Value.ToString());
-                    bool isPrimaryKey = (bool) ((DataGridViewCheckBoxCell) CreateTableDataGridView.Rows[i].Cells[3]).FormattedValue;
-                    column.Nullable = (bool) ((DataGridViewCheckBoxCell) CreateTableDataGridView.Rows[i].Cells[4]).FormattedValue;
+                    column.Name = TableDataGridView.Rows[i].Cells[0].Value.ToString();
+                    column.Type = DataTypeConverter.ToDataType(TableDataGridView.Rows[i].Cells[1].Value.ToString());
+                    column.Size = Int32.Parse(TableDataGridView.Rows[i].Cells[2].Value.ToString());
+                    bool isPrimaryKey = (bool) ((DataGridViewCheckBoxCell) TableDataGridView.Rows[i].Cells[3]).FormattedValue;
+                    column.Nullable = (bool) ((DataGridViewCheckBoxCell) TableDataGridView.Rows[i].Cells[4]).FormattedValue;
 
                     if (isPrimaryKey)
                     {
