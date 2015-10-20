@@ -1,22 +1,35 @@
-﻿using System;
+﻿using PseudoDb.Engine;
+using PseudoDb.Interfaces.Metadata;
+using System;
 using System.Windows.Forms;
 
 namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class NewDatabaseForm : Form
     {
-        //TODO: handle wrong imputs
-        public string DatabaseName { get; set; }
+        private DatabaseContext dbContext;
 
-        public NewDatabaseForm()
+        // TODO: handle wrong imputs.
+        public Database Database { get; set; }
+
+        private NewDatabaseForm()
+        {
+        }
+
+        public NewDatabaseForm(DatabaseContext dbContext)
         {
             InitializeComponent();
             this.DialogResult = DialogResult.Ignore;
+            this.dbContext = dbContext;
         }
 
         private void createButton_Click(object sender, EventArgs e)
         {
-            DatabaseName = databaseNameTextBox.Text.ToString();
+            string databaseName = databaseNameTextBox.Text.ToString();
+
+            dbContext.SchemaQuery.AddDatabase(databaseName);
+            Database = dbContext.SchemaQuery.GetDatabase(databaseName);
+
             this.DialogResult = DialogResult.OK;
         }
 

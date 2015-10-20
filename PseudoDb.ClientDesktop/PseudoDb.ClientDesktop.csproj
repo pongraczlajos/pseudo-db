@@ -142,6 +142,10 @@
       <Project>{B92D794F-3567-448A-BC80-C5C625663731}</Project>
       <Name>PseudoDb.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PseudoDb.QueryProcessor\PseudoDb.QueryProcessor.csproj">
+      <Project>{5fa16461-2aeb-493d-bcdb-b9d8facabb1a}</Project>
+      <Name>PseudoDb.QueryProcessor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

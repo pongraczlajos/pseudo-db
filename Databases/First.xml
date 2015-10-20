@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Database Name="First">
+  <Tables>
+    <Table Name="First">
+      <PrimaryKey>
+        <KeyMember>First</KeyMember>
+      </PrimaryKey>
+      <Columns>
+        <Column Name="First" Type="Integer" Size="0" Nullable="False" />
+        <Column Name="Second" Type="String" Size="12" Nullable="False" />
+      </Columns>
+    </Table>
+  </Tables>
+  <Associations />
+</Database>

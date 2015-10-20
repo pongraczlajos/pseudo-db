@@ -1,59 +1,42 @@
 ﻿using PseudoDb.Interfaces.Metadata;
 using PseudoDb.Interfaces.Query;
 using PseudoDb.Interfaces.Engine;
+using System.Collections.Generic;
 
 namespace PseudoDb.QueryProcessor
 {
     public class SchemaQuery : ISchemaQuery
     {
-        private Database database;
+        private IMetadata metadata;
 
-        public IEngine Engine { get; set; }
-
-        public ISchemaQuery AddDatabase(string databaseName)
+        public SchemaQuery(IMetadata metadata)
         {
-            return this;
+            this.metadata = metadata;
         }
 
-        public ISchemaQuery GetDatabase(string databaseName)
+        public ICollection<Database> GetDatabases()
         {
-            return this;
+            return metadata.GetDatabases();
         }
 
-        public ISchemaQuery DeleteDatabase(string databaseName)
+        public void AddDatabase(string databaseName)
         {
-            return this;
+            metadata.AddDatabase(databaseName);
         }
 
-        public ISchemaQuery AddTable(string databaseName, string tableName)
+        public Database GetDatabase(string databaseName)
         {
-            return this;
+            return metadata.GetDatabase(databaseName);
         }
 
-        public ISchemaQuery GetTable(string databaseName, string tableName)
+        public void UpdateDatabase(string databaseName)
         {
-            return this;
+            metadata.UpdateDatabase(databaseName);
         }
 
-        public ISchemaQuery DeleteTable(string databaseName, string tableName)
+        public void RemoveDatabase(string databaseName)
         {
-            return this;
-        }
-
-        public ISchemaQuery AddOrUpdateColumn(string databaseName, string tableName,
-            string columnName, DataType type, int size, bool nullable = false)
-        {
-            return this;
-        }
-
-        public ISchemaQuery DeleteColumn(string databaseName, string tableName, string columnName)
-        {
-            return this;
-        }
-
-        public Database Execute()
-        {
-            return database;
+            metadata.RemoveDatabase(databaseName);
         }
     }
 }

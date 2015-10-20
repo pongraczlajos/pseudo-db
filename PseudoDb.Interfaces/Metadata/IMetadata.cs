@@ -1,16 +1,18 @@
-﻿using PseudoDb.Interfaces.Engine;
-using PseudoDb.Interfaces.Metadata;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace PseudoDb.Interfaces.Query
+namespace PseudoDb.Interfaces.Metadata
 {
-    public interface ISchemaQuery
+    public interface IMetadata
     {
         ICollection<Database> GetDatabases();
 
-        void AddDatabase(string databaseName);
-
         Database GetDatabase(string databaseName);
+
+        void AddDatabase(string databaseName);
 
         void UpdateDatabase(string databaseName);
 

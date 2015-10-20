@@ -1,22 +1,23 @@
-﻿using System;
+﻿using PseudoDb.Engine;
+using PseudoDb.Interfaces.Metadata;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using PseudoDb.Engine;
-using PseudoDb.Interfaces.Metadata;
 
 namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class MainForm : Form 
     {
         private TreeNode DatabaseTree;
-        private List<Database> databases;
-        private DbEngine Engine = new DbEngine();
 
+        private DatabaseContext dbContext;
 
         public MainForm()
         {
             InitializeComponent();
-            databases = Engine.GetDatabases();//db_engine call
+
+            dbContext = new DatabaseContext();
+
             BuildDatabaseTree();
         }
         
@@ -29,51 +30,24 @@ namespace PseudoDb.ClientDesktop.Forms
         {
             DatabaseTree = new TreeNode("Databases");
 
-            foreach(var db in databases)
+            foreach(var database in dbContext.SchemaQuery.GetDatabases())
             {
-                TreeNode dbNode = new TreeNode(db.Name);
-                foreach(var table in db.Tables)
+                TreeNode dbNode = new TreeNode(database.Name);
+
+                foreach(var table in database.Tables)
                 {
                     TreeNode tbNode = new TreeNode(table.Name);
                     dbNode.Nodes.Add(tbNode);
                 }
+
                 DatabaseTree.Nodes.Add(dbNode);
             }
 
             DatabaseTreeView.Nodes.Add(DatabaseTree);
             DatabaseTreeView.Refresh();
 
-            //Add event handlers
+            // Add event handlers.
             DatabaseTreeView.NodeMouseClick += DatabaseTreeView_NodeMouseClick;
-
-        }
-
-        private void LoadDatabaseTree()
-        {
-            DatabaseTree = new TreeNode("Databases");
-            TreeNode[] Databases = new TreeNode[5];
-
-            for (int i = 0; i < Databases.Length; ++i)
-            {
-                Databases[i] = new TreeNode();
-                Databases[i].Text = "DB "+i;
-                TreeNode[] Tables = new TreeNode[3];
-                for (int j = 0; j < Tables.Length; ++j)
-                {
-                    Tables[j] = new TreeNode();
-                    Tables[j].Text = "Table " + j;
-                }
-                Databases[i].Nodes.AddRange(Tables);
-            }
-            DatabaseTree.Nodes.AddRange(Databases);
-
-            //add the created treeNodes to the databaseTreeView
-            DatabaseTreeView.Nodes.Add(DatabaseTree);
-            DatabaseTreeView.Refresh();
-
-            //Add event handlers
-            DatabaseTreeView.NodeMouseClick += DatabaseTreeView_NodeMouseClick;
-
         }
 
         private void DatabaseTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -121,42 +95,49 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void OnCreateNewTableMenuItemClick(object sender, EventArgs e)
         {
-            var newTableForm = new TableDesignForm(DatabaseTreeView.SelectedNode.Text.ToString());
+            Database database = dbContext.SchemaQuery.GetDatabase(DatabaseTreeView.SelectedNode.Text.ToString());
+            var newTableForm = new TableDesignForm(database);
             newTableForm.ShowDialog(this);
+
             switch (newTableForm.DialogResult) {
                 case DialogResult.OK:
+                    dbContext.SchemaQuery.UpdateDatabase(database.Name);
                     Table table = newTableForm.GetTable();
-                    //TODO: test if this table can be created, and add to this db
-                    databases.Find(a => a.Name == DatabaseTreeView.SelectedNode.Text.ToString()).Tables.Add(table);
-                    
+
                     foreach(TreeNode node in DatabaseTree.Nodes)
                     {
                         if (node.Text.Equals(DatabaseTreeView.SelectedNode.Text.ToString()))
                         {
                             node.Nodes.Add(new TreeNode(table.Name));
-                            break; //foreach
+                            break;
                         }
                     }
-                    break; //switch
+                    break;
                 default:
                     break;
             }
-
         }
 
         private void OnCreateNewDbMenuItemClick(object sender, EventArgs e)
         {
-            NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
+            NewDatabaseForm newDatabaseForm = new NewDatabaseForm(dbContext);
             newDatabaseForm.ShowDialog(this);
+
             switch (newDatabaseForm.DialogResult)
             {
                 case DialogResult.OK:
-                    //TODO: Test if this database can be create!
-                    DatabaseTree.Nodes.Add(new TreeNode(newDatabaseForm.DatabaseName));
-                    databases.Add(new Interfaces.Metadata.Database(newDatabaseForm.DatabaseName));
+                    // TODO: Test if this database can be created!
+                    if (newDatabaseForm.Database != null)
+                    {
+                        DatabaseTree.Nodes.Add(new TreeNode(newDatabaseForm.Database.Name));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Database creation failed!", "Database creation error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     break;
                 case DialogResult.Cancel:
-                    MessageBox.Show("Cancel");
+                    //MessageBox.Show("Cancel");
                     break;
             }
         }

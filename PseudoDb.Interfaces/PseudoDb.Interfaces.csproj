@@ -48,6 +48,7 @@
     <Compile Include="Engine\IEngine.cs" />
     <Compile Include="Metadata\Association.cs" />
     <Compile Include="Metadata\Column.cs" />
+    <Compile Include="Metadata\IMetadata.cs" />
     <Compile Include="Metadata\DataType.cs" />
     <Compile Include="Metadata\Table.cs" />
     <Compile Include="Metadata\Database.cs" />

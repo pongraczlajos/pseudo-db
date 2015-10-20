@@ -10,7 +10,7 @@ namespace PseudoDb.ClientDesktop.Forms
     {
         private Table table { get; set; }
 
-        private String DatabaseName;
+        private Database database;
 
         private TableDesignForm()
         {
@@ -21,11 +21,11 @@ namespace PseudoDb.ClientDesktop.Forms
             return table;
         }
 
-        public TableDesignForm(string DatabaseName)
+        public TableDesignForm(Database database)
         {
             InitializeComponent();
 
-            this.DatabaseName = DatabaseName;
+            this.database = database;
             DialogResult = DialogResult.Cancel;
             CreateTableDataGridView.CellValueChanged += new DataGridViewCellEventHandler(CreateTableDataGridView_CellValueChanged);
             CreateTableDataGridView.DataError += CreateTableDataGridView_DataError;
@@ -73,17 +73,23 @@ namespace PseudoDb.ClientDesktop.Forms
                     column.Name = CreateTableDataGridView.Rows[i].Cells[0].Value.ToString();
                     column.Type = DataTypeConverter.ToDataType(CreateTableDataGridView.Rows[i].Cells[1].Value.ToString());
                     column.Size = Int32.Parse(CreateTableDataGridView.Rows[i].Cells[2].Value.ToString());
-                    bool pk = (bool)((DataGridViewCheckBoxCell)CreateTableDataGridView.Rows[i].Cells[3]).FormattedValue;
-                    column.Nullable = (bool)((DataGridViewCheckBoxCell)CreateTableDataGridView.Rows[i].Cells[4]).FormattedValue;
+                    bool isPrimaryKey = (bool) ((DataGridViewCheckBoxCell) CreateTableDataGridView.Rows[i].Cells[3]).FormattedValue;
+                    column.Nullable = (bool) ((DataGridViewCheckBoxCell) CreateTableDataGridView.Rows[i].Cells[4]).FormattedValue;
 
-                    if (pk)
+                    if (isPrimaryKey)
                     {
                         table.PrimaryKey.Add(column.Name);
                     }
 
                     table.Columns.Add(column);
-
                 }
+
+                if (database.GetTable(table.Name) != null)
+                {
+                    database.RemoveTable(table.Name);
+                }
+
+                database.Tables.Add(table);
             }
             catch (NullReferenceException exception)
             {
