@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.relationshipsListBox = new System.Windows.Forms.ListBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -42,7 +43,9 @@
             this.parentComboBox = new System.Windows.Forms.ComboBox();
             this.childComboBox = new System.Windows.Forms.ComboBox();
             this.removeButton = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.relDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // relationshipsListBox
@@ -141,6 +144,7 @@
             // 
             // parentComboBox
             // 
+            this.parentComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.parentComboBox.FormattingEnabled = true;
             this.parentComboBox.Location = new System.Drawing.Point(280, 36);
             this.parentComboBox.Name = "parentComboBox";
@@ -150,6 +154,7 @@
             // 
             // childComboBox
             // 
+            this.childComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.childComboBox.FormattingEnabled = true;
             this.childComboBox.Location = new System.Drawing.Point(280, 62);
             this.childComboBox.Name = "childComboBox";
@@ -166,6 +171,10 @@
             this.removeButton.Text = "Remove";
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // RelationshipsForm
             // 
@@ -187,6 +196,7 @@
             this.Name = "RelationshipsForm";
             this.Text = "Relationships";
             ((System.ComponentModel.ISupportInitialize)(this.relDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,5 +218,6 @@
         private System.Windows.Forms.ComboBox parentComboBox;
         private System.Windows.Forms.ComboBox childComboBox;
         private System.Windows.Forms.Button removeButton;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

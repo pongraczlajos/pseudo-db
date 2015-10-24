@@ -19,9 +19,9 @@ namespace PseudoDb.QueryProcessor
             return metadata.GetDatabases();
         }
 
-        public void AddDatabase(string databaseName)
+        public bool AddDatabase(string databaseName)
         {
-            metadata.AddDatabase(databaseName);
+            return metadata.AddDatabase(databaseName);
         }
 
         public Database GetDatabase(string databaseName)

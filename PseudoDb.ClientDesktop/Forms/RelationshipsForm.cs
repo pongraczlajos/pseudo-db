@@ -1,4 +1,5 @@
-﻿using PseudoDb.Engine;
+﻿using PseudoDb.ClientDesktop.Properties;
+using PseudoDb.Engine;
 using PseudoDb.Interfaces.Metadata;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,12 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(relNameTextBox.Text.ToString()))
+            {
+                MessageBox.Show(Resources.ResourceManager.GetString("EmptyRelation"));
+                return;
+            }
+
             try
             {
                 var association = new Association();

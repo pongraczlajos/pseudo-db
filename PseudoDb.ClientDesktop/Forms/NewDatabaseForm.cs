@@ -27,7 +27,14 @@ namespace PseudoDb.ClientDesktop.Forms
         {
             string databaseName = databaseNameTextBox.Text.ToString();
 
-            dbContext.SchemaQuery.AddDatabase(databaseName);
+            var result = dbContext.SchemaQuery.AddDatabase(databaseName);
+            if (!result)
+            {
+                this.DialogResult = DialogResult.Cancel;
+                MessageBox.Show("This database already exists!");
+                this.DialogResult = DialogResult.Cancel;
+                return;
+            }
             Database = dbContext.SchemaQuery.GetDatabase(databaseName);
 
             this.DialogResult = DialogResult.OK;

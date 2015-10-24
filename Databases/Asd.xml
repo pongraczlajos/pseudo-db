@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Database Name="Asd">
+  <Tables>
+    <Table Name="Atable">
+      <PrimaryKey>
+        <KeyMember>Af</KeyMember>
+      </PrimaryKey>
+      <Columns>
+        <Column Name="Af" Type="Integer" Size="23" Nullable="True" />
+      </Columns>
+    </Table>
+    <Table Name="BTable">
+      <PrimaryKey>
+        <KeyMember>asd</KeyMember>
+        <KeyMember>vasdg</KeyMember>
+      </PrimaryKey>
+      <Columns>
+        <Column Name="asd1" Type="Integer" Size="22" Nullable="False" />
+		<Column Name="asd2" Type="Integer" Size="22" Nullable="False" />
+		<Column Name="asd3" Type="Integer" Size="22" Nullable="False" />
+		<Column Name="asd4" Type="Integer" Size="22" Nullable="False" />
+		<Column Name="asd5" Type="Integer" Size="22" Nullable="False" />
+		<Column Name="asd6" Type="Integer" Size="22" Nullable="False" />
+		<Column Name="asd" Type="Integer" Size="22" Nullable="False" />
+        <Column Name="vasdg" Type="String" Size="232" Nullable="False" />
+      </Columns>
+    </Table>
+  </Tables>
+  <Associations />
+</Database>

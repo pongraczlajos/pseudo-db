@@ -4,6 +4,9 @@ using System.Collections;
 using System;
 using PseudoDb.Interfaces.Metadata;
 using PseudoDb.Engine;
+using System.Resources;
+using System.Reflection;
+using PseudoDb.ClientDesktop.Properties;
 
 namespace PseudoDb.ClientDesktop.Forms
 {
@@ -38,7 +41,7 @@ namespace PseudoDb.ClientDesktop.Forms
             {
                 TableNameTextBox.Text = table.Name;
                 TableNameTextBox.Enabled = false;
-                TableDataGridView.Rows.Add(table.Columns.Count - 1);
+                TableDataGridView.Rows.Add(table.Columns.Count );
 
                 int index = 0;
                 foreach (var column in table.Columns)
@@ -103,9 +106,24 @@ namespace PseudoDb.ClientDesktop.Forms
         private void SaveTableButton_Click(object sender, System.EventArgs e)
         {
             //TODO: validate inputs
+                       
+            var tableName = TableNameTextBox.Text.ToString();
+            if (string.IsNullOrEmpty(tableName))
+            {
+                MessageBox.Show(Resources.ResourceManager.GetString("MissingTableName"));
+                return;
+            }
+
+            var result = database.Tables.Find(table => table.Name.Equals(tableName));
+            if(result != null)
+            {
+                MessageBox.Show(Resources.ResourceManager.GetString("TableNameTaked"));
+                return;
+            }
+
 
             table = new Table();
-            table.Name = TableNameTextBox.Text.ToString();
+            table.Name = tableName;
 
             try
             {

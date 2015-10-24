@@ -12,7 +12,7 @@ namespace PseudoDb.Interfaces.Metadata
 
         Database GetDatabase(string databaseName);
 
-        void AddDatabase(string databaseName);
+        bool AddDatabase(string databaseName);
 
         void UpdateDatabase(string databaseName);
 

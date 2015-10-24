@@ -8,7 +8,7 @@ namespace PseudoDb.Interfaces.Query
     {
         ICollection<Database> GetDatabases();
 
-        void AddDatabase(string databaseName);
+        bool AddDatabase(string databaseName);
 
         Database GetDatabase(string databaseName);
 

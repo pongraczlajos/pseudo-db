@@ -40,14 +40,21 @@ namespace PseudoDb.Engine
             return databases.Where(db => db.Name.Equals(databaseName)).FirstOrDefault();
         }
 
-        public void AddDatabase(string databaseName)
+        public bool AddDatabase(string databaseName)
         {
+            var result = databases.Find(a => a.Name.Equals(databaseName));
+            if(result!= null)
+            {
+                return false;
+            }
+
             Database database = new Database();
             database.Name = databaseName;
 
             databases.Add(database);
 
             XmlSerializer.Serialize<Database>(database, Location + string.Format(@"\{0}.xml", database.Name));
+            return true;
         }
 
         public void UpdateDatabase(string databaseName)

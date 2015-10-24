@@ -1,4 +1,5 @@
-﻿using PseudoDb.Engine;
+﻿using PseudoDb.ClientDesktop.Properties;
+using PseudoDb.Engine;
 using PseudoDb.Interfaces.Metadata;
 using System;
 using System.Collections.Generic;
@@ -88,6 +89,10 @@ namespace PseudoDb.ClientDesktop.Forms
                         actionWithTableItem.Click += OnDesignTableMenuItemClick;
                         rightClickMenu.Items.Add(actionWithTableItem);
 
+                        actionWithTableItem = new ToolStripMenuItem("Insert");
+                        actionWithTableItem.Click += OnInsertIntoTableMenuItemClick; ;
+                        rightClickMenu.Items.Add(actionWithTableItem);
+
                         actionWithTableItem = new ToolStripMenuItem("Delete");
                         actionWithTableItem.Click += OnDeleteTableMenuItemClick;
                         rightClickMenu.Items.Add(actionWithTableItem);
@@ -101,6 +106,22 @@ namespace PseudoDb.ClientDesktop.Forms
             }
         }
 
+        private void OnInsertIntoTableMenuItemClick(object sender, EventArgs e)
+        {
+            string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
+            string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+
+            Table tableSchema = dbContext.SchemaQuery.GetDatabase(selectedDbName).GetTable(selectedTableName);
+            var insertForm = new InsertForm(tableSchema);
+            insertForm.Show(this);
+
+            switch(insertForm.DialogResult)
+            {
+                case DialogResult.OK:
+                    break;
+            }
+        }
+
         private void OnCreateNewDbMenuItemClick(object sender, EventArgs e)
         {
             NewDatabaseForm newDatabaseForm = new NewDatabaseForm(dbContext);
@@ -109,14 +130,14 @@ namespace PseudoDb.ClientDesktop.Forms
             switch (newDatabaseForm.DialogResult)
             {
                 case DialogResult.OK:
-                    // TODO: Test if this database can be created!
+                    // Test if this database can be created!
                     if (newDatabaseForm.Database != null)
                     {
                         DatabaseTree.Nodes.Add(new TreeNode(newDatabaseForm.Database.Name));
                     }
                     else
                     {
-                        MessageBox.Show("Database creation failed!", "Database creation error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Resources.ResourceManager.GetString("DbCreateFail"), Resources.ResourceManager.GetString("DbCreateError"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     break;
                 case DialogResult.Cancel:
