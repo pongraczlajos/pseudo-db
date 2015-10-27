@@ -61,6 +61,10 @@
       <Project>{5fa16461-2aeb-493d-bcdb-b9d8facabb1a}</Project>
       <Name>PseudoDb.QueryProcessor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PseudoDb.StorageProviders\PseudoDb.StorageProviders.csproj">
+      <Project>{e845eec6-0e97-4b4f-823c-6a2a4242a76a}</Project>
+      <Name>PseudoDb.StorageProviders</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

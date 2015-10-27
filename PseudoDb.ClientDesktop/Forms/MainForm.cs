@@ -70,6 +70,10 @@ namespace PseudoDb.ClientDesktop.Forms
                         ToolStripMenuItem createDbItem = new ToolStripMenuItem("Create new database");
                         createDbItem.Click += OnCreateNewDbMenuItemClick;
                         rightClickMenu.Items.Add(createDbItem);
+
+                        createDbItem = new ToolStripMenuItem("Insert engine call test");
+                        createDbItem.Click += InsertMenuItemClick;
+                        rightClickMenu.Items.Add(createDbItem);
                         break;
 
                     // Database node
@@ -96,6 +100,10 @@ namespace PseudoDb.ClientDesktop.Forms
                         actionWithTableItem = new ToolStripMenuItem("Delete");
                         actionWithTableItem.Click += OnDeleteTableMenuItemClick;
                         rightClickMenu.Items.Add(actionWithTableItem);
+
+                        actionWithTableItem = new ToolStripMenuItem("Create index");
+                        actionWithTableItem.Click += OnCreateIndexMenuItemClick;
+                        rightClickMenu.Items.Add(actionWithTableItem);
                         break;
                 }
 
@@ -104,6 +112,11 @@ namespace PseudoDb.ClientDesktop.Forms
                     rightClickMenu.Show(this, e.X, e.Y + 30);
                 }
             }
+        }
+
+        private void InsertMenuItemClick(object sender, EventArgs e)
+        {
+            dbContext.Query.Insert("troloo.stsdb4", "shalala", "", "");
         }
 
         private void OnInsertIntoTableMenuItemClick(object sender, EventArgs e)
@@ -214,6 +227,11 @@ namespace PseudoDb.ClientDesktop.Forms
                 case DialogResult.No:
                     break;
             }
+        }
+
+        private void OnCreateIndexMenuItemClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

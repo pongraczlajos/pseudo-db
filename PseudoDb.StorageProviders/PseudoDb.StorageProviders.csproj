@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B92D794F-3567-448A-BC80-C5C625663731}</ProjectGuid>
+    <ProjectGuid>{E845EEC6-0E97-4B4F-823C-6A2A4242A76A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PseudoDb.Interfaces</RootNamespace>
-    <AssemblyName>PseudoDb.Interfaces</AssemblyName>
+    <RootNamespace>PseudoDb.StorageProviders</RootNamespace>
+    <AssemblyName>PseudoDb.StorageProviders</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,37 +30,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="STSdb4, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\STSdb.4.0.0\lib\STSdb4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="YAXLib, Version=2.13.0.0, Culture=neutral, PublicKeyToken=7cc39f8266ad1835, processorArchitecture=MSIL">
-      <HintPath>..\packages\YAXLib.2.13\lib\YAXLib.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\IEngine.cs" />
-    <Compile Include="Metadata\Association.cs" />
-    <Compile Include="Metadata\Column.cs" />
-    <Compile Include="Metadata\IMetadata.cs" />
-    <Compile Include="Metadata\DataType.cs" />
-    <Compile Include="Metadata\Index.cs" />
-    <Compile Include="Metadata\Table.cs" />
-    <Compile Include="Metadata\Database.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\IQuery.cs" />
-    <Compile Include="Query\ISchemaQuery.cs" />
-    <Compile Include="Storage\IRepository.cs" />
+    <Compile Include="StsDb\Key.cs" />
+    <Compile Include="StsDb\StsDbRepository.cs" />
+    <Compile Include="StsDb\Value.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="STSdb4.DevelopersGuide.pdf" />
+    <None Include="STSdb4.GettingStarted.pdf" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PseudoDb.Interfaces\PseudoDb.Interfaces.csproj">
+      <Project>{b92d794f-3567-448a-bc80-c5c625663731}</Project>
+      <Name>PseudoDb.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

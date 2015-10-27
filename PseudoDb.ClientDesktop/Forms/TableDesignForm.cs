@@ -12,7 +12,7 @@ namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class TableDesignForm : Form
     {
-        private Table table { get; set; }
+        private Table table;
 
         private Database database;
 
@@ -114,7 +114,7 @@ namespace PseudoDb.ClientDesktop.Forms
                 return;
             }
 
-            var result = database.Tables.Find(table => table.Name.Equals(tableName));
+            var result = database.Tables.Find(t => t.Name.Equals(tableName));
             if(result != null)
             {
                 MessageBox.Show(Resources.ResourceManager.GetString("TableNameTaked"));
@@ -124,6 +124,7 @@ namespace PseudoDb.ClientDesktop.Forms
 
             table = new Table();
             table.Name = tableName;
+            table.FileName = database.Name + "." + table.Name;
 
             try
             {

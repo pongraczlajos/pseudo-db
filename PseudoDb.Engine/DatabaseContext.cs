@@ -1,6 +1,7 @@
 ﻿using PseudoDb.Interfaces.Metadata;
 using PseudoDb.Interfaces.Query;
 using PseudoDb.QueryProcessor;
+using PseudoDb.StorageProviders.StsDb;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,18 @@ namespace PseudoDb.Engine
             get { return schemaQuery; }
         }
 
+        private IQuery query;
+
+        public IQuery Query
+        {
+            get { return query; }
+        }
+
         public DatabaseContext()
         {
             this.metadata = new Metadata();
             this.schemaQuery = new SchemaQuery(metadata);
+            this.query = new Query(new StsDbRepository());
         }
     }
 }
