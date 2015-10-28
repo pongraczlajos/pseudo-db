@@ -19,7 +19,7 @@ namespace PseudoDb.StorageProviders.StsDb
         {
             using (IStorageEngine engine = STSdb.FromFile(databaseName))
             {
-                var table = engine.OpenXTable<Key, Value>(tableName);
+                var table = engine.OpenXTable<string, string>(tableName);
             }
         }
 
@@ -27,7 +27,7 @@ namespace PseudoDb.StorageProviders.StsDb
         {
             using (IStorageEngine engine = STSdb.FromFile(databaseName))
             {
-                var table = engine.OpenXTable<Key, Value>(tableName);
+                var table = engine.OpenXTable<string, string>(tableName);
             }
         }
     }
