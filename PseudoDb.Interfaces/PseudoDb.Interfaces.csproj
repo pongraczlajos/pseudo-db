@@ -51,6 +51,7 @@
     <Compile Include="Metadata\IMetadata.cs" />
     <Compile Include="Metadata\DataType.cs" />
     <Compile Include="Metadata\Index.cs" />
+    <Compile Include="Metadata\Operator.cs" />
     <Compile Include="Metadata\Table.cs" />
     <Compile Include="Metadata\Database.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -124,7 +124,6 @@ namespace PseudoDb.ClientDesktop.Forms
 
             table = new Table();
             table.Name = tableName;
-            table.FileName = database.Name + "." + table.Name;
 
             try
             {

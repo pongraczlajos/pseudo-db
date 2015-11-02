@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PseudoDb.Interfaces.Metadata;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace PseudoDb.Interfaces.Query
 {
     public interface IQuery
     {
-        void Insert(string databaseName, string tableName, string key, string value);
+        void Insert(Database database, Table table, ICollection<string> keyMembers, ICollection<string> values);
     }
 }

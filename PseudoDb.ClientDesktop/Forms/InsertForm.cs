@@ -1,4 +1,5 @@
-﻿using PseudoDb.Interfaces.Metadata;
+﻿using PseudoDb.Engine;
+using PseudoDb.Interfaces.Metadata;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,11 +14,23 @@ namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class InsertForm : Form
     {
+        private DatabaseContext dbContext;
+
+        private Database database;
+
         private Table tableSchema;
+
+        private int count;
+
+        private Label[] labels;
+
+        private TextBox[] textBoxes;
         
-        public InsertForm(Table tableSchema)
+        public InsertForm(DatabaseContext dbContext, Database database, Table tableSchema)
         {
             InitializeComponent();
+            this.dbContext = dbContext;
+            this.database = database;
             this.tableSchema = tableSchema;
             BuildUpTheForm();
             this.DialogResult = DialogResult.Cancel;
@@ -41,9 +54,9 @@ namespace PseudoDb.ClientDesktop.Forms
             fieldLabel.AutoSize = true;
             fieldLabel.BackColor = Color.FromArgb(192, 192, 192); 
 
-            var count = tableSchema.Columns.Count;
-            var labels = new Label[count];
-            var textBoxes = new TextBox[count];
+            count = tableSchema.Columns.Count;
+            labels = new Label[count];
+            textBoxes = new TextBox[count];
 
             for(int i = 0; i < count; ++i)
             {
@@ -79,6 +92,48 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void insertButton_Click(object sender, EventArgs e)
         {
+            var keyMembers = new List<string>();
+            var values = new List<string>();
+
+            foreach (var keyMember in tableSchema.PrimaryKey)
+            {
+                var index = 0;
+
+                foreach (var label in labels)
+                {
+                    if (label.Text.Equals(keyMember))
+                    {
+                        break;
+                    }
+
+                    index++;
+                }
+
+                keyMembers.Add(textBoxes[index].Text);
+            }
+
+            foreach (var column in tableSchema.Columns)
+            {
+                if (!tableSchema.PrimaryKey.Contains(column.Name))
+                {
+                    var index = 0;
+
+                    foreach (var label in labels)
+                    {
+                        if (label.Text.Equals(column.Name))
+                        {
+                            break;
+                        }
+
+                        index++;
+                    }
+
+                    values.Add(textBoxes[index].Text);
+                }
+            }
+
+            dbContext.Query.Insert(database, tableSchema, keyMembers, values);
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

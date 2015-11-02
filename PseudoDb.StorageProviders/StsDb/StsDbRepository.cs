@@ -1,4 +1,5 @@
-﻿using PseudoDb.Interfaces.Storage;
+﻿using log4net;
+using PseudoDb.Interfaces.Storage;
 using STSdb4.Database;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,81 @@ namespace PseudoDb.StorageProviders.StsDb
 {
     public class StsDbRepository : IRepository
     {
-        public void Exists(string databaseName, string tableName, string key)
-        {
+        private ILog log;
 
+        public StsDbRepository()
+        {
+            log4net.Config.XmlConfigurator.Configure();
+            log = LogManager.GetLogger("StsDbRepository");
         }
 
-        public void Get(string databaseName, string tableName, string key)
+        public bool Exists(string databaseFile, string tableName, string key)
         {
-            using (IStorageEngine engine = STSdb.FromFile(databaseName))
+            using (IStorageEngine engine = STSdb.FromFile(databaseFile))
             {
                 var table = engine.OpenXTable<string, string>(tableName);
+
+                return table.Exists(key);
             }
         }
 
-        public void Put(string databaseName, string tableName, string key, string value)
+        public string Get(string databaseFile, string tableName, string key)
         {
-            using (IStorageEngine engine = STSdb.FromFile(databaseName))
+            using (IStorageEngine engine = STSdb.FromFile(databaseFile))
             {
                 var table = engine.OpenXTable<string, string>(tableName);
+
+                if (table.Exists(key))
+                {
+                    return table[key];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public void Put(string databaseFile, string tableName, string key, string value)
+        {
+            using (IStorageEngine engine = STSdb.FromFile(databaseFile))
+            {
+                var table = engine.OpenXTable<string, string>(tableName);
+
+                table[key] = value;
+
+                engine.Commit();
+            }
+
+            Log(databaseFile, tableName);
+        }
+
+        public void Delete(string databaseFile, string tableName, string key)
+        {
+            using (IStorageEngine engine = STSdb.FromFile(databaseFile))
+            {
+                var table = engine.OpenXTable<string, string>(tableName);
+
+                table.Delete(key);
+
+                engine.Commit();
+            }
+
+            Log(databaseFile, tableName);
+        }
+
+        private void Log(string databaseFile, string tableName)
+        {
+            using (IStorageEngine engine = STSdb.FromFile(databaseFile))
+            {
+                var table = engine.OpenXTable<string, string>(tableName);
+
+                log.Info(string.Format("Rows in {0}.{1}:", databaseFile, tableName));
+
+                foreach (var row in table)
+                {
+                    log.Info(string.Format("{0} => {1}", row.Key, row.Value));
+                }
             }
         }
     }

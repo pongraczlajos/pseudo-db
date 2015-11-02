@@ -7,9 +7,6 @@ namespace PseudoDb.Interfaces.Metadata
         [YAXAttributeForClass()]
         public string Name { get; set; }
 
-        [YAXAttributeForClass()]
-        public string FileName { get; set; }
-
         [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "KeyMember")]
         public List<string> PrimaryKey { get; set; }
 
@@ -22,7 +19,6 @@ namespace PseudoDb.Interfaces.Metadata
         public Table()
         {
             Name = string.Empty;
-            FileName = string.Empty;
             PrimaryKey = new List<string>();
             Columns = new List<Column>();
             Indexes = new List<Index>();

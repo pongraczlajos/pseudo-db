@@ -70,10 +70,6 @@ namespace PseudoDb.ClientDesktop.Forms
                         ToolStripMenuItem createDbItem = new ToolStripMenuItem("Create new database");
                         createDbItem.Click += OnCreateNewDbMenuItemClick;
                         rightClickMenu.Items.Add(createDbItem);
-
-                        createDbItem = new ToolStripMenuItem("Insert engine call test");
-                        createDbItem.Click += InsertMenuItemClick;
-                        rightClickMenu.Items.Add(createDbItem);
                         break;
 
                     // Database node
@@ -114,21 +110,18 @@ namespace PseudoDb.ClientDesktop.Forms
             }
         }
 
-        private void InsertMenuItemClick(object sender, EventArgs e)
-        {
-            dbContext.Query.Insert("troloo.stsdb4", "shalala", "", "");
-        }
-
         private void OnInsertIntoTableMenuItemClick(object sender, EventArgs e)
         {
             string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
             string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
 
-            Table tableSchema = dbContext.SchemaQuery.GetDatabase(selectedDbName).GetTable(selectedTableName);
-            var insertForm = new InsertForm(tableSchema);
+            Database database = dbContext.SchemaQuery.GetDatabase(selectedDbName);
+            Table tableSchema = database.GetTable(selectedTableName);
+
+            var insertForm = new InsertForm(dbContext, database, tableSchema);
             insertForm.Show(this);
 
-            switch(insertForm.DialogResult)
+            switch (insertForm.DialogResult)
             {
                 case DialogResult.OK:
                     break;

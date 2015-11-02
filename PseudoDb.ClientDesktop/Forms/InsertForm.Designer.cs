@@ -50,7 +50,7 @@ namespace PseudoDb.ClientDesktop.Forms
             this.ClientSize = new System.Drawing.Size(292, 481);
             this.Controls.Add(this.insertButton);
             this.Name = "InsertForm";
-            this.Text = "InsertForm";
+            this.Text = "Insert";
             this.ResumeLayout(false);
 
         }

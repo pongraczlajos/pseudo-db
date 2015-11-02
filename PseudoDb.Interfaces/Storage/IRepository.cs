@@ -8,10 +8,12 @@ namespace PseudoDb.Interfaces.Storage
 {
     public interface IRepository
     {
-        void Exists(string databaseName, string tableName, string key);
+        bool Exists(string databaseFile, string tableName, string key);
 
-        void Get(string databaseName, string tableName, string key);
+        string Get(string databaseFile, string tableName, string key);
 
-        void Put(string databaseName, string tableName, string key, string value);
+        void Put(string databaseFile, string tableName, string key, string value);
+
+        void Delete(string databaseFile, string tableName, string key);
     }
 }

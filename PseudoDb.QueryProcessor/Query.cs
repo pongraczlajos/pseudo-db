@@ -1,4 +1,5 @@
-﻿using PseudoDb.Interfaces.Query;
+﻿using PseudoDb.Interfaces.Metadata;
+using PseudoDb.Interfaces.Query;
 using PseudoDb.Interfaces.Storage;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,16 @@ namespace PseudoDb.QueryProcessor
             this.repository = repository;
         }
 
-        public void Insert(string databaseName, string tableName, string key, string value)
+        public void Insert(Database database, Table table, ICollection<string> keyMembers, ICollection<string> values)
         {
-            repository.Put(databaseName, tableName, key, value);
+            string stsDbFile = string.Format("{0}.stsdb4", database.Name);
+            string key = string.Join("#", keyMembers);
+            string value = string.Join("#", values);
+
+            // Insert indexes.
+
+            // Insert row.
+            repository.Put(stsDbFile, table.Name, key, value);
         }
     }
 }

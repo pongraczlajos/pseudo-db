@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<Database Name="University">
+  <Tables>
+    <Table Name="Students">
+      <PrimaryKey>
+        <KeyMember>StudID</KeyMember>
+      </PrimaryKey>
+      <Columns>
+        <Column Name="StudID" Type="Integer" Size="1" Nullable="False" />
+        <Column Name="Name" Type="String" Size="50" Nullable="False" />
+        <Column Name="Tel" Type="String" Size="20" Nullable="False" />
+        <Column Name="Email" Type="String" Size="64" Nullable="False" />
+      </Columns>
+      <Indexes />
+    </Table>
+  </Tables>
+  <Associations />
+</Database>

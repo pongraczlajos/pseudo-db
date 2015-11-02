@@ -22,6 +22,7 @@ namespace PseudoDb.Interfaces.Metadata
         {
             Name = string.Empty;
             Unique = false;
+            IndexMembers = new List<string>();
         }
     }
 }

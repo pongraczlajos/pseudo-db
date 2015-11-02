@@ -39,6 +39,11 @@
             this.queryDesignerTabControl = new System.Windows.Forms.TabControl();
             this.SelectTabPage = new System.Windows.Forms.TabPage();
             this.FilterTabPage = new System.Windows.Forms.TabPage();
+            this.queryGroupBox = new System.Windows.Forms.GroupBox();
+            this.queryTabControl = new System.Windows.Forms.TabControl();
+            this.sqlQueryTabPage = new System.Windows.Forms.TabPage();
+            this.sqlQueryTextBox = new System.Windows.Forms.TextBox();
+            this.resultsTabPage = new System.Windows.Forms.TabPage();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -50,11 +55,12 @@
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.queryGroupBox = new System.Windows.Forms.GroupBox();
-            this.queryTabControl = new System.Windows.Forms.TabControl();
-            this.sqlQueryTabPage = new System.Windows.Forms.TabPage();
-            this.resultsTabPage = new System.Windows.Forms.TabPage();
-            this.sqlQueryTextBox = new System.Windows.Forms.TextBox();
+            this.messagesTabPage = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.TableColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Column = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Operator = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.messagesTextBox = new System.Windows.Forms.TextBox();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -70,10 +76,13 @@
             this.queryDesignerSplitContainer.Panel2.SuspendLayout();
             this.queryDesignerSplitContainer.SuspendLayout();
             this.queryDesignerTabControl.SuspendLayout();
-            this.toolStrip.SuspendLayout();
+            this.FilterTabPage.SuspendLayout();
             this.queryGroupBox.SuspendLayout();
             this.queryTabControl.SuspendLayout();
             this.sqlQueryTabPage.SuspendLayout();
+            this.toolStrip.SuspendLayout();
+            this.messagesTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer
@@ -195,13 +204,69 @@
             // 
             // FilterTabPage
             // 
+            this.FilterTabPage.Controls.Add(this.dataGridView1);
             this.FilterTabPage.Location = new System.Drawing.Point(4, 22);
             this.FilterTabPage.Name = "FilterTabPage";
             this.FilterTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.FilterTabPage.Size = new System.Drawing.Size(642, 289);
+            this.FilterTabPage.Size = new System.Drawing.Size(642, 254);
             this.FilterTabPage.TabIndex = 1;
             this.FilterTabPage.Text = "Filter";
             this.FilterTabPage.UseVisualStyleBackColor = true;
+            // 
+            // queryGroupBox
+            // 
+            this.queryGroupBox.Controls.Add(this.queryTabControl);
+            this.queryGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.queryGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.queryGroupBox.Name = "queryGroupBox";
+            this.queryGroupBox.Size = new System.Drawing.Size(650, 206);
+            this.queryGroupBox.TabIndex = 0;
+            this.queryGroupBox.TabStop = false;
+            this.queryGroupBox.Text = "Query";
+            // 
+            // queryTabControl
+            // 
+            this.queryTabControl.Controls.Add(this.sqlQueryTabPage);
+            this.queryTabControl.Controls.Add(this.resultsTabPage);
+            this.queryTabControl.Controls.Add(this.messagesTabPage);
+            this.queryTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.queryTabControl.Location = new System.Drawing.Point(3, 16);
+            this.queryTabControl.Name = "queryTabControl";
+            this.queryTabControl.SelectedIndex = 0;
+            this.queryTabControl.Size = new System.Drawing.Size(644, 187);
+            this.queryTabControl.TabIndex = 0;
+            // 
+            // sqlQueryTabPage
+            // 
+            this.sqlQueryTabPage.Controls.Add(this.sqlQueryTextBox);
+            this.sqlQueryTabPage.Location = new System.Drawing.Point(4, 22);
+            this.sqlQueryTabPage.Name = "sqlQueryTabPage";
+            this.sqlQueryTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.sqlQueryTabPage.Size = new System.Drawing.Size(636, 161);
+            this.sqlQueryTabPage.TabIndex = 0;
+            this.sqlQueryTabPage.Text = "SQL Query";
+            this.sqlQueryTabPage.UseVisualStyleBackColor = true;
+            // 
+            // sqlQueryTextBox
+            // 
+            this.sqlQueryTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.sqlQueryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sqlQueryTextBox.Location = new System.Drawing.Point(3, 3);
+            this.sqlQueryTextBox.Multiline = true;
+            this.sqlQueryTextBox.Name = "sqlQueryTextBox";
+            this.sqlQueryTextBox.ReadOnly = true;
+            this.sqlQueryTextBox.Size = new System.Drawing.Size(630, 155);
+            this.sqlQueryTextBox.TabIndex = 0;
+            // 
+            // resultsTabPage
+            // 
+            this.resultsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.resultsTabPage.Name = "resultsTabPage";
+            this.resultsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.resultsTabPage.Size = new System.Drawing.Size(636, 161);
+            this.resultsTabPage.TabIndex = 1;
+            this.resultsTabPage.Text = "Results";
+            this.resultsTabPage.UseVisualStyleBackColor = true;
             // 
             // toolStrip
             // 
@@ -304,59 +369,54 @@
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "He&lp";
             // 
-            // queryGroupBox
+            // messagesTabPage
             // 
-            this.queryGroupBox.Controls.Add(this.queryTabControl);
-            this.queryGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.queryGroupBox.Location = new System.Drawing.Point(0, 0);
-            this.queryGroupBox.Name = "queryGroupBox";
-            this.queryGroupBox.Size = new System.Drawing.Size(650, 206);
-            this.queryGroupBox.TabIndex = 0;
-            this.queryGroupBox.TabStop = false;
-            this.queryGroupBox.Text = "Query";
+            this.messagesTabPage.Controls.Add(this.messagesTextBox);
+            this.messagesTabPage.Location = new System.Drawing.Point(4, 22);
+            this.messagesTabPage.Name = "messagesTabPage";
+            this.messagesTabPage.Size = new System.Drawing.Size(636, 161);
+            this.messagesTabPage.TabIndex = 2;
+            this.messagesTabPage.Text = "Messages";
+            this.messagesTabPage.UseVisualStyleBackColor = true;
             // 
-            // queryTabControl
+            // dataGridView1
             // 
-            this.queryTabControl.Controls.Add(this.sqlQueryTabPage);
-            this.queryTabControl.Controls.Add(this.resultsTabPage);
-            this.queryTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.queryTabControl.Location = new System.Drawing.Point(3, 16);
-            this.queryTabControl.Name = "queryTabControl";
-            this.queryTabControl.SelectedIndex = 0;
-            this.queryTabControl.Size = new System.Drawing.Size(644, 187);
-            this.queryTabControl.TabIndex = 0;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TableColumn,
+            this.Column,
+            this.Operator});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(636, 248);
+            this.dataGridView1.TabIndex = 0;
             // 
-            // sqlQueryTabPage
+            // TableColumn
             // 
-            this.sqlQueryTabPage.Controls.Add(this.sqlQueryTextBox);
-            this.sqlQueryTabPage.Location = new System.Drawing.Point(4, 22);
-            this.sqlQueryTabPage.Name = "sqlQueryTabPage";
-            this.sqlQueryTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.sqlQueryTabPage.Size = new System.Drawing.Size(636, 161);
-            this.sqlQueryTabPage.TabIndex = 0;
-            this.sqlQueryTabPage.Text = "SQL Query";
-            this.sqlQueryTabPage.UseVisualStyleBackColor = true;
+            this.TableColumn.HeaderText = "Table";
+            this.TableColumn.Name = "TableColumn";
             // 
-            // resultsTabPage
+            // Column
             // 
-            this.resultsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.resultsTabPage.Name = "resultsTabPage";
-            this.resultsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.resultsTabPage.Size = new System.Drawing.Size(636, 141);
-            this.resultsTabPage.TabIndex = 1;
-            this.resultsTabPage.Text = "Results";
-            this.resultsTabPage.UseVisualStyleBackColor = true;
+            this.Column.HeaderText = "Column";
+            this.Column.Name = "Column";
             // 
-            // sqlQueryTextBox
+            // Operator
             // 
-            this.sqlQueryTextBox.BackColor = System.Drawing.SystemColors.Window;
-            this.sqlQueryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sqlQueryTextBox.Location = new System.Drawing.Point(3, 3);
-            this.sqlQueryTextBox.Multiline = true;
-            this.sqlQueryTextBox.Name = "sqlQueryTextBox";
-            this.sqlQueryTextBox.ReadOnly = true;
-            this.sqlQueryTextBox.Size = new System.Drawing.Size(630, 155);
-            this.sqlQueryTextBox.TabIndex = 0;
+            this.Operator.HeaderText = "Operator";
+            this.Operator.Name = "Operator";
+            // 
+            // messagesTextBox
+            // 
+            this.messagesTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.messagesTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.messagesTextBox.Location = new System.Drawing.Point(0, 0);
+            this.messagesTextBox.Multiline = true;
+            this.messagesTextBox.Name = "messagesTextBox";
+            this.messagesTextBox.ReadOnly = true;
+            this.messagesTextBox.Size = new System.Drawing.Size(636, 161);
+            this.messagesTextBox.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -386,12 +446,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.queryDesignerSplitContainer)).EndInit();
             this.queryDesignerSplitContainer.ResumeLayout(false);
             this.queryDesignerTabControl.ResumeLayout(false);
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
+            this.FilterTabPage.ResumeLayout(false);
             this.queryGroupBox.ResumeLayout(false);
             this.queryTabControl.ResumeLayout(false);
             this.sqlQueryTabPage.ResumeLayout(false);
             this.sqlQueryTabPage.PerformLayout();
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
+            this.messagesTabPage.ResumeLayout(false);
+            this.messagesTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -424,6 +488,12 @@
         private System.Windows.Forms.TabPage sqlQueryTabPage;
         private System.Windows.Forms.TabPage resultsTabPage;
         private System.Windows.Forms.TextBox sqlQueryTextBox;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewComboBoxColumn TableColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Column;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Operator;
+        private System.Windows.Forms.TabPage messagesTabPage;
+        private System.Windows.Forms.TextBox messagesTextBox;
     }
 }
 
