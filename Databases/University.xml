@@ -24,6 +24,11 @@
             <IndexMember>Name</IndexMember>
           </IndexMembers>
         </Index>
+        <Index Name="Students_Index_3" Unique="False">
+          <IndexMembers>
+            <IndexMember>Tel</IndexMember>
+          </IndexMembers>
+        </Index>
       </Indexes>
     </Table>
   </Tables>

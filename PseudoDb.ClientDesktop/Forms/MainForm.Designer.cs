@@ -39,28 +39,24 @@
             this.queryDesignerTabControl = new System.Windows.Forms.TabControl();
             this.SelectTabPage = new System.Windows.Forms.TabPage();
             this.FilterTabPage = new System.Windows.Forms.TabPage();
+            this.filterDataGridView = new System.Windows.Forms.DataGridView();
+            this.Table = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Column = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Operator = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.queryGroupBox = new System.Windows.Forms.GroupBox();
             this.queryTabControl = new System.Windows.Forms.TabControl();
             this.sqlQueryTabPage = new System.Windows.Forms.TabPage();
             this.sqlQueryTextBox = new System.Windows.Forms.TextBox();
             this.resultsTabPage = new System.Windows.Forms.TabPage();
+            this.resultDataGridView = new System.Windows.Forms.DataGridView();
+            this.messagesTabPage = new System.Windows.Forms.TabPage();
+            this.messagesTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.executeToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.cancelToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.messagesTabPage = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.TableColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Column = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Operator = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.messagesTextBox = new System.Windows.Forms.TextBox();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -77,12 +73,14 @@
             this.queryDesignerSplitContainer.SuspendLayout();
             this.queryDesignerTabControl.SuspendLayout();
             this.FilterTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.filterDataGridView)).BeginInit();
             this.queryGroupBox.SuspendLayout();
             this.queryTabControl.SuspendLayout();
             this.sqlQueryTabPage.SuspendLayout();
-            this.toolStrip.SuspendLayout();
+            this.resultsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.resultDataGridView)).BeginInit();
             this.messagesTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer
@@ -204,7 +202,7 @@
             // 
             // FilterTabPage
             // 
-            this.FilterTabPage.Controls.Add(this.dataGridView1);
+            this.FilterTabPage.Controls.Add(this.filterDataGridView);
             this.FilterTabPage.Location = new System.Drawing.Point(4, 22);
             this.FilterTabPage.Name = "FilterTabPage";
             this.FilterTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -212,6 +210,47 @@
             this.FilterTabPage.TabIndex = 1;
             this.FilterTabPage.Text = "Filter";
             this.FilterTabPage.UseVisualStyleBackColor = true;
+            // 
+            // filterDataGridView
+            // 
+            this.filterDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.filterDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Table,
+            this.Column,
+            this.Operator,
+            this.Value});
+            this.filterDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.filterDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.filterDataGridView.Name = "filterDataGridView";
+            this.filterDataGridView.Size = new System.Drawing.Size(636, 248);
+            this.filterDataGridView.TabIndex = 0;
+            // 
+            // Table
+            // 
+            this.Table.HeaderText = "Table";
+            this.Table.Name = "Table";
+            // 
+            // Column
+            // 
+            this.Column.HeaderText = "Column";
+            this.Column.Name = "Column";
+            // 
+            // Operator
+            // 
+            this.Operator.HeaderText = "Operator";
+            this.Operator.Items.AddRange(new object[] {
+            "=",
+            "<>",
+            "<",
+            ">",
+            "<=",
+            ">="});
+            this.Operator.Name = "Operator";
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Value";
+            this.Value.Name = "Value";
             // 
             // queryGroupBox
             // 
@@ -260,6 +299,7 @@
             // 
             // resultsTabPage
             // 
+            this.resultsTabPage.Controls.Add(this.resultDataGridView);
             this.resultsTabPage.Location = new System.Drawing.Point(4, 22);
             this.resultsTabPage.Name = "resultsTabPage";
             this.resultsTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -268,92 +308,75 @@
             this.resultsTabPage.Text = "Results";
             this.resultsTabPage.UseVisualStyleBackColor = true;
             // 
+            // resultDataGridView
+            // 
+            this.resultDataGridView.AllowUserToAddRows = false;
+            this.resultDataGridView.AllowUserToDeleteRows = false;
+            this.resultDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.resultDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.resultDataGridView.Name = "resultDataGridView";
+            this.resultDataGridView.ReadOnly = true;
+            this.resultDataGridView.Size = new System.Drawing.Size(630, 155);
+            this.resultDataGridView.TabIndex = 0;
+            // 
+            // messagesTabPage
+            // 
+            this.messagesTabPage.Controls.Add(this.messagesTextBox);
+            this.messagesTabPage.Location = new System.Drawing.Point(4, 22);
+            this.messagesTabPage.Name = "messagesTabPage";
+            this.messagesTabPage.Size = new System.Drawing.Size(636, 161);
+            this.messagesTabPage.TabIndex = 2;
+            this.messagesTabPage.Text = "Messages";
+            this.messagesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // messagesTextBox
+            // 
+            this.messagesTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.messagesTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.messagesTextBox.Location = new System.Drawing.Point(0, 0);
+            this.messagesTextBox.Multiline = true;
+            this.messagesTextBox.Name = "messagesTextBox";
+            this.messagesTextBox.ReadOnly = true;
+            this.messagesTextBox.Size = new System.Drawing.Size(636, 161);
+            this.messagesTextBox.TabIndex = 0;
+            // 
             // toolStrip
             // 
             this.toolStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripButton,
-            this.openToolStripButton,
-            this.saveToolStripButton,
-            this.printToolStripButton,
-            this.toolStripSeparator,
-            this.cutToolStripButton,
-            this.copyToolStripButton,
-            this.pasteToolStripButton,
+            this.executeToolStripButton,
+            this.cancelToolStripButton,
             this.toolStripSeparator1,
             this.helpToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(3, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(208, 25);
+            this.toolStrip.Size = new System.Drawing.Size(118, 25);
             this.toolStrip.TabIndex = 0;
             // 
-            // newToolStripButton
+            // executeToolStripButton
             // 
-            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
-            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripButton.Name = "newToolStripButton";
-            this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.newToolStripButton.Text = "&New";
+            this.executeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.executeToolStripButton.Enabled = false;
+            this.executeToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("executeToolStripButton.Image")));
+            this.executeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.executeToolStripButton.Name = "executeToolStripButton";
+            this.executeToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.executeToolStripButton.Text = "Execute";
+            this.executeToolStripButton.ToolTipText = "Execute current command.";
+            this.executeToolStripButton.Click += new System.EventHandler(this.executeToolStripButton_Click);
             // 
-            // openToolStripButton
+            // cancelToolStripButton
             // 
-            this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
-            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripButton.Name = "openToolStripButton";
-            this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.openToolStripButton.Text = "&Open";
-            // 
-            // saveToolStripButton
-            // 
-            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
-            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripButton.Name = "saveToolStripButton";
-            this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.saveToolStripButton.Text = "&Save";
-            // 
-            // printToolStripButton
-            // 
-            this.printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.printToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton.Image")));
-            this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.printToolStripButton.Name = "printToolStripButton";
-            this.printToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.printToolStripButton.Text = "&Print";
-            // 
-            // toolStripSeparator
-            // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
-            // 
-            // cutToolStripButton
-            // 
-            this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
-            this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cutToolStripButton.Name = "cutToolStripButton";
-            this.cutToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.cutToolStripButton.Text = "C&ut";
-            // 
-            // copyToolStripButton
-            // 
-            this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.copyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButton.Image")));
-            this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copyToolStripButton.Name = "copyToolStripButton";
-            this.copyToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.copyToolStripButton.Text = "&Copy";
-            // 
-            // pasteToolStripButton
-            // 
-            this.pasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
-            this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pasteToolStripButton.Name = "pasteToolStripButton";
-            this.pasteToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.pasteToolStripButton.Text = "&Paste";
+            this.cancelToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.cancelToolStripButton.Enabled = false;
+            this.cancelToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cancelToolStripButton.Image")));
+            this.cancelToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cancelToolStripButton.Name = "cancelToolStripButton";
+            this.cancelToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.cancelToolStripButton.Text = "Cancel";
+            this.cancelToolStripButton.ToolTipText = "Cancel the current execution of a command.";
+            this.cancelToolStripButton.Click += new System.EventHandler(this.cancelToolStripButton_Click);
             // 
             // toolStripSeparator1
             // 
@@ -368,55 +391,6 @@
             this.helpToolStripButton.Name = "helpToolStripButton";
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "He&lp";
-            // 
-            // messagesTabPage
-            // 
-            this.messagesTabPage.Controls.Add(this.messagesTextBox);
-            this.messagesTabPage.Location = new System.Drawing.Point(4, 22);
-            this.messagesTabPage.Name = "messagesTabPage";
-            this.messagesTabPage.Size = new System.Drawing.Size(636, 161);
-            this.messagesTabPage.TabIndex = 2;
-            this.messagesTabPage.Text = "Messages";
-            this.messagesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.TableColumn,
-            this.Column,
-            this.Operator});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(636, 248);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // TableColumn
-            // 
-            this.TableColumn.HeaderText = "Table";
-            this.TableColumn.Name = "TableColumn";
-            // 
-            // Column
-            // 
-            this.Column.HeaderText = "Column";
-            this.Column.Name = "Column";
-            // 
-            // Operator
-            // 
-            this.Operator.HeaderText = "Operator";
-            this.Operator.Name = "Operator";
-            // 
-            // messagesTextBox
-            // 
-            this.messagesTextBox.BackColor = System.Drawing.SystemColors.Window;
-            this.messagesTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.messagesTextBox.Location = new System.Drawing.Point(0, 0);
-            this.messagesTextBox.Multiline = true;
-            this.messagesTextBox.Name = "messagesTextBox";
-            this.messagesTextBox.ReadOnly = true;
-            this.messagesTextBox.Size = new System.Drawing.Size(636, 161);
-            this.messagesTextBox.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -447,15 +421,17 @@
             this.queryDesignerSplitContainer.ResumeLayout(false);
             this.queryDesignerTabControl.ResumeLayout(false);
             this.FilterTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.filterDataGridView)).EndInit();
             this.queryGroupBox.ResumeLayout(false);
             this.queryTabControl.ResumeLayout(false);
             this.sqlQueryTabPage.ResumeLayout(false);
             this.sqlQueryTabPage.PerformLayout();
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
+            this.resultsTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.resultDataGridView)).EndInit();
             this.messagesTabPage.ResumeLayout(false);
             this.messagesTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -468,32 +444,28 @@
         private System.Windows.Forms.TreeView DatabaseTreeView;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripButton newToolStripButton;
-        private System.Windows.Forms.ToolStripButton openToolStripButton;
-        private System.Windows.Forms.ToolStripButton saveToolStripButton;
-        private System.Windows.Forms.ToolStripButton printToolStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripButton cutToolStripButton;
-        private System.Windows.Forms.ToolStripButton copyToolStripButton;
-        private System.Windows.Forms.ToolStripButton pasteToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
         private System.Windows.Forms.GroupBox queryDesignerGroupBox;
         private System.Windows.Forms.SplitContainer queryDesignerSplitContainer;
-        private System.Windows.Forms.TabControl queryDesignerTabControl;
-        private System.Windows.Forms.TabPage SelectTabPage;
-        private System.Windows.Forms.TabPage FilterTabPage;
         private System.Windows.Forms.GroupBox queryGroupBox;
         private System.Windows.Forms.TabControl queryTabControl;
         private System.Windows.Forms.TabPage sqlQueryTabPage;
         private System.Windows.Forms.TabPage resultsTabPage;
         private System.Windows.Forms.TextBox sqlQueryTextBox;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewComboBoxColumn TableColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Column;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Operator;
         private System.Windows.Forms.TabPage messagesTabPage;
         private System.Windows.Forms.TextBox messagesTextBox;
+        private System.Windows.Forms.TabControl queryDesignerTabControl;
+        private System.Windows.Forms.TabPage SelectTabPage;
+        private System.Windows.Forms.TabPage FilterTabPage;
+        private System.Windows.Forms.DataGridView filterDataGridView;
+        private System.Windows.Forms.DataGridView resultDataGridView;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Table;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Column;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Operator;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private System.Windows.Forms.ToolStripButton executeToolStripButton;
+        private System.Windows.Forms.ToolStripButton cancelToolStripButton;
     }
 }
 

@@ -3,6 +3,7 @@ using PseudoDb.Engine;
 using PseudoDb.Interfaces.Metadata;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PseudoDb.ClientDesktop.Forms
@@ -20,6 +21,9 @@ namespace PseudoDb.ClientDesktop.Forms
             dbContext = new DatabaseContext();
 
             BuildDatabaseTree();
+
+            filterDataGridView.CellValueChanged += new DataGridViewCellEventHandler(this.filterDataGridView_CellValueChanged);
+            queryDesignerTabControl.Visible = false;
         }
         
         private void MainForm_Load(object sender, EventArgs e)
@@ -74,12 +78,12 @@ namespace PseudoDb.ClientDesktop.Forms
 
                     // Database node
                     case 1:
-                        ToolStripMenuItem actionWithDbItem = new ToolStripMenuItem("Create new table");
-                        actionWithDbItem.Click += OnCreateNewTableMenuItemClick;
+                        ToolStripMenuItem actionWithDbItem = new ToolStripMenuItem("Delete database");
+                        actionWithDbItem.Click += OnDeleteDbMenuItemClick;
                         rightClickMenu.Items.Add(actionWithDbItem);
 
-                        actionWithDbItem = new ToolStripMenuItem("Delete");
-                        actionWithDbItem.Click += OnDeleteDbMenuItemClick;
+                        actionWithDbItem = new ToolStripMenuItem("Create new table");
+                        actionWithDbItem.Click += OnCreateNewTableMenuItemClick;
                         rightClickMenu.Items.Add(actionWithDbItem);
                         break;
 
@@ -89,16 +93,24 @@ namespace PseudoDb.ClientDesktop.Forms
                         actionWithTableItem.Click += OnDesignTableMenuItemClick;
                         rightClickMenu.Items.Add(actionWithTableItem);
 
-                        actionWithTableItem = new ToolStripMenuItem("Insert");
-                        actionWithTableItem.Click += OnInsertIntoTableMenuItemClick; ;
-                        rightClickMenu.Items.Add(actionWithTableItem);
-
-                        actionWithTableItem = new ToolStripMenuItem("Delete");
+                        actionWithTableItem = new ToolStripMenuItem("Delete Table");
                         actionWithTableItem.Click += OnDeleteTableMenuItemClick;
                         rightClickMenu.Items.Add(actionWithTableItem);
 
                         actionWithTableItem = new ToolStripMenuItem("Create index");
                         actionWithTableItem.Click += OnCreateIndexMenuItemClick;
+                        rightClickMenu.Items.Add(actionWithTableItem);
+
+                        actionWithTableItem = new ToolStripMenuItem("Insert");
+                        actionWithTableItem.Click += OnInsertIntoTableMenuItemClick; ;
+                        rightClickMenu.Items.Add(actionWithTableItem);
+
+                        actionWithTableItem = new ToolStripMenuItem("Select");
+                        actionWithTableItem.Click += OnSelectFromTableMenuItemClick; ;
+                        rightClickMenu.Items.Add(actionWithTableItem);
+
+                        actionWithTableItem = new ToolStripMenuItem("Delete");
+                        actionWithTableItem.Click += OnDeleteFromTableMenuItemClick; ;
                         rightClickMenu.Items.Add(actionWithTableItem);
                         break;
                 }
@@ -107,24 +119,6 @@ namespace PseudoDb.ClientDesktop.Forms
                 {
                     rightClickMenu.Show(this, e.X, e.Y + 30);
                 }
-            }
-        }
-
-        private void OnInsertIntoTableMenuItemClick(object sender, EventArgs e)
-        {
-            string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
-            string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
-
-            Database database = dbContext.SchemaQuery.GetDatabase(selectedDbName);
-            Table tableSchema = database.GetTable(selectedTableName);
-
-            var insertForm = new InsertForm(dbContext, database, tableSchema);
-            insertForm.Show(this);
-
-            switch (insertForm.DialogResult)
-            {
-                case DialogResult.OK:
-                    break;
             }
         }
 
@@ -238,6 +232,87 @@ namespace PseudoDb.ClientDesktop.Forms
                 case DialogResult.OK:
                     break;
             }
+        }
+
+        private void OnInsertIntoTableMenuItemClick(object sender, EventArgs e)
+        {
+            string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
+            string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+
+            Database database = dbContext.SchemaQuery.GetDatabase(selectedDbName);
+            Table tableSchema = database.GetTable(selectedTableName);
+
+            var insertForm = new InsertForm(dbContext, database, tableSchema);
+            insertForm.Show(this);
+
+            switch (insertForm.DialogResult)
+            {
+                case DialogResult.OK:
+                    break;
+            }
+        }
+
+        private void OnSelectFromTableMenuItemClick(object sender, EventArgs e)
+        {
+            // Populate table combo box from the data grid view with the possible tables from the joins.
+        }
+
+        private void OnDeleteFromTableMenuItemClick(object sender, EventArgs e)
+        {
+            string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+
+            // Populate table combo box from the data grid view with the possible tables.
+            var tableColumnCombo = (DataGridViewComboBoxColumn) filterDataGridView.Columns["Table"];
+            tableColumnCombo.Items.Add(selectedTableName);
+
+            executeToolStripButton.Enabled = true;
+            cancelToolStripButton.Enabled = true;
+            queryDesignerTabControl.Visible = true;
+        }
+
+        private void filterDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
+            string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+
+            Database database = dbContext.SchemaQuery.GetDatabase(selectedDbName);
+            Table table = database.GetTable(selectedTableName);
+
+            if (e.ColumnIndex == 0)
+            {
+                var tableColumnCell = (DataGridViewComboBoxCell) filterDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                var tableName = tableColumnCell.Value.ToString();
+
+                var columnColumnCell = (DataGridViewComboBoxCell) filterDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex + 1];
+                columnColumnCell.Items.Clear();
+                columnColumnCell.Items.AddRange(table.Columns.Select(c => c.Name).ToArray());
+            }
+        }
+
+        private void executeToolStripButton_Click(object sender, EventArgs e)
+        {
+            ClearFilterDataGridView();
+
+            executeToolStripButton.Enabled = false;
+            cancelToolStripButton.Enabled = false;
+            queryDesignerTabControl.Visible = false;
+        }
+
+        private void cancelToolStripButton_Click(object sender, EventArgs e)
+        {
+            ClearFilterDataGridView();
+
+            executeToolStripButton.Enabled = false;
+            cancelToolStripButton.Enabled = false;
+            queryDesignerTabControl.Visible = false;
+        }
+
+        private void ClearFilterDataGridView()
+        {
+            filterDataGridView.Rows.Clear();
+
+            var tableColumnCombo = (DataGridViewComboBoxColumn)filterDataGridView.Columns["Table"];
+            tableColumnCombo.Items.Clear();
         }
     }
 }
