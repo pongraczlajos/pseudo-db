@@ -11,7 +11,20 @@
         <Column Name="Tel" Type="String" Size="20" Nullable="False" />
         <Column Name="Email" Type="String" Size="64" Nullable="False" />
       </Columns>
-      <Indexes />
+      <Indexes>
+        <Index Name="Students_Index_1" Unique="True">
+          <IndexMembers>
+            <IndexMember>StudID</IndexMember>
+          </IndexMembers>
+        </Index>
+        <Index Name="Students_Index_2" Unique="False">
+          <IndexMembers>
+            <IndexMember>Tel</IndexMember>
+            <IndexMember>Email</IndexMember>
+            <IndexMember>Name</IndexMember>
+          </IndexMembers>
+        </Index>
+      </Indexes>
     </Table>
   </Tables>
   <Associations />

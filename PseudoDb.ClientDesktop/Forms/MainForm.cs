@@ -224,7 +224,20 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void OnCreateIndexMenuItemClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
+            string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+
+            Database database = dbContext.SchemaQuery.GetDatabase(selectedDbName);
+            Table tableSchema = database.GetTable(selectedTableName);
+
+            var newIndexForm = new NewIndexForm(dbContext, database, tableSchema);
+            newIndexForm.Show(this);
+
+            switch (newIndexForm.DialogResult)
+            {
+                case DialogResult.OK:
+                    break;
+            }
         }
     }
 }

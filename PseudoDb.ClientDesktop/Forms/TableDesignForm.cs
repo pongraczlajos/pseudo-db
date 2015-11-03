@@ -41,7 +41,7 @@ namespace PseudoDb.ClientDesktop.Forms
             {
                 TableNameTextBox.Text = table.Name;
                 TableNameTextBox.Enabled = false;
-                TableDataGridView.Rows.Add(table.Columns.Count );
+                TableDataGridView.Rows.Add(table.Columns.Count);
 
                 int index = 0;
                 foreach (var column in table.Columns)
