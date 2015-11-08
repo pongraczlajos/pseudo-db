@@ -88,5 +88,16 @@ namespace PseudoDb.StorageProviders.StsDb
                 }
             }
         }
+
+        public List<KeyValuePair<string, string>> GetAll(string databaseFile, string tableName)
+        {
+            List<KeyValuePair<string, string>> results = new List<KeyValuePair<string, string>>();
+            using (IStorageEngine engine = STSdb.FromFile(databaseFile))
+            {
+                var table = engine.OpenXTable<string, string>(tableName);
+                results.AddRange(table.AsEnumerable());
+            }
+            return results;
+        }
     }
 }

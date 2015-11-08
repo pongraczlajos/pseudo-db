@@ -3,6 +3,7 @@ using PseudoDb.Engine;
 using PseudoDb.Interfaces.Metadata;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -89,7 +90,26 @@ namespace PseudoDb.ClientDesktop.Forms
 
                     // Table node
                     case 2:
-                        ToolStripMenuItem actionWithTableItem = new ToolStripMenuItem("Design table");
+                        ToolStripMenuItem actionWithTableItem;
+                        actionWithTableItem = new ToolStripMenuItem("Select");
+                        actionWithTableItem.Click += OnSelectFromTableMenuItemClick; ;
+                        rightClickMenu.Items.Add(actionWithTableItem);
+
+                        actionWithTableItem = new ToolStripMenuItem("Select all");
+                        actionWithTableItem.Click += OnSelectAllFromTableMenuItemClick; ;
+                        rightClickMenu.Items.Add(actionWithTableItem);
+
+                        actionWithTableItem = new ToolStripMenuItem("Insert");
+                        actionWithTableItem.Click += OnInsertIntoTableMenuItemClick; ;
+                        rightClickMenu.Items.Add(actionWithTableItem);
+
+                        actionWithTableItem = new ToolStripMenuItem("Delete");
+                        actionWithTableItem.Click += OnDeleteFromTableMenuItemClick; ;
+                        rightClickMenu.Items.Add(actionWithTableItem);
+
+                        rightClickMenu.Items.Add(new ToolStripSeparator());
+
+                        actionWithTableItem = new ToolStripMenuItem("Design table");
                         actionWithTableItem.Click += OnDesignTableMenuItemClick;
                         rightClickMenu.Items.Add(actionWithTableItem);
 
@@ -100,18 +120,6 @@ namespace PseudoDb.ClientDesktop.Forms
                         actionWithTableItem = new ToolStripMenuItem("Create index");
                         actionWithTableItem.Click += OnCreateIndexMenuItemClick;
                         rightClickMenu.Items.Add(actionWithTableItem);
-
-                        actionWithTableItem = new ToolStripMenuItem("Insert");
-                        actionWithTableItem.Click += OnInsertIntoTableMenuItemClick; ;
-                        rightClickMenu.Items.Add(actionWithTableItem);
-
-                        actionWithTableItem = new ToolStripMenuItem("Select");
-                        actionWithTableItem.Click += OnSelectFromTableMenuItemClick; ;
-                        rightClickMenu.Items.Add(actionWithTableItem);
-
-                        actionWithTableItem = new ToolStripMenuItem("Delete");
-                        actionWithTableItem.Click += OnDeleteFromTableMenuItemClick; ;
-                        rightClickMenu.Items.Add(actionWithTableItem);
                         break;
                 }
 
@@ -120,6 +128,19 @@ namespace PseudoDb.ClientDesktop.Forms
                     rightClickMenu.Show(this, e.X, e.Y + 30);
                 }
             }
+        }
+
+        private void OnSelectAllFromTableMenuItemClick(object sender, EventArgs e)
+        {
+            string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
+            string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+
+            Database database = dbContext.SchemaQuery.GetDatabase(selectedDbName);
+            Table tableSchema = database.GetTable(selectedTableName);
+            DataTable resultTable = dbContext.Query.GetAll(database, tableSchema);
+
+            resultDataGridView.DataSource = resultTable;
+            resultDataGridView.Refresh();
         }
 
         private void OnCreateNewDbMenuItemClick(object sender, EventArgs e)

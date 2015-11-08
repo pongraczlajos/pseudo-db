@@ -93,11 +93,11 @@
             // toolStripContainer.ContentPanel
             // 
             this.toolStripContainer.ContentPanel.Controls.Add(this.splitContainer);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(984, 515);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(984, 518);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer.Name = "toolStripContainer";
-            this.toolStripContainer.Size = new System.Drawing.Size(984, 562);
+            this.toolStripContainer.Size = new System.Drawing.Size(984, 565);
             this.toolStripContainer.TabIndex = 0;
             // 
             // toolStripContainer.TopToolStripPanel
@@ -127,7 +127,7 @@
             // 
             this.splitContainer.Panel2.Controls.Add(this.queryDesignerGroupBox);
             this.splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.splitContainer.Size = new System.Drawing.Size(984, 515);
+            this.splitContainer.Size = new System.Drawing.Size(984, 518);
             this.splitContainer.SplitterDistance = 318;
             this.splitContainer.TabIndex = 0;
             // 
@@ -137,7 +137,7 @@
             this.objectExplorerGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectExplorerGroupBox.Location = new System.Drawing.Point(3, 3);
             this.objectExplorerGroupBox.Name = "objectExplorerGroupBox";
-            this.objectExplorerGroupBox.Size = new System.Drawing.Size(312, 509);
+            this.objectExplorerGroupBox.Size = new System.Drawing.Size(312, 512);
             this.objectExplorerGroupBox.TabIndex = 0;
             this.objectExplorerGroupBox.TabStop = false;
             this.objectExplorerGroupBox.Text = "Object Explorer";
@@ -147,7 +147,7 @@
             this.DatabaseTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DatabaseTreeView.Location = new System.Drawing.Point(3, 16);
             this.DatabaseTreeView.Name = "DatabaseTreeView";
-            this.DatabaseTreeView.Size = new System.Drawing.Size(306, 490);
+            this.DatabaseTreeView.Size = new System.Drawing.Size(306, 493);
             this.DatabaseTreeView.TabIndex = 2;
             // 
             // queryDesignerGroupBox
@@ -156,7 +156,7 @@
             this.queryDesignerGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.queryDesignerGroupBox.Location = new System.Drawing.Point(3, 3);
             this.queryDesignerGroupBox.Name = "queryDesignerGroupBox";
-            this.queryDesignerGroupBox.Size = new System.Drawing.Size(656, 509);
+            this.queryDesignerGroupBox.Size = new System.Drawing.Size(656, 512);
             this.queryDesignerGroupBox.TabIndex = 0;
             this.queryDesignerGroupBox.TabStop = false;
             this.queryDesignerGroupBox.Text = "Visual Query Designer";
@@ -175,8 +175,8 @@
             // queryDesignerSplitContainer.Panel2
             // 
             this.queryDesignerSplitContainer.Panel2.Controls.Add(this.queryGroupBox);
-            this.queryDesignerSplitContainer.Size = new System.Drawing.Size(650, 490);
-            this.queryDesignerSplitContainer.SplitterDistance = 280;
+            this.queryDesignerSplitContainer.Size = new System.Drawing.Size(650, 493);
+            this.queryDesignerSplitContainer.SplitterDistance = 281;
             this.queryDesignerSplitContainer.TabIndex = 0;
             // 
             // queryDesignerTabControl
@@ -187,7 +187,7 @@
             this.queryDesignerTabControl.Location = new System.Drawing.Point(0, 0);
             this.queryDesignerTabControl.Name = "queryDesignerTabControl";
             this.queryDesignerTabControl.SelectedIndex = 0;
-            this.queryDesignerTabControl.Size = new System.Drawing.Size(650, 280);
+            this.queryDesignerTabControl.Size = new System.Drawing.Size(650, 281);
             this.queryDesignerTabControl.TabIndex = 0;
             // 
             // SelectTabPage
@@ -195,7 +195,7 @@
             this.SelectTabPage.Location = new System.Drawing.Point(4, 22);
             this.SelectTabPage.Name = "SelectTabPage";
             this.SelectTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.SelectTabPage.Size = new System.Drawing.Size(642, 254);
+            this.SelectTabPage.Size = new System.Drawing.Size(642, 255);
             this.SelectTabPage.TabIndex = 0;
             this.SelectTabPage.Text = "Select";
             this.SelectTabPage.UseVisualStyleBackColor = true;
@@ -258,7 +258,7 @@
             this.queryGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.queryGroupBox.Location = new System.Drawing.Point(0, 0);
             this.queryGroupBox.Name = "queryGroupBox";
-            this.queryGroupBox.Size = new System.Drawing.Size(650, 206);
+            this.queryGroupBox.Size = new System.Drawing.Size(650, 208);
             this.queryGroupBox.TabIndex = 0;
             this.queryGroupBox.TabStop = false;
             this.queryGroupBox.Text = "Query";
@@ -272,7 +272,7 @@
             this.queryTabControl.Location = new System.Drawing.Point(3, 16);
             this.queryTabControl.Name = "queryTabControl";
             this.queryTabControl.SelectedIndex = 0;
-            this.queryTabControl.Size = new System.Drawing.Size(644, 187);
+            this.queryTabControl.Size = new System.Drawing.Size(644, 189);
             this.queryTabControl.TabIndex = 0;
             // 
             // sqlQueryTabPage
@@ -281,7 +281,7 @@
             this.sqlQueryTabPage.Location = new System.Drawing.Point(4, 22);
             this.sqlQueryTabPage.Name = "sqlQueryTabPage";
             this.sqlQueryTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.sqlQueryTabPage.Size = new System.Drawing.Size(636, 161);
+            this.sqlQueryTabPage.Size = new System.Drawing.Size(636, 163);
             this.sqlQueryTabPage.TabIndex = 0;
             this.sqlQueryTabPage.Text = "SQL Query";
             this.sqlQueryTabPage.UseVisualStyleBackColor = true;
@@ -294,7 +294,7 @@
             this.sqlQueryTextBox.Multiline = true;
             this.sqlQueryTextBox.Name = "sqlQueryTextBox";
             this.sqlQueryTextBox.ReadOnly = true;
-            this.sqlQueryTextBox.Size = new System.Drawing.Size(630, 155);
+            this.sqlQueryTextBox.Size = new System.Drawing.Size(630, 157);
             this.sqlQueryTextBox.TabIndex = 0;
             // 
             // resultsTabPage
@@ -303,7 +303,7 @@
             this.resultsTabPage.Location = new System.Drawing.Point(4, 22);
             this.resultsTabPage.Name = "resultsTabPage";
             this.resultsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.resultsTabPage.Size = new System.Drawing.Size(636, 161);
+            this.resultsTabPage.Size = new System.Drawing.Size(636, 163);
             this.resultsTabPage.TabIndex = 1;
             this.resultsTabPage.Text = "Results";
             this.resultsTabPage.UseVisualStyleBackColor = true;
@@ -317,7 +317,7 @@
             this.resultDataGridView.Location = new System.Drawing.Point(3, 3);
             this.resultDataGridView.Name = "resultDataGridView";
             this.resultDataGridView.ReadOnly = true;
-            this.resultDataGridView.Size = new System.Drawing.Size(630, 155);
+            this.resultDataGridView.Size = new System.Drawing.Size(630, 157);
             this.resultDataGridView.TabIndex = 0;
             // 
             // messagesTabPage
@@ -351,7 +351,7 @@
             this.helpToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(3, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(118, 25);
+            this.toolStrip.Size = new System.Drawing.Size(87, 25);
             this.toolStrip.TabIndex = 0;
             // 
             // executeToolStripButton
@@ -396,7 +396,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 562);
+            this.ClientSize = new System.Drawing.Size(984, 565);
             this.Controls.Add(this.toolStripContainer);
             this.MinimumSize = new System.Drawing.Size(1000, 600);
             this.Name = "MainForm";

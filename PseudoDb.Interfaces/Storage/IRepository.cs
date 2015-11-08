@@ -15,5 +15,7 @@ namespace PseudoDb.Interfaces.Storage
         void Put(string databaseFile, string tableName, string key, string value);
 
         void Delete(string databaseFile, string tableName, string key);
+
+        List<KeyValuePair<string, string>> GetAll(string databaseFile, string tableName);
     }
 }
