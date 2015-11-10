@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExecutionPlan\FilterExecutionPlanOperation.cs" />
+    <Compile Include="ExecutionPlan\FullScanExecutionPlanOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="SchemaQuery.cs" />

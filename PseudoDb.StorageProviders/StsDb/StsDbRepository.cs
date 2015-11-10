@@ -91,13 +91,15 @@ namespace PseudoDb.StorageProviders.StsDb
 
         public IEnumerable<KeyValuePair<string, string>> GetAll(string databaseFile, string tableName)
         {
-            var results = new List<KeyValuePair<string, string>>();
             using (IStorageEngine engine = STSdb.FromFile(databaseFile))
             {
                 var table = engine.OpenXTable<string, string>(tableName);
-                results.AddRange(table.AsEnumerable());
+
+                foreach (var row in table)
+                {
+                    yield return row;
+                }
             }
-            return results;
         }
     }
 }
