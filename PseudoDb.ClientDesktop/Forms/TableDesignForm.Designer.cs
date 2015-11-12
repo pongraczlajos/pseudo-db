@@ -31,14 +31,15 @@
             this.TableNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.TableDataGridView = new System.Windows.Forms.DataGridView();
+            this.SaveTableButton = new System.Windows.Forms.Button();
+            this.CancelButton = new System.Windows.Forms.Button();
+            this.relationshipsButton = new System.Windows.Forms.Button();
             this.FieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FIeldType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Size = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PK = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Unique = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Nullable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.SaveTableButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
-            this.relationshipsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,11 +67,42 @@
             this.FIeldType,
             this.Size,
             this.PK,
+            this.Unique,
             this.Nullable});
             this.TableDataGridView.Location = new System.Drawing.Point(15, 50);
             this.TableDataGridView.Name = "TableDataGridView";
-            this.TableDataGridView.Size = new System.Drawing.Size(560, 281);
+            this.TableDataGridView.Size = new System.Drawing.Size(647, 281);
             this.TableDataGridView.TabIndex = 2;
+            // 
+            // SaveTableButton
+            // 
+            this.SaveTableButton.Location = new System.Drawing.Point(587, 337);
+            this.SaveTableButton.Name = "SaveTableButton";
+            this.SaveTableButton.Size = new System.Drawing.Size(75, 23);
+            this.SaveTableButton.TabIndex = 3;
+            this.SaveTableButton.Text = "Save";
+            this.SaveTableButton.UseVisualStyleBackColor = true;
+            this.SaveTableButton.Click += new System.EventHandler(this.SaveTableButton_Click);
+            // 
+            // CancelButton
+            // 
+            this.CancelButton.Location = new System.Drawing.Point(506, 337);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelButton.TabIndex = 4;
+            this.CancelButton.Text = "Cancel";
+            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
+            // relationshipsButton
+            // 
+            this.relationshipsButton.Location = new System.Drawing.Point(576, 19);
+            this.relationshipsButton.Name = "relationshipsButton";
+            this.relationshipsButton.Size = new System.Drawing.Size(86, 23);
+            this.relationshipsButton.TabIndex = 5;
+            this.relationshipsButton.Text = "Relationships";
+            this.relationshipsButton.UseVisualStyleBackColor = true;
+            this.relationshipsButton.Click += new System.EventHandler(this.relationshipsButton_Click);
             // 
             // FieldName
             // 
@@ -95,46 +127,21 @@
             this.PK.HeaderText = "PK";
             this.PK.Name = "PK";
             // 
+            // Unique
+            // 
+            this.Unique.HeaderText = "Unique";
+            this.Unique.Name = "Unique";
+            // 
             // Nullable
             // 
             this.Nullable.HeaderText = "Nullable";
             this.Nullable.Name = "Nullable";
             // 
-            // SaveTableButton
-            // 
-            this.SaveTableButton.Location = new System.Drawing.Point(497, 337);
-            this.SaveTableButton.Name = "SaveTableButton";
-            this.SaveTableButton.Size = new System.Drawing.Size(75, 23);
-            this.SaveTableButton.TabIndex = 3;
-            this.SaveTableButton.Text = "Save";
-            this.SaveTableButton.UseVisualStyleBackColor = true;
-            this.SaveTableButton.Click += new System.EventHandler(this.SaveTableButton_Click);
-            // 
-            // CancelButton
-            // 
-            this.CancelButton.Location = new System.Drawing.Point(405, 337);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(75, 23);
-            this.CancelButton.TabIndex = 4;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
-            // 
-            // relationshipsButton
-            // 
-            this.relationshipsButton.Location = new System.Drawing.Point(486, 19);
-            this.relationshipsButton.Name = "relationshipsButton";
-            this.relationshipsButton.Size = new System.Drawing.Size(86, 23);
-            this.relationshipsButton.TabIndex = 5;
-            this.relationshipsButton.Text = "Relationships";
-            this.relationshipsButton.UseVisualStyleBackColor = true;
-            this.relationshipsButton.Click += new System.EventHandler(this.relationshipsButton_Click);
-            // 
             // TableDesignForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 364);
+            this.ClientSize = new System.Drawing.Size(674, 364);
             this.Controls.Add(this.relationshipsButton);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.SaveTableButton);
@@ -154,13 +161,14 @@
         private System.Windows.Forms.TextBox TableNameTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView TableDataGridView;
+        private System.Windows.Forms.Button SaveTableButton;
+        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button relationshipsButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn FieldName;
         private System.Windows.Forms.DataGridViewComboBoxColumn FIeldType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Size;
         private System.Windows.Forms.DataGridViewCheckBoxColumn PK;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Unique;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Nullable;
-        private System.Windows.Forms.Button SaveTableButton;
-        private System.Windows.Forms.Button CancelButton;
-        private System.Windows.Forms.Button relationshipsButton;
     }
 }

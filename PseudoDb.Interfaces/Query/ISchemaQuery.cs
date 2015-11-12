@@ -1,5 +1,4 @@
-﻿using PseudoDb.Interfaces.Engine;
-using PseudoDb.Interfaces.Metadata;
+﻿using PseudoDb.Interfaces.Metadata;
 using System.Collections.Generic;
 
 namespace PseudoDb.Interfaces.Query

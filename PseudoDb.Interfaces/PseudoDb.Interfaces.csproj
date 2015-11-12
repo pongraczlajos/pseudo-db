@@ -45,13 +45,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\IEngine.cs" />
+    <Compile Include="Indexing\IConcreteIndex.cs" />
+    <Compile Include="Indexing\IndexFactory.cs" />
+    <Compile Include="Indexing\NonUniqueIndex.cs" />
+    <Compile Include="Indexing\UniqueIndex.cs" />
     <Compile Include="Metadata\Association.cs" />
     <Compile Include="Metadata\Column.cs" />
     <Compile Include="Metadata\IMetadata.cs" />
     <Compile Include="Metadata\DataType.cs" />
     <Compile Include="Metadata\Index.cs" />
     <Compile Include="Metadata\Operator.cs" />
+    <Compile Include="ReturnCode.cs" />
     <Compile Include="Metadata\Table.cs" />
     <Compile Include="Metadata\Database.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +63,7 @@
     <Compile Include="Query\IExecutionPlanOperation.cs" />
     <Compile Include="Query\IQuery.cs" />
     <Compile Include="Query\ISchemaQuery.cs" />
+    <Compile Include="ReturnStatus.cs" />
     <Compile Include="Storage\IRepository.cs" />
   </ItemGroup>
   <ItemGroup>

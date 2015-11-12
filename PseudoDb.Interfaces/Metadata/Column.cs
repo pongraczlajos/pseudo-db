@@ -14,6 +14,9 @@ namespace PseudoDb.Interfaces.Metadata
         public int Size { get; set; }
 
         [YAXAttributeForClass()]
+        public bool Unique { get; set; }
+
+        [YAXAttributeForClass()]
         public bool Nullable { get; set; }
 
         public Column()
@@ -21,6 +24,7 @@ namespace PseudoDb.Interfaces.Metadata
             Name = string.Empty;
             Type = DataType.Unknown;
             Size = 0;
+            Unique = false;
             Nullable = false;
         }
     }

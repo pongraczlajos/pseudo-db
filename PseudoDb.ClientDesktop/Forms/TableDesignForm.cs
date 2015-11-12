@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Collections;
+using System.Linq;
 using System;
 using PseudoDb.Interfaces.Metadata;
 using PseudoDb.Engine;
@@ -59,13 +60,22 @@ namespace PseudoDb.ClientDesktop.Forms
                         TableDataGridView.Rows[index].Cells[3].Value = false;
                     }
 
-                    if (column.Nullable)
+                    if (column.Unique)
                     {
                         TableDataGridView.Rows[index].Cells[4].Value = true;
                     }
                     else
                     {
                         TableDataGridView.Rows[index].Cells[4].Value = false;
+                    }
+
+                    if (column.Nullable)
+                    {
+                        TableDataGridView.Rows[index].Cells[5].Value = true;
+                    }
+                    else
+                    {
+                        TableDataGridView.Rows[index].Cells[5].Value = false;
                     }
 
                     index++;
@@ -135,7 +145,8 @@ namespace PseudoDb.ClientDesktop.Forms
                     column.Type = DataTypeConverter.ToDataType(TableDataGridView.Rows[i].Cells[1].Value.ToString());
                     column.Size = Int32.Parse(TableDataGridView.Rows[i].Cells[2].Value.ToString());
                     bool isPrimaryKey = (bool) ((DataGridViewCheckBoxCell) TableDataGridView.Rows[i].Cells[3]).FormattedValue;
-                    column.Nullable = (bool) ((DataGridViewCheckBoxCell) TableDataGridView.Rows[i].Cells[4]).FormattedValue;
+                    column.Unique = (bool) ((DataGridViewCheckBoxCell) TableDataGridView.Rows[i].Cells[4]).FormattedValue;
+                    column.Nullable = (bool) ((DataGridViewCheckBoxCell)TableDataGridView.Rows[i].Cells[5]).FormattedValue;
 
                     if (isPrimaryKey)
                     {
@@ -143,6 +154,16 @@ namespace PseudoDb.ClientDesktop.Forms
                     }
 
                     table.Columns.Add(column);
+                }
+
+                // Create indexes for unique values.
+                foreach (var column in table.Columns.Where(c => c.Unique).Select(c => c.Name))
+                {
+                    Index index = new Index();
+                    index.Name = string.Format("{0}_Index_{1}", table.Name, table.Indexes.Count + 1);
+                    index.IndexMembers.Add(column);
+                    index.Unique = true;
+                    table.Indexes.Add(index);
                 }
 
                 if (database.GetTable(table.Name) != null)

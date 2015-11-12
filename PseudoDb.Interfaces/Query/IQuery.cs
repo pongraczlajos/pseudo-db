@@ -10,7 +10,7 @@ namespace PseudoDb.Interfaces.Query
 {
     public interface IQuery
     {
-        void Insert(Database database, Table table, ICollection<string> keyMembers, ICollection<string> values);
+        ReturnStatus Insert(Database database, Table table, ICollection<string> keyMembers, ICollection<string> values);
 
         DataTable GetAll(Database database, Table table);
     }
