@@ -1,4 +1,5 @@
 ﻿using PseudoDb.Engine;
+using PseudoDb.Interfaces;
 using PseudoDb.Interfaces.Metadata;
 using System;
 using System.Collections.Generic;
@@ -132,7 +133,12 @@ namespace PseudoDb.ClientDesktop.Forms
                 }
             }
 
-            dbContext.Query.Insert(database, tableSchema, keyMembers, values);
+            var status = dbContext.Query.Insert(database, tableSchema, keyMembers, values);
+
+            if (!status.ReturnCode.Equals(ReturnCode.Success))
+            {
+                MessageBox.Show(status.Message, "Insert into failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             this.DialogResult = DialogResult.OK;
             this.Close();

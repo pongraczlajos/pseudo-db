@@ -23,14 +23,14 @@ namespace PseudoDb.QueryProcessor
 
         public ReturnStatus Insert(Database database, Table table, ICollection<string> keyMembers, ICollection<string> values)
         {
-            string stsDbFile = string.Format("{0}.stsdb4", database.Name);
-            string key = string.Join("#", keyMembers);
-            string value = string.Join("#", values);
+            string databaseFileName = KeyValue.GetDatabaseFileName(database.Name);
+            string key = KeyValue.Concatenate(keyMembers);
+            string value = KeyValue.Concatenate(values);
 
             ReturnStatus status = new ReturnStatus();
 
-            // Check primary key and unique index constraints.
-            if (repository.Exists(stsDbFile, table.Name, key))
+            // Check primary key constraints.
+            if (repository.Exists(databaseFileName, table.Name, key))
             {
                 status.ReturnCode = ReturnCode.PrimaryKeyConstraintFailed;
                 status.Message = string.Format("Primary key constraint check failed for primary key: {0}", key);
@@ -38,17 +38,51 @@ namespace PseudoDb.QueryProcessor
                 return status;
             }
 
-            var indexFactory = new IndexFactory(database, table, repository);
+            // Check unique index constraints.
+            var uniqueIndexes = new IConcreteIndex[table.Indexes.Where(i => i.Unique).Count()];
+            var uniqueIndexKeys = new string[table.Indexes.Where(i => i.Unique).Count()];
+
+            var indexFactory = new IndexFactory(databaseFileName, repository);
+
+            var counter = 0;
+            var nonKeyColumnNames = table.Columns.Where(c => !table.PrimaryKey.Contains(c.Name)).Select(c => c.Name).ToList();
 
             foreach (var uniqueIndex in table.Indexes.Where(i => i.Unique))
             {
                 var index = indexFactory.GetIndex(uniqueIndex);
+                uniqueIndexes[counter] = index;
+
+                var columnValues = new List<string>();
+
+                foreach (var column in uniqueIndex.IndexMembers)
+                {
+                    columnValues.Add(values.ElementAt(nonKeyColumnNames.IndexOf(column)));
+                }
+
+                var uniqueKey = KeyValue.Concatenate(columnValues);
+                uniqueIndexKeys[counter] = uniqueKey;
+
+                if (index.Exists(uniqueKey))
+                {
+                    status.ReturnCode = ReturnCode.UniqueConstraintFailed;
+                    status.Message = string.Format("Unique constraint check failed for key: {0}", uniqueKey);
+
+                    return status;
+                }
+
+                counter++;
             }
 
+            // Check foreign key constraints.
+
             // Insert indexes.
+            for (int k = 0; k < uniqueIndexes.Length; k++)
+            {
+                uniqueIndexes[k].Put(uniqueIndexKeys[k], key);
+            }
 
             // Insert row if there is no errors.
-            repository.Put(stsDbFile, table.Name, key, value);
+            repository.Put(databaseFileName, table.Name, key, value);
 
             return status;
         }
@@ -56,25 +90,39 @@ namespace PseudoDb.QueryProcessor
         public DataTable GetAll(Database database, Table table)
         {
             DataTable result = new DataTable();
-            string stsDbFile = string.Format("{0}.stsdb4", database.Name);
-            var queryResult = repository.GetAll(stsDbFile, table.Name);
+            string databaseFileName = KeyValue.GetDatabaseFileName(database.Name);
+            var queryResult = repository.GetAll(databaseFileName, table.Name);
             
             foreach(var item in table.Columns)
             {
                 result.Columns.Add(item.Name, typeof(string));
             }
 
-            foreach(var pair in queryResult)
+            foreach (var pair in queryResult)
             {
                 List<string> row = new List<string>();
-                row.AddRange(pair.Key.Split('#').ToArray());
-                row.AddRange(pair.Value.Split('#').ToArray());
+                row.AddRange(KeyValue.Split(pair.Key));
+                row.AddRange(KeyValue.Split(pair.Value));
 
                 result.Rows.Add(row.ToArray());
             }
 
             return result;
             
+        }
+
+        public void DeleteTable(Database database, Table table)
+        {
+            string databaseFileName = KeyValue.GetDatabaseFileName(database.Name);
+
+            // Remove all index tables.
+            foreach (var indexName in table.Indexes.Select(i => i.Name))
+            {
+                repository.DeleteTable(databaseFileName, indexName);
+            }
+
+            // Remove table.
+            repository.DeleteTable(databaseFileName, table.Name);
         }
     }
 }

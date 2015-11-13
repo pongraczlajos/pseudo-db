@@ -10,46 +10,37 @@ namespace PseudoDb.Interfaces.Indexing
 {
     public class UniqueIndex : IConcreteIndex
     {
-        private Database database;
-
-        private Table table;
+        private string databaseFileName;
 
         private IRepository repository;
 
         private Index index;
 
-        public UniqueIndex(Database database, Table table, IRepository repository, Index index)
+        public UniqueIndex(string databaseFileName, IRepository repository, Index index)
         {
-            this.database = database;
-            this.table = table;
+            this.databaseFileName = databaseFileName;
             this.repository = repository;
             this.index = index;
         }
 
         public bool Exists(string key)
         {
-            string stsDbFile = string.Format("{0}.stsdb4", database.Name);
-            return true;
+            return repository.Exists(databaseFileName, index.Name, key);
         }
 
-        public string Get(string key)
+        public IEnumerable<string> Get(string key)
         {
-            string stsDbFile = string.Format("{0}.stsdb4", database.Name);
-            return "";
+            return new List<string>() { repository.Get(databaseFileName, index.Name, key) };
         }
 
         public void Put(string key, string value)
         {
-            string stsDbFile = string.Format("{0}.stsdb4", database.Name);
-            //string key = string.Join("#", keyMembers);
-            //string value = string.Join("#", values);
-
-            repository.Put(stsDbFile, index.Name, key, value);
+            repository.Put(databaseFileName, index.Name, key, value);
         }
 
         public void Delete(string key)
         {
-            string stsDbFile = string.Format("{0}.stsdb4", database.Name);
+            repository.Delete(databaseFileName, index.Name, key);
         }
     }
 }

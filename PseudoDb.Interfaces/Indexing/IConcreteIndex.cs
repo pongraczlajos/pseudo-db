@@ -10,7 +10,7 @@ namespace PseudoDb.Interfaces.Indexing
     {
         bool Exists(string key);
 
-        string Get(string key);
+        IEnumerable<string> Get(string key);
 
         void Put(string key, string value);
 

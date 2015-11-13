@@ -45,19 +45,6 @@ namespace PseudoDb.Interfaces.Metadata
             return Tables.Where(table => table.Name.Equals(tableName)).FirstOrDefault();
         }
 
-        public bool RemoveTable(string tableName)
-        {
-            Table table = Tables.Where(t => t.Name.Equals(tableName)).FirstOrDefault();
-
-            if (table != null)
-            {
-                Tables.Remove(table);
-                return true;
-            }
-
-            return false;
-        }
-
         public void AddAssociation(string associationName, string parent, string child,
             Dictionary<string, string> mappings)
         {

@@ -49,6 +49,7 @@
     <Compile Include="Indexing\IndexFactory.cs" />
     <Compile Include="Indexing\NonUniqueIndex.cs" />
     <Compile Include="Indexing\UniqueIndex.cs" />
+    <Compile Include="KeyValue.cs" />
     <Compile Include="Metadata\Association.cs" />
     <Compile Include="Metadata\Column.cs" />
     <Compile Include="Metadata\IMetadata.cs" />

@@ -10,40 +10,51 @@ namespace PseudoDb.Interfaces.Indexing
 {
     public class NonUniqueIndex : IConcreteIndex
     {
-        private Database database;
-
-        private Table table;
+        private string databaseFileName;
 
         private IRepository repository;
 
         private Index index;
 
-        public NonUniqueIndex(Database database, Table table, IRepository repository, Index index)
+        public NonUniqueIndex(string databaseFileName, IRepository repository, Index index)
         {
-            this.database = database;
-            this.table = table;
+            this.databaseFileName = databaseFileName;
             this.repository = repository;
             this.index = index;
         }
 
         public bool Exists(string key)
         {
-            throw new NotImplementedException();
+            return repository.Exists(databaseFileName, index.Name, key);
         }
 
-        public string Get(string key)
+        public IEnumerable<string> Get(string key)
         {
-            throw new NotImplementedException();
+            var separator = new char[] { '#', '#', '#' };
+            return repository.Get(databaseFileName, index.Name, key).Split(separator);
         }
 
         public void Put(string key, string value)
         {
-            throw new NotImplementedException();
+            if (Exists(key))
+            {
+                var values = Get(key);
+                Delete(key);
+
+                var newValues = new List<string>(values);
+                newValues.Add(value);
+
+                repository.Put(databaseFileName, index.Name, key, string.Join("###", newValues));
+            }
+            else
+            {
+                repository.Put(databaseFileName, index.Name, key, value);
+            }
         }
 
         public void Delete(string key)
         {
-            throw new NotImplementedException();
+            repository.Delete(databaseFileName, index.Name, key);
         }
     }
 }

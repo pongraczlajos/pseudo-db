@@ -168,7 +168,9 @@ namespace PseudoDb.ClientDesktop.Forms
 
                 if (database.GetTable(table.Name) != null)
                 {
-                    database.RemoveTable(table.Name);
+                    Table tableToDelete = database.GetTable(table.Name);
+                    dbContext.Query.DeleteTable(database, tableToDelete);
+                    database.Tables.Remove(tableToDelete);
                 }
 
                 database.Tables.Add(table);

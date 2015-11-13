@@ -101,5 +101,16 @@ namespace PseudoDb.StorageProviders.StsDb
                 }
             }
         }
+
+
+        public void DeleteTable(string databaseFileName, string tableName)
+        {
+            using (IStorageEngine engine = STSdb.FromFile(databaseFileName))
+            {
+                engine.Delete(tableName);
+
+                engine.Commit();
+            }
+        }
     }
 }

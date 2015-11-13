@@ -10,16 +10,13 @@ namespace PseudoDb.Interfaces.Indexing
 {
     public class IndexFactory
     {
-        private Database database;
-
-        private Table table;
+        private string databaseFileName;
 
         private IRepository repository;
 
-        public IndexFactory(Database database, Table table, IRepository repository)
+        public IndexFactory(string databaseFileName, IRepository repository)
         {
-            this.database = database;
-            this.table = table;
+            this.databaseFileName = databaseFileName;
             this.repository = repository;
         }
 
@@ -27,10 +24,10 @@ namespace PseudoDb.Interfaces.Indexing
         {
             if (index.Unique)
             {
-                return new UniqueIndex(database, table, repository, index);
+                return new UniqueIndex(databaseFileName, repository, index);
             }
             
-            return new NonUniqueIndex(database, table, repository, index);
+            return new NonUniqueIndex(databaseFileName, repository, index);
         }
     }
 }

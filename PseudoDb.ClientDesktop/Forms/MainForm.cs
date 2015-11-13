@@ -113,7 +113,7 @@ namespace PseudoDb.ClientDesktop.Forms
                         actionWithTableItem.Click += OnDesignTableMenuItemClick;
                         rightClickMenu.Items.Add(actionWithTableItem);
 
-                        actionWithTableItem = new ToolStripMenuItem("Delete Table");
+                        actionWithTableItem = new ToolStripMenuItem("Delete table");
                         actionWithTableItem.Click += OnDeleteTableMenuItemClick;
                         rightClickMenu.Items.Add(actionWithTableItem);
 
@@ -226,8 +226,12 @@ namespace PseudoDb.ClientDesktop.Forms
                     string databaseName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
                     Database database = dbContext.SchemaQuery.GetDatabase(databaseName);
 
-                    if (database.RemoveTable(DatabaseTreeView.SelectedNode.Text.ToString()))
+                    Table table = database.GetTable(DatabaseTreeView.SelectedNode.Text.ToString());
+                    if (table != null)
                     {
+                        dbContext.Query.DeleteTable(database, table);
+                        database.Tables.Remove(table);
+
                         dbContext.SchemaQuery.UpdateDatabase(database.Name);
                         DatabaseTreeView.Nodes.Remove(DatabaseTreeView.SelectedNode);
                     }
