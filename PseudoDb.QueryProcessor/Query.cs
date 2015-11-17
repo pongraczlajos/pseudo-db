@@ -3,6 +3,7 @@ using PseudoDb.Interfaces.Indexing;
 using PseudoDb.Interfaces.Metadata;
 using PseudoDb.Interfaces.Query;
 using PseudoDb.Interfaces.Storage;
+using PseudoDb.QueryProcessor.ExecutionPlan;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -83,6 +84,34 @@ namespace PseudoDb.QueryProcessor
 
             // Insert row if there is no errors.
             repository.Put(databaseFileName, table.Name, key, value);
+
+            status.ReturnCode = ReturnCode.Success;
+            status.Message = string.Format("({0} row(s) affected)", 1);
+
+            return status;
+        }
+
+        public ReturnStatus Delete(Database database, Table table, ICollection<Filter> filters)
+        {
+            var planner = new SimpleExecutionPlanner(database, repository, new List<Selection>(), filters);
+            var rootOperation = planner.GetRootOperation();
+
+            var rows = rootOperation.Execute();
+
+            var rowsToDelete = new List<string>();
+            foreach (var row in rows)
+            {
+                rowsToDelete.Add(row.Key);
+            }
+
+            foreach (var rowToDelete in rowsToDelete)
+            {
+                repository.Delete(KeyValue.GetDatabaseFileName(database.Name), table.Name, rowToDelete);
+            }
+
+            ReturnStatus status = new ReturnStatus();
+            status.ReturnCode = ReturnCode.Success;
+            status.Message = string.Format("({0} row(s) affected)", rowsToDelete.Count);
 
             return status;
         }

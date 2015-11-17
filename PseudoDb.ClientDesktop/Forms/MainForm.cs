@@ -1,6 +1,7 @@
 ﻿using PseudoDb.ClientDesktop.Properties;
 using PseudoDb.Engine;
 using PseudoDb.Interfaces.Metadata;
+using PseudoDb.Interfaces.Query;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,9 +12,18 @@ namespace PseudoDb.ClientDesktop.Forms
 {
     public partial class MainForm : Form 
     {
+        private enum SelectedOperation
+        {
+            Unknown,
+            Select,
+            Delete
+        }
+
         private TreeNode DatabaseTree;
 
         private DatabaseContext dbContext;
+
+        private SelectedOperation selection;
 
         public MainForm()
         {
@@ -25,6 +35,8 @@ namespace PseudoDb.ClientDesktop.Forms
 
             filterDataGridView.CellValueChanged += new DataGridViewCellEventHandler(this.filterDataGridView_CellValueChanged);
             queryDesignerTabControl.Visible = false;
+
+            selection = SelectedOperation.Unknown;
         }
         
         private void MainForm_Load(object sender, EventArgs e)
@@ -280,6 +292,8 @@ namespace PseudoDb.ClientDesktop.Forms
         private void OnSelectFromTableMenuItemClick(object sender, EventArgs e)
         {
             // Populate table combo box from the data grid view with the possible tables from the joins.
+
+            selection = SelectedOperation.Select;
         }
 
         private void OnDeleteFromTableMenuItemClick(object sender, EventArgs e)
@@ -293,6 +307,8 @@ namespace PseudoDb.ClientDesktop.Forms
             executeToolStripButton.Enabled = true;
             cancelToolStripButton.Enabled = true;
             queryDesignerTabControl.Visible = true;
+
+            selection = SelectedOperation.Delete;
         }
 
         private void filterDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -316,11 +332,51 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void executeToolStripButton_Click(object sender, EventArgs e)
         {
+            switch (selection)
+            {
+                case SelectedOperation.Select:
+                    break;
+                case SelectedOperation.Delete:
+                    try
+                    {
+                        var filters = new List<Filter>();
+
+                        for (int i = 0; i < filterDataGridView.Rows.Count - 1; i++)
+                        {
+                            var tableName = filterDataGridView.Rows[i].Cells[0].Value.ToString();
+                            var columnName = filterDataGridView.Rows[i].Cells[1].Value.ToString();
+                            var operatorType = OperatorConverter.ToOperator(filterDataGridView.Rows[i].Cells[2].Value.ToString());
+                            var value = filterDataGridView.Rows[i].Cells[3].Value.ToString();
+
+                            var filter = new Filter(tableName, columnName, operatorType, value);
+                            filters.Add(filter);
+                        }
+
+                        string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
+                        string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+
+                        Database database = dbContext.SchemaQuery.GetDatabase(selectedDbName);
+                        Table table = database.GetTable(selectedTableName);
+
+                        var status = dbContext.Query.Delete(database, table, filters);
+
+                        messagesTextBox.Text = status.Message;
+                    }
+                    catch (NullReferenceException exception)
+                    {
+                        MessageBox.Show("Complete all cells!\n" + exception.Message);
+                    }
+
+                    break;
+            }
+
             ClearFilterDataGridView();
 
             executeToolStripButton.Enabled = false;
             cancelToolStripButton.Enabled = false;
             queryDesignerTabControl.Visible = false;
+
+            selection = SelectedOperation.Unknown;
         }
 
         private void cancelToolStripButton_Click(object sender, EventArgs e)
@@ -330,6 +386,8 @@ namespace PseudoDb.ClientDesktop.Forms
             executeToolStripButton.Enabled = false;
             cancelToolStripButton.Enabled = false;
             queryDesignerTabControl.Visible = false;
+
+            selection = SelectedOperation.Unknown;
         }
 
         private void ClearFilterDataGridView()

@@ -206,7 +206,7 @@
             this.FilterTabPage.Location = new System.Drawing.Point(4, 22);
             this.FilterTabPage.Name = "FilterTabPage";
             this.FilterTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.FilterTabPage.Size = new System.Drawing.Size(642, 254);
+            this.FilterTabPage.Size = new System.Drawing.Size(642, 255);
             this.FilterTabPage.TabIndex = 1;
             this.FilterTabPage.Text = "Filter";
             this.FilterTabPage.UseVisualStyleBackColor = true;
@@ -222,7 +222,7 @@
             this.filterDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.filterDataGridView.Location = new System.Drawing.Point(3, 3);
             this.filterDataGridView.Name = "filterDataGridView";
-            this.filterDataGridView.Size = new System.Drawing.Size(636, 248);
+            this.filterDataGridView.Size = new System.Drawing.Size(636, 249);
             this.filterDataGridView.TabIndex = 0;
             // 
             // Table
@@ -325,7 +325,7 @@
             this.messagesTabPage.Controls.Add(this.messagesTextBox);
             this.messagesTabPage.Location = new System.Drawing.Point(4, 22);
             this.messagesTabPage.Name = "messagesTabPage";
-            this.messagesTabPage.Size = new System.Drawing.Size(636, 161);
+            this.messagesTabPage.Size = new System.Drawing.Size(636, 163);
             this.messagesTabPage.TabIndex = 2;
             this.messagesTabPage.Text = "Messages";
             this.messagesTabPage.UseVisualStyleBackColor = true;
@@ -338,7 +338,7 @@
             this.messagesTextBox.Multiline = true;
             this.messagesTextBox.Name = "messagesTextBox";
             this.messagesTextBox.ReadOnly = true;
-            this.messagesTextBox.Size = new System.Drawing.Size(636, 161);
+            this.messagesTextBox.Size = new System.Drawing.Size(636, 163);
             this.messagesTextBox.TabIndex = 0;
             // 
             // toolStrip
@@ -351,7 +351,7 @@
             this.helpToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(3, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(87, 25);
+            this.toolStrip.Size = new System.Drawing.Size(118, 25);
             this.toolStrip.TabIndex = 0;
             // 
             // executeToolStripButton

@@ -8,10 +8,10 @@ namespace PseudoDb.Interfaces.Query
 {
     public interface IExecutionPlanOperation
     {
-        IExecutionPlanOperation Successor { get; set; }
-
         IExecutionPlanOperation Predecessor { get; set; }
 
         IEnumerable<KeyValuePair<string, string>> Execute();
+
+        KeyValuePair<string, string> GetMetadata();
     }
 }

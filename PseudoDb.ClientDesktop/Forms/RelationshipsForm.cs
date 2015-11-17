@@ -74,7 +74,7 @@ namespace PseudoDb.ClientDesktop.Forms
             }
             catch (NullReferenceException exception)
             {
-                MessageBox.Show("Complete all cells!\n!" + exception.Message);
+                MessageBox.Show("Complete all cells!\n" + exception.Message);
             }
 
             DialogResult = DialogResult.OK;
