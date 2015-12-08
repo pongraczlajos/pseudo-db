@@ -71,6 +71,19 @@ namespace PseudoDb.ClientDesktop.Forms
                 }
 
                 database.Associations.Add(association);
+
+                // Add non-unique index for the association.
+                Table parentTable = database.GetTable(association.Parent);
+                Index index = new Index();
+                index.Name = association.Name;
+                index.Unique = false;
+                
+                foreach (var parentColumn in association.ColumnMappings.Keys)
+                {
+                    index.IndexMembers.Add(parentColumn);
+                }
+
+                parentTable.Indexes.Add(index);
             }
             catch (NullReferenceException exception)
             {

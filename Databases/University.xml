@@ -1,21 +1,42 @@
 <?xml version="1.0"?>
 <Database Name="University">
   <Tables>
-    <Table Name="Students">
+    <Table Name="Groups">
       <PrimaryKey>
-        <KeyMember>StudID</KeyMember>
+        <KeyMember>ID</KeyMember>
       </PrimaryKey>
       <Columns>
-        <Column Name="StudID" Type="Integer" Size="1" Unique="False" Nullable="False" />
-        <Column Name="CNP" Type="String" Size="13" Unique="True" Nullable="False" />
-        <Column Name="Nume" Type="String" Size="50" Unique="False" Nullable="False" />
-        <Column Name="Tel" Type="String" Size="20" Unique="False" Nullable="False" />
+        <Column Name="ID" Type="Integer" Size="1" Unique="False" Nullable="False" />
+        <Column Name="Name" Type="String" Size="16" Unique="True" Nullable="False" />
+      </Columns>
+      <Indexes>
+        <Index Name="Groups_Index_1" Unique="True">
+          <IndexMembers>
+            <IndexMember>Name</IndexMember>
+          </IndexMembers>
+        </Index>
+        <Index Name="Groups_Students" Unique="False">
+          <IndexMembers>
+            <IndexMember>ID</IndexMember>
+          </IndexMembers>
+        </Index>
+      </Indexes>
+    </Table>
+    <Table Name="Students">
+      <PrimaryKey>
+        <KeyMember>CNP</KeyMember>
+      </PrimaryKey>
+      <Columns>
+        <Column Name="CNP" Type="Integer" Size="1" Unique="False" Nullable="False" />
+        <Column Name="NrMat" Type="Integer" Size="1" Unique="True" Nullable="False" />
+        <Column Name="Name" Type="String" Size="64" Unique="False" Nullable="False" />
         <Column Name="Email" Type="String" Size="64" Unique="True" Nullable="False" />
+        <Column Name="Group" Type="Integer" Size="1" Unique="False" Nullable="False" />
       </Columns>
       <Indexes>
         <Index Name="Students_Index_1" Unique="True">
           <IndexMembers>
-            <IndexMember>CNP</IndexMember>
+            <IndexMember>NrMat</IndexMember>
           </IndexMembers>
         </Index>
         <Index Name="Students_Index_2" Unique="True">
@@ -26,5 +47,13 @@
       </Indexes>
     </Table>
   </Tables>
-  <Associations />
+  <Associations>
+    <Association Name="Groups_Students">
+      <Parent>Groups</Parent>
+      <Child>Students</Child>
+      <ColumnMappings>
+        <ColumnRef OnParent="ID" OnChild="Group" />
+      </ColumnMappings>
+    </Association>
+  </Associations>
 </Database>

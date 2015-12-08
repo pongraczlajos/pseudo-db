@@ -75,12 +75,60 @@ namespace PseudoDb.QueryProcessor
             }
 
             // Check foreign key constraints.
+            foreach (var association in database.GetAssociationsWhereTableIsParent(table.Name))
+            {
+                var indexMeta = table.Indexes.Where(i => i.Name.Equals(association.Name)).Single();
+                var index = indexFactory.GetIndex(indexMeta);
+
+                var columnValues = new List<string>();
+
+                foreach (var column in indexMeta.IndexMembers)
+                {
+                    columnValues.Add(values.ElementAt(table.Columns.Select(c => c.Name).ToList().IndexOf(column)));
+                }
+
+                var foreignKey = KeyValue.Concatenate(columnValues);
+
+                if (index.Exists(foreignKey))
+                {
+                    status.ReturnCode = ReturnCode.ForeignKeyConstraintFailed;
+                    status.Message = string.Format("Foreign key constraint check failed (key is not unique) for key: {0}", foreignKey);
+
+                    return status;
+                }
+            }
+
+            foreach (var association in database.GetAssociationsWhereTableIsChild(table.Name))
+            {
+                var parentTable = database.GetTable(association.Parent);
+                var indexMeta = parentTable.Indexes.Where(i => i.Name.Equals(association.Name)).Single();
+                var index = indexFactory.GetIndex(indexMeta);
+
+                var columnValues = new List<string>();
+
+                foreach (var column in indexMeta.IndexMembers)
+                {
+                    columnValues.Add(values.ElementAt(table.Columns.Select(c => c.Name).ToList().IndexOf(column)));
+                }
+
+                var foreignKey = KeyValue.Concatenate(columnValues);
+
+                if (index.Exists(foreignKey))
+                {
+                    status.ReturnCode = ReturnCode.ForeignKeyConstraintFailed;
+                    status.Message = string.Format("Foreign key constraint check failed (key is not unique) for key: {0}", foreignKey);
+
+                    return status;
+                }
+            }
 
             // Insert indexes.
             for (int k = 0; k < uniqueIndexes.Length; k++)
             {
                 uniqueIndexes[k].Put(uniqueIndexKeys[k], key);
             }
+
+
 
             // Insert row if there is no errors.
             repository.Put(databaseFileName, table.Name, key, value);
@@ -93,20 +141,26 @@ namespace PseudoDb.QueryProcessor
 
         public ReturnStatus Delete(Database database, Table table, ICollection<Filter> filters)
         {
+            string databaseFileName = KeyValue.GetDatabaseFileName(database.Name);
             var planner = new SimpleExecutionPlanner(database, repository, new List<Selection>(), filters);
             var rootOperation = planner.GetRootOperation();
 
             var rows = rootOperation.Execute();
 
+            var indexFactory = new IndexFactory(databaseFileName, repository);
+
             var rowsToDelete = new List<string>();
             foreach (var row in rows)
             {
+                // Check foreign key constraints.
                 rowsToDelete.Add(row.Key);
             }
 
             foreach (var rowToDelete in rowsToDelete)
             {
-                repository.Delete(KeyValue.GetDatabaseFileName(database.Name), table.Name, rowToDelete);
+                repository.Delete(databaseFileName, table.Name, rowToDelete);
+
+                // Delete indexes.
             }
 
             ReturnStatus status = new ReturnStatus();
