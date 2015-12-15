@@ -153,6 +153,8 @@ namespace PseudoDb.ClientDesktop.Forms
 
             resultDataGridView.DataSource = resultTable;
             resultDataGridView.Refresh();
+
+            queryTabControl.SelectedIndex = 1;
         }
 
         private void OnCreateNewDbMenuItemClick(object sender, EventArgs e)
@@ -298,6 +300,7 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void OnDeleteFromTableMenuItemClick(object sender, EventArgs e)
         {
+            queryDesignerTabControl.SelectedIndex = 1;
             string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
 
             // Populate table combo box from the data grid view with the possible tables.
@@ -361,6 +364,7 @@ namespace PseudoDb.ClientDesktop.Forms
                         var status = dbContext.Query.Delete(database, table, filters);
 
                         messagesTextBox.Text = status.Message;
+                        queryTabControl.SelectedIndex = 2;
                     }
                     catch (NullReferenceException exception)
                     {

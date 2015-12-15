@@ -15,5 +15,7 @@ namespace PseudoDb.Interfaces.Indexing
         void Put(string key, string value);
 
         void Delete(string key);
+
+        void Delete(string key, string subKey);
     }
 }

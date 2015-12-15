@@ -74,29 +74,11 @@ namespace PseudoDb.QueryProcessor
                 counter++;
             }
 
-            // Check foreign key constraints.
-            foreach (var association in database.GetAssociationsWhereTableIsParent(table.Name))
-            {
-                var indexMeta = table.Indexes.Where(i => i.Name.Equals(association.Name)).Single();
-                var index = indexFactory.GetIndex(indexMeta);
-
-                var columnValues = new List<string>();
-
-                foreach (var column in indexMeta.IndexMembers)
-                {
-                    columnValues.Add(values.ElementAt(table.Columns.Select(c => c.Name).ToList().IndexOf(column)));
-                }
-
-                var foreignKey = KeyValue.Concatenate(columnValues);
-
-                if (index.Exists(foreignKey))
-                {
-                    status.ReturnCode = ReturnCode.ForeignKeyConstraintFailed;
-                    status.Message = string.Format("Foreign key constraint check failed (key is not unique) for key: {0}", foreignKey);
-
-                    return status;
-                }
-            }
+            // Check foreign key constraints (the key is simple).
+            // Check if the key exists in the parent table.
+            var foreignKeyIndexes = new IConcreteIndex[database.GetAssociationsWhereTableIsChild(table.Name).Count()];
+            var foreignKeyIndexKeys = new string[database.GetAssociationsWhereTableIsChild(table.Name).Count()];
+            counter = 0;
 
             foreach (var association in database.GetAssociationsWhereTableIsChild(table.Name))
             {
@@ -104,31 +86,42 @@ namespace PseudoDb.QueryProcessor
                 var indexMeta = parentTable.Indexes.Where(i => i.Name.Equals(association.Name)).Single();
                 var index = indexFactory.GetIndex(indexMeta);
 
-                var columnValues = new List<string>();
-
-                foreach (var column in indexMeta.IndexMembers)
+                var foreignKey = string.Empty;
+                if (table.PrimaryKey.Contains(association.ColumnMappings.Values.First()))
                 {
-                    columnValues.Add(values.ElementAt(table.Columns.Select(c => c.Name).ToList().IndexOf(column)));
+                    foreignKey = keyMembers.ElementAt(table.PrimaryKey.IndexOf(association.ColumnMappings.Values.First()));
+                }
+                else
+                {
+                    foreignKey = values.ElementAt(nonKeyColumnNames.IndexOf(association.ColumnMappings.Values.First()));
                 }
 
-                var foreignKey = KeyValue.Concatenate(columnValues);
+                foreignKeyIndexes[counter] = index;
+                foreignKeyIndexKeys[counter] = foreignKey;
 
-                if (index.Exists(foreignKey))
+                if (!repository.Exists(databaseFileName, parentTable.Name, foreignKey))
                 {
                     status.ReturnCode = ReturnCode.ForeignKeyConstraintFailed;
-                    status.Message = string.Format("Foreign key constraint check failed (key is not unique) for key: {0}", foreignKey);
+                    status.Message = string.Format("Foreign key constraint check failed, key is missing from the parent table ({0} [{1}]): {2}", parentTable.Name,
+                        association.ColumnMappings.Keys.First(), foreignKey);
 
                     return status;
                 }
+
+                counter++;
             }
 
-            // Insert indexes.
+            // Insert unique indexes.
             for (int k = 0; k < uniqueIndexes.Length; k++)
             {
                 uniqueIndexes[k].Put(uniqueIndexKeys[k], key);
             }
 
-
+            // Insert foreign key indexes.
+            for (int k = 0; k < foreignKeyIndexes.Length; k++)
+            {
+                foreignKeyIndexes[k].Put(foreignKeyIndexKeys[k], key);
+            }
 
             // Insert row if there is no errors.
             repository.Put(databaseFileName, table.Name, key, value);
@@ -144,26 +137,89 @@ namespace PseudoDb.QueryProcessor
             string databaseFileName = KeyValue.GetDatabaseFileName(database.Name);
             var planner = new SimpleExecutionPlanner(database, repository, new List<Selection>(), filters);
             var rootOperation = planner.GetRootOperation();
+            var nonKeyColumnNames = table.Columns.Where(c => !table.PrimaryKey.Contains(c.Name)).Select(c => c.Name).ToList();
 
+            var metadata = rootOperation.GetMetadata();
             var rows = rootOperation.Execute();
+
+            ReturnStatus status = new ReturnStatus();
 
             var indexFactory = new IndexFactory(databaseFileName, repository);
 
             var rowsToDelete = new List<string>();
+            var rowData = new List<KeyValuePair<string, string>>();
             foreach (var row in rows)
             {
-                // Check foreign key constraints.
                 rowsToDelete.Add(row.Key);
+                rowData.Add(row);
+            }
+
+            foreach (var row in rowsToDelete)
+            {
+                // Check foreign key constraints.
+                foreach (var association in database.GetAssociationsWhereTableIsParent(table.Name))
+                {
+                    var indexMeta = table.Indexes.Where(i => i.Name.Equals(association.Name)).Single();
+                    var index = indexFactory.GetIndex(indexMeta);
+
+                    var foreignKey = string.Empty;
+
+                    if (index.Exists(row))
+                    {
+                        status.ReturnCode = ReturnCode.ForeignKeyConstraintFailed;
+                        status.Message = string.Format("Foreign key constraint check failed, the key [{0}] is referenced in {1}.", row, association.Child);
+
+                        return status;
+                    }
+                }
+            }
+
+            foreach (var row in rowData)
+            {
+                // Delete unique indexes.
+                foreach (var uniqueIndex in table.Indexes.Where(i => i.Unique))
+                {
+                    var index = indexFactory.GetIndex(uniqueIndex);
+
+                    var columnValues = new List<string>();
+
+                    foreach (var column in uniqueIndex.IndexMembers)
+                    {
+                        columnValues.Add(KeyValue.Split(row.Value).ElementAt(KeyValue.Split(metadata.Value).ToList().IndexOf(column)));
+                    }
+
+                    var uniqueKey = KeyValue.Concatenate(columnValues);
+                    index.Delete(uniqueKey);
+                }
+
+                // Delete foreign key indexes.
+                foreach (var association in database.GetAssociationsWhereTableIsChild(table.Name))
+                {
+                    var parentTable = database.GetTable(association.Parent);
+                    var indexMeta = parentTable.Indexes.Where(i => i.Name.Equals(association.Name)).Single();
+                    var index = indexFactory.GetIndex(indexMeta);
+
+                    var foreignKey = string.Empty;
+                    if (table.PrimaryKey.Contains(association.ColumnMappings.Values.First()))
+                    {
+                        foreignKey = KeyValue.Split(row.Key).ElementAt(table.PrimaryKey.IndexOf(association.ColumnMappings.Values.First()));
+                    }
+                    else
+                    {
+                        foreignKey = KeyValue.Split(row.Value).ElementAt(nonKeyColumnNames.IndexOf(association.ColumnMappings.Values.First()));
+                    }
+
+                    index.Delete(foreignKey, row.Key);
+                }
             }
 
             foreach (var rowToDelete in rowsToDelete)
             {
+                // Delete primary key and data.
                 repository.Delete(databaseFileName, table.Name, rowToDelete);
-
-                // Delete indexes.
             }
 
-            ReturnStatus status = new ReturnStatus();
+            
             status.ReturnCode = ReturnCode.Success;
             status.Message = string.Format("({0} row(s) affected)", rowsToDelete.Count);
 

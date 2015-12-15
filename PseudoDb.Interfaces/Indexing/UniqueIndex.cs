@@ -42,5 +42,9 @@ namespace PseudoDb.Interfaces.Indexing
         {
             repository.Delete(databaseFileName, index.Name, key);
         }
+
+        public void Delete(string key, string subKey)
+        {
+        }
     }
 }
