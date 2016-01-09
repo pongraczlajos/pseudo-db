@@ -33,12 +33,14 @@ namespace PseudoDb.ClientDesktop.Forms
 
             BuildDatabaseTree();
 
-            filterDataGridView.CellValueChanged += new DataGridViewCellEventHandler(this.filterDataGridView_CellValueChanged);
+            selectDataGridView.CellValueChanged += new DataGridViewCellEventHandler(selectDataGridView_CellValueChanged);
+            filterDataGridView.CellValueChanged += new DataGridViewCellEventHandler(filterDataGridView_CellValueChanged);
+            joinDataGridView.CellValueChanged += new DataGridViewCellEventHandler(joinDataGridView_CellValueChanged);
             queryDesignerTabControl.Visible = false;
 
             selection = SelectedOperation.Unknown;
         }
-        
+
         private void MainForm_Load(object sender, EventArgs e)
         {
 
@@ -293,7 +295,24 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void OnSelectFromTableMenuItemClick(object sender, EventArgs e)
         {
-            // Populate table combo box from the data grid view with the possible tables from the joins.
+            queryDesignerTabControl.SelectedIndex = 0;
+            string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+
+            // Populate selection table combo box from the data grid view with the possible tables.
+            var tableColumnCombo = (DataGridViewComboBoxColumn)selectDataGridView.Columns["SelectTable"];
+            tableColumnCombo.Items.Add(selectedTableName);
+
+            // Populate filter table combo box from the data grid view with the possible tables.
+            tableColumnCombo = (DataGridViewComboBoxColumn) filterDataGridView.Columns["Table"];
+            tableColumnCombo.Items.Add(selectedTableName);
+
+            // Populate join table combo box from the data grid view with the possible tables.
+            //tableColumnCombo = (DataGridViewComboBoxColumn) joinDataGridView.Columns["LeftTable"];
+            //tableColumnCombo.Items.Add(selectedTableName);
+
+            executeToolStripButton.Enabled = true;
+            cancelToolStripButton.Enabled = true;
+            queryDesignerTabControl.Visible = true;
 
             selection = SelectedOperation.Select;
         }
@@ -312,6 +331,26 @@ namespace PseudoDb.ClientDesktop.Forms
             queryDesignerTabControl.Visible = true;
 
             selection = SelectedOperation.Delete;
+        }
+
+        private void selectDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
+            string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+
+            Database database = dbContext.SchemaQuery.GetDatabase(selectedDbName);
+            Table table = database.GetTable(selectedTableName);
+
+            if (e.ColumnIndex == 0)
+            {
+                var tableColumnCell = (DataGridViewComboBoxCell) selectDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                var tableName = tableColumnCell.Value.ToString();
+
+                var columnColumnCell = (DataGridViewComboBoxCell) selectDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex + 1];
+                columnColumnCell.Items.Clear();
+                columnColumnCell.Items.Add("*");
+                columnColumnCell.Items.AddRange(table.Columns.Select(c => c.Name).ToArray());
+            }
         }
 
         private void filterDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -333,27 +372,33 @@ namespace PseudoDb.ClientDesktop.Forms
             }
         }
 
+        private void joinDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
         private void executeToolStripButton_Click(object sender, EventArgs e)
         {
             switch (selection)
             {
                 case SelectedOperation.Select:
+                    try
+                    {
+                        var selections = GetSelections();
+                        var filters = GetFilters();
+                        var joins = GetJoins();
+
+                        queryTabControl.SelectedIndex = 1;
+                    }
+                    catch (NullReferenceException exception)
+                    {
+                        MessageBox.Show("Complete all cells!\n" + exception.Message);
+                    }
                     break;
                 case SelectedOperation.Delete:
                     try
                     {
-                        var filters = new List<Filter>();
-
-                        for (int i = 0; i < filterDataGridView.Rows.Count - 1; i++)
-                        {
-                            var tableName = filterDataGridView.Rows[i].Cells[0].Value.ToString();
-                            var columnName = filterDataGridView.Rows[i].Cells[1].Value.ToString();
-                            var operatorType = OperatorConverter.ToOperator(filterDataGridView.Rows[i].Cells[2].Value.ToString());
-                            var value = filterDataGridView.Rows[i].Cells[3].Value.ToString();
-
-                            var filter = new Filter(tableName, columnName, operatorType, value);
-                            filters.Add(filter);
-                        }
+                        var filters = GetFilters();
 
                         string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
                         string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
@@ -374,13 +419,67 @@ namespace PseudoDb.ClientDesktop.Forms
                     break;
             }
 
+            ClearSelectDataGridView();
             ClearFilterDataGridView();
+            ClearJoinDataGridView();
 
             executeToolStripButton.Enabled = false;
             cancelToolStripButton.Enabled = false;
             queryDesignerTabControl.Visible = false;
 
             selection = SelectedOperation.Unknown;
+        }
+
+        private ICollection<Selection> GetSelections()
+        {
+            var selections = new List<Selection>();
+
+            for (int i = 0; i < selectDataGridView.Rows.Count - 1; i++)
+            {
+                var tableName = selectDataGridView.Rows[i].Cells[0].Value.ToString();
+                var columnName = selectDataGridView.Rows[i].Cells[1].Value.ToString();
+
+                var selection = new Selection(tableName, columnName);
+                selections.Add(selection);
+            }
+
+            return selections;
+        }
+
+        private ICollection<Filter> GetFilters()
+        {
+            var filters = new List<Filter>();
+
+            for (int i = 0; i < filterDataGridView.Rows.Count - 1; i++)
+            {
+                var tableName = filterDataGridView.Rows[i].Cells[0].Value.ToString();
+                var columnName = filterDataGridView.Rows[i].Cells[1].Value.ToString();
+                var operatorType = OperatorConverter.ToOperator(filterDataGridView.Rows[i].Cells[2].Value.ToString());
+                var value = filterDataGridView.Rows[i].Cells[3].Value.ToString();
+
+                var filter = new Filter(tableName, columnName, operatorType, value);
+                filters.Add(filter);
+            }
+
+            return filters;
+        }
+
+        private ICollection<Join> GetJoins()
+        {
+            var joins = new List<Join>();
+
+            for (int i = 0; i < joinDataGridView.Rows.Count - 1; i++)
+            {
+                var leftTableName = joinDataGridView.Rows[i].Cells[0].Value.ToString();
+                var leftColumnName = joinDataGridView.Rows[i].Cells[1].Value.ToString();
+                var rightTableName = joinDataGridView.Rows[i].Cells[2].Value.ToString();
+                var rightColumnName = joinDataGridView.Rows[i].Cells[3].Value.ToString();
+
+                var join = new Join(leftTableName, leftColumnName, rightTableName, rightColumnName);
+                joins.Add(join);
+            }
+
+            return joins;
         }
 
         private void cancelToolStripButton_Click(object sender, EventArgs e)
@@ -394,11 +493,30 @@ namespace PseudoDb.ClientDesktop.Forms
             selection = SelectedOperation.Unknown;
         }
 
+        private void ClearSelectDataGridView()
+        {
+            selectDataGridView.Rows.Clear();
+
+            var tableColumnCombo = (DataGridViewComboBoxColumn)selectDataGridView.Columns["SelectTable"];
+            tableColumnCombo.Items.Clear();
+        }
+
         private void ClearFilterDataGridView()
         {
             filterDataGridView.Rows.Clear();
 
             var tableColumnCombo = (DataGridViewComboBoxColumn)filterDataGridView.Columns["Table"];
+            tableColumnCombo.Items.Clear();
+        }
+
+        private void ClearJoinDataGridView()
+        {
+            joinDataGridView.Rows.Clear();
+
+            var tableColumnCombo = (DataGridViewComboBoxColumn)joinDataGridView.Columns["LeftTable"];
+            tableColumnCombo.Items.Clear();
+
+            tableColumnCombo = (DataGridViewComboBoxColumn)joinDataGridView.Columns["RightTable"];
             tableColumnCombo.Items.Clear();
         }
     }

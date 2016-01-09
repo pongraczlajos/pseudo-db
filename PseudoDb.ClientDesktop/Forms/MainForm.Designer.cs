@@ -57,6 +57,15 @@
             this.cancelToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.joinTabPage = new System.Windows.Forms.TabPage();
+            this.selectDataGridView = new System.Windows.Forms.DataGridView();
+            this.joinDataGridView = new System.Windows.Forms.DataGridView();
+            this.SelectTable = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.SelectField = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.LeftTable = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.LeftColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.RightTable = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.RightColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -72,6 +81,7 @@
             this.queryDesignerSplitContainer.Panel2.SuspendLayout();
             this.queryDesignerSplitContainer.SuspendLayout();
             this.queryDesignerTabControl.SuspendLayout();
+            this.SelectTabPage.SuspendLayout();
             this.FilterTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filterDataGridView)).BeginInit();
             this.queryGroupBox.SuspendLayout();
@@ -81,6 +91,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.resultDataGridView)).BeginInit();
             this.messagesTabPage.SuspendLayout();
             this.toolStrip.SuspendLayout();
+            this.joinTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.selectDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.joinDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer
@@ -183,6 +196,7 @@
             // 
             this.queryDesignerTabControl.Controls.Add(this.SelectTabPage);
             this.queryDesignerTabControl.Controls.Add(this.FilterTabPage);
+            this.queryDesignerTabControl.Controls.Add(this.joinTabPage);
             this.queryDesignerTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.queryDesignerTabControl.Location = new System.Drawing.Point(0, 0);
             this.queryDesignerTabControl.Name = "queryDesignerTabControl";
@@ -192,6 +206,7 @@
             // 
             // SelectTabPage
             // 
+            this.SelectTabPage.Controls.Add(this.selectDataGridView);
             this.SelectTabPage.Location = new System.Drawing.Point(4, 22);
             this.SelectTabPage.Name = "SelectTabPage";
             this.SelectTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -351,7 +366,7 @@
             this.helpToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(3, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(118, 25);
+            this.toolStrip.Size = new System.Drawing.Size(87, 25);
             this.toolStrip.TabIndex = 0;
             // 
             // executeToolStripButton
@@ -392,6 +407,75 @@
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "He&lp";
             // 
+            // joinTabPage
+            // 
+            this.joinTabPage.Controls.Add(this.joinDataGridView);
+            this.joinTabPage.Location = new System.Drawing.Point(4, 22);
+            this.joinTabPage.Name = "joinTabPage";
+            this.joinTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.joinTabPage.Size = new System.Drawing.Size(642, 255);
+            this.joinTabPage.TabIndex = 2;
+            this.joinTabPage.Text = "Join";
+            this.joinTabPage.UseVisualStyleBackColor = true;
+            // 
+            // selectDataGridView
+            // 
+            this.selectDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.selectDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SelectTable,
+            this.SelectField});
+            this.selectDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.selectDataGridView.Name = "selectDataGridView";
+            this.selectDataGridView.Size = new System.Drawing.Size(636, 249);
+            this.selectDataGridView.TabIndex = 0;
+            // 
+            // joinDataGridView
+            // 
+            this.joinDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.joinDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LeftTable,
+            this.LeftColumn,
+            this.RightTable,
+            this.RightColumn});
+            this.joinDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.joinDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.joinDataGridView.Name = "joinDataGridView";
+            this.joinDataGridView.Size = new System.Drawing.Size(636, 249);
+            this.joinDataGridView.TabIndex = 0;
+            // 
+            // SelectTable
+            // 
+            this.SelectTable.HeaderText = "Table";
+            this.SelectTable.Name = "SelectTable";
+            // 
+            // SelectField
+            // 
+            this.SelectField.HeaderText = "Column";
+            this.SelectField.Name = "SelectField";
+            // 
+            // LeftTable
+            // 
+            this.LeftTable.HeaderText = "Left Table";
+            this.LeftTable.Name = "LeftTable";
+            // 
+            // LeftColumn
+            // 
+            this.LeftColumn.HeaderText = "Left Table Column";
+            this.LeftColumn.Name = "LeftColumn";
+            this.LeftColumn.Width = 130;
+            // 
+            // RightTable
+            // 
+            this.RightTable.HeaderText = "Right Table";
+            this.RightTable.Name = "RightTable";
+            // 
+            // RightColumn
+            // 
+            this.RightColumn.HeaderText = "Right Table Column";
+            this.RightColumn.Name = "RightColumn";
+            this.RightColumn.Width = 130;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -420,6 +504,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.queryDesignerSplitContainer)).EndInit();
             this.queryDesignerSplitContainer.ResumeLayout(false);
             this.queryDesignerTabControl.ResumeLayout(false);
+            this.SelectTabPage.ResumeLayout(false);
             this.FilterTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.filterDataGridView)).EndInit();
             this.queryGroupBox.ResumeLayout(false);
@@ -432,6 +517,9 @@
             this.messagesTabPage.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            this.joinTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.selectDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.joinDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -466,6 +554,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.ToolStripButton executeToolStripButton;
         private System.Windows.Forms.ToolStripButton cancelToolStripButton;
+        private System.Windows.Forms.TabPage joinTabPage;
+        private System.Windows.Forms.DataGridView selectDataGridView;
+        private System.Windows.Forms.DataGridViewComboBoxColumn SelectTable;
+        private System.Windows.Forms.DataGridViewComboBoxColumn SelectField;
+        private System.Windows.Forms.DataGridView joinDataGridView;
+        private System.Windows.Forms.DataGridViewComboBoxColumn LeftTable;
+        private System.Windows.Forms.DataGridViewComboBoxColumn LeftColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn RightTable;
+        private System.Windows.Forms.DataGridViewComboBoxColumn RightColumn;
     }
 }
 
