@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PseudoDb.QueryProcessor.ExecutionPlan
 {
-    class FilterExecutionPlanOperation : IExecutionPlanOperation
+    class FilterOperation : IExecutionPlanOperation
     {
         public IExecutionPlanOperation Predecessor { get; set; }
 
@@ -17,7 +17,7 @@ namespace PseudoDb.QueryProcessor.ExecutionPlan
 
         private KeyValuePair<string, string> metadata;
 
-        public FilterExecutionPlanOperation(IExecutionPlanOperation predecessor, Filter filter)
+        public FilterOperation(IExecutionPlanOperation predecessor, Filter filter)
         {
             Predecessor = predecessor;
             this.filter = filter;

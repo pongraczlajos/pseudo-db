@@ -4,12 +4,9 @@ using PseudoDb.Interfaces.Metadata;
 using PseudoDb.Interfaces.Query;
 using PseudoDb.Interfaces.Storage;
 using PseudoDb.QueryProcessor.ExecutionPlan;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PseudoDb.QueryProcessor
 {
@@ -224,6 +221,19 @@ namespace PseudoDb.QueryProcessor
             status.Message = string.Format("({0} row(s) affected)", rowsToDelete.Count);
 
             return status;
+        }
+
+        public DataTable Select(Database database, Table table, ICollection<Selection> selections, ICollection<Filter> filters)
+        {
+            var planner = new SimpleExecutionPlanner(database, repository, selections, filters);
+            var rootOperation = planner.GetRootOperation();
+
+            DataTable result = new DataTable();
+
+            rootOperation.GetMetadata();
+            rootOperation.Execute();
+
+            return result;
         }
 
         public DataTable GetAll(Database database, Table table)

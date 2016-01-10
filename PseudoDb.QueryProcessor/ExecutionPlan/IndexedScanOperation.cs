@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PseudoDb.QueryProcessor.ExecutionPlan
 {
-    class FullScanExecutionPlanOperation : IExecutionPlanOperation
+    class IndexedScanOperation : IExecutionPlanOperation
     {
         public IExecutionPlanOperation Predecessor { get; set; }
 
@@ -22,7 +22,7 @@ namespace PseudoDb.QueryProcessor.ExecutionPlan
 
         private string tableName;
 
-        public FullScanExecutionPlanOperation(Table table, IRepository repository, string databaseFile, string tableName)
+        public IndexedScanOperation(Table table, IRepository repository, string databaseFile, string tableName)
         {
             this.table = table;
             this.repository = repository;
@@ -32,15 +32,12 @@ namespace PseudoDb.QueryProcessor.ExecutionPlan
 
         public IEnumerable<KeyValuePair<string, string>> Execute()
         {
-            foreach (var row in repository.GetAll(databaseFile, tableName))
-            {
-                yield return row;
-            }
+            throw new NotImplementedException();
         }
 
         public KeyValuePair<string, string> GetMetadata()
         {
-            return new KeyValuePair<string,string>(KeyValue.Concatenate(table.PrimaryKey), KeyValue.Concatenate(table.Columns.Where(c => !table.PrimaryKey.Contains(c.Name)).Select(c => c.Name)));
+            return new KeyValuePair<string, string>(KeyValue.Concatenate(table.PrimaryKey), KeyValue.Concatenate(table.Columns.Where(c => !table.PrimaryKey.Contains(c.Name)).Select(c => c.Name)));
         }
     }
 }

@@ -33,13 +33,13 @@ namespace PseudoDb.QueryProcessor.ExecutionPlan
             Filter firstFilter = filters.First();
 
             var table = database.GetTable(firstFilter.Table);
-            var readOperation = new FullScanExecutionPlanOperation(table, repository, KeyValue.GetDatabaseFileName(database.Name), table.Name);
+            var readOperation = new FullScanOperation(table, repository, KeyValue.GetDatabaseFileName(database.Name), table.Name);
 
-            var predecessor = new FilterExecutionPlanOperation(readOperation, firstFilter);
+            var predecessor = new FilterOperation(readOperation, firstFilter);
 
             for (int i = 1; i < filters.Count; i++)
             {
-                var operation = new FilterExecutionPlanOperation(predecessor, filters.ElementAt(i));
+                var operation = new FilterOperation(predecessor, filters.ElementAt(i));
                 predecessor = operation;
             }
 
