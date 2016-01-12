@@ -12,6 +12,8 @@ namespace PseudoDb.Interfaces.Indexing
 
         IEnumerable<string> Get(string key);
 
+        IEnumerable<KeyValuePair<string, string>> GetAll();
+
         void Put(string key, string value);
 
         void Delete(string key);

@@ -30,8 +30,7 @@ namespace PseudoDb.Interfaces.Indexing
 
         public IEnumerable<string> Get(string key)
         {
-            var separator = new char[] { '#', '#', '#' };
-            return repository.Get(databaseFileName, index.Name, key).Split(separator);
+            return repository.Get(databaseFileName, index.Name, key).Split(new string[] { "###" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public void Put(string key, string value)
@@ -73,6 +72,11 @@ namespace PseudoDb.Interfaces.Indexing
             {
                 repository.Delete(databaseFileName, index.Name, key);
             }
+        }
+
+        public IEnumerable<KeyValuePair<string, string>> GetAll()
+        {
+            return repository.GetAll(databaseFileName, index.Name);
         }
     }
 }

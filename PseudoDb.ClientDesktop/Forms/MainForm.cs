@@ -404,7 +404,7 @@ namespace PseudoDb.ClientDesktop.Forms
                         MessageBox.Show("Complete all cells!\n" + exception.Message);
                     }
                     break;
-                case SelectedOperation.Delete:
+                /*case SelectedOperation.Delete:
                     try
                     {
                         var filters = GetFilters();
@@ -425,7 +425,7 @@ namespace PseudoDb.ClientDesktop.Forms
                         MessageBox.Show("Complete all cells!\n" + exception.Message);
                     }
 
-                    break;
+                    break;*/
             }
 
             ClearSelectDataGridView();

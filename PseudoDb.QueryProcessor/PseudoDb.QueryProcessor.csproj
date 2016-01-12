@@ -47,7 +47,7 @@
     <Compile Include="ExecutionPlan\FullScanOperation.cs" />
     <Compile Include="ExecutionPlan\HashJoinOperation.cs" />
     <Compile Include="ExecutionPlan\IExecutionPlanner.cs" />
-    <Compile Include="ExecutionPlan\IndexedScanOperation.cs" />
+    <Compile Include="ExecutionPlan\NonUniqueScanOperation.cs" />
     <Compile Include="ExecutionPlan\NestedLoopJoinOperation.cs" />
     <Compile Include="ExecutionPlan\SelectOperation.cs" />
     <Compile Include="ExecutionPlan\SimpleExecutionPlanner.cs" />

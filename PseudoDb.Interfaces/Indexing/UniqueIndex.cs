@@ -46,5 +46,10 @@ namespace PseudoDb.Interfaces.Indexing
         public void Delete(string key, string subKey)
         {
         }
+
+        public IEnumerable<KeyValuePair<string, string>> GetAll()
+        {
+            return repository.GetAll(databaseFileName, index.Name);
+        }
     }
 }

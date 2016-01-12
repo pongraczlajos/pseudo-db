@@ -48,7 +48,6 @@
     <Compile Include="Indexing\IConcreteIndex.cs" />
     <Compile Include="Indexing\IndexFactory.cs" />
     <Compile Include="Indexing\NonUniqueIndex.cs" />
-    <Compile Include="Indexing\PrimaryIndex.cs" />
     <Compile Include="Indexing\UniqueIndex.cs" />
     <Compile Include="KeyValue.cs" />
     <Compile Include="Metadata\Association.cs" />

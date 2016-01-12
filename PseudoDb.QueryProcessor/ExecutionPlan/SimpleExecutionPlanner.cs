@@ -38,14 +38,14 @@ namespace PseudoDb.QueryProcessor.ExecutionPlan
                 if (filters.Any())
                 {
                     // Try to get a filter which can use an index.
-                    var indexScanFilter = TryGetFilterWithIndex();
+                    var indexScanFilter = TryGetFilterWithIndex(filters);
                     var firstFilter = indexScanFilter.Key;
                     var table = database.GetTable(firstFilter.Table);
                     IExecutionPlanOperation predecessor = null;
 
                     if (indexScanFilter.Value != null)
                     {
-                        var readOperation = new IndexedScanOperation(table, indexScanFilter.Value, firstFilter, repository,
+                        var readOperation = new NonUniqueScanOperation(table, indexScanFilter.Value, firstFilter, repository,
                             KeyValue.GetDatabaseFileName(database.Name), table.Name);
                         predecessor = readOperation;
                     }
@@ -87,26 +87,24 @@ namespace PseudoDb.QueryProcessor.ExecutionPlan
             }
         }
 
-        private KeyValuePair<Filter, IConcreteIndex> TryGetFilterWithIndex()
+        private KeyValuePair<Filter, IConcreteIndex> TryGetFilterWithIndex(ICollection<Filter> sameTableFilters)
         {
             var indexFactory = new IndexFactory(KeyValue.GetDatabaseFileName(database.Name), repository);
+            var table = database.Tables.Single(t => t.Name == sameTableFilters.First().Table);
 
-            foreach (var filter in filters)
+            foreach (var filter in sameTableFilters)
             {
-                var table = database.Tables.First(t => t.Name == filter.Table);
-                if (table.PrimaryKey.Count == 1 && table.PrimaryKey.Contains(filter.Column))
+                var associations = database.Associations.Where(a => a.Child == table.Name && a.ColumnMappings.Values.Contains(filter.Column) && a.ColumnMappings.Count == 1);
+
+                if (associations.Any())
                 {
-                    return new KeyValuePair<Filter, IConcreteIndex>(filter,
-                        new PrimaryIndex(table, KeyValue.GetDatabaseFileName(database.Name), repository));
+                    var association = associations.First();
+                    var parentTable = database.Tables.Single(t => t.Name == association.Parent);
+                    var indexMeta = parentTable.Indexes.Where(i => i.Name.Equals(association.Name)).Single();
+                    var index = indexFactory.GetIndex(indexMeta);
+
+                    return new KeyValuePair<Filter, IConcreteIndex>(filter, index);
                 }
-
-                if (table.Indexes.Exists(i => i.Unique == true && i.IndexMembers.Count == 1 && i.IndexMembers.Contains(filter.Column)))
-                {
-                    var indexMeta = table.Indexes.First(i => i.Unique == true && i.IndexMembers.Count == 1 && i.IndexMembers.Contains(filter.Column));
-                    return new KeyValuePair<Filter, IConcreteIndex>(filter, indexFactory.GetIndex(indexMeta));
-                }
-
-
             }
 
             return new KeyValuePair<Filter, IConcreteIndex>(filters.First(), null);
