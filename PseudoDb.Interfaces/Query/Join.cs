@@ -1,4 +1,6 @@
-﻿namespace PseudoDb.Interfaces.Query
+﻿using PseudoDb.Interfaces.Metadata;
+
+namespace PseudoDb.Interfaces.Query
 {
     public class Join
     {
@@ -30,12 +32,20 @@
             get { return rightColumn; }
         }
 
-        public Join(string leftTable, string leftColumn, string rightTable, string rightColumn)
+        private Operator op;
+
+        public Operator Operator
+        {
+            get { return op; }
+        }
+
+        public Join(string leftTable, string leftColumn, string rightTable, string rightColumn, Operator op)
         {
             this.leftTable = leftTable;
             this.leftColumn = leftColumn;
             this.rightTable = rightTable;
             this.rightColumn = rightColumn;
+            this.op = op;
         }
     }
 }

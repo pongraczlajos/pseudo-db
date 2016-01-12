@@ -132,7 +132,7 @@ namespace PseudoDb.QueryProcessor
         public ReturnStatus Delete(Database database, Table table, ICollection<Filter> filters)
         {
             string databaseFileName = KeyValue.GetDatabaseFileName(database.Name);
-            var planner = new SimpleExecutionPlanner(database, repository, new List<Selection>(), filters);
+            var planner = new SimpleExecutionPlanner(database, repository, new List<Selection>(), new List<Join>(), filters);
             var rootOperation = planner.GetRootOperation();
             var nonKeyColumnNames = table.Columns.Where(c => !table.PrimaryKey.Contains(c.Name)).Select(c => c.Name).ToList();
 
@@ -223,15 +223,36 @@ namespace PseudoDb.QueryProcessor
             return status;
         }
 
-        public DataTable Select(Database database, Table table, ICollection<Selection> selections, ICollection<Filter> filters)
+        public DataTable Select(Database database, ICollection<Selection> selections, ICollection<Join> joins,
+            ICollection<Filter> filters)
         {
-            var planner = new SimpleExecutionPlanner(database, repository, selections, filters);
+            var planner = new SimpleExecutionPlanner(database, repository, selections, joins, filters);
             var rootOperation = planner.GetRootOperation();
 
             DataTable result = new DataTable();
 
-            rootOperation.GetMetadata();
-            rootOperation.Execute();
+            var metadata = rootOperation.GetMetadata();
+            var queryResult = rootOperation.Execute();
+
+            // Add header.
+            List<string> columns = new List<string>();
+            columns.AddRange(KeyValue.Split(metadata.Value));
+            columns.AddRange(KeyValue.Split(metadata.Key));
+
+            foreach (var item in columns)
+            {
+                result.Columns.Add(item, typeof(string));
+            }
+
+            // Add query result.
+            foreach (var pair in queryResult)
+            {
+                List<string> row = new List<string>();
+                row.AddRange(KeyValue.Split(pair.Value));
+                row.AddRange(KeyValue.Split(pair.Key));
+
+                result.Rows.Add(row.ToArray());
+            }
 
             return result;
         }

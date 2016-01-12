@@ -10,7 +10,7 @@ namespace PseudoDb.Interfaces.Query
 
         ReturnStatus Delete(Database database, Table table, ICollection<Filter> filters);
         
-        DataTable Select(Database database, Table table, ICollection<Selection> selections, ICollection<Filter> filters);
+        DataTable Select(Database database, ICollection<Selection> selections, ICollection<Join> joins, ICollection<Filter> filters);
 
         void DeleteTable(Database database, Table table);
 

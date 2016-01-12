@@ -388,6 +388,15 @@ namespace PseudoDb.ClientDesktop.Forms
                         var filters = GetFilters();
                         var joins = GetJoins();
 
+                        string selectedDbName = DatabaseTreeView.SelectedNode.Parent.Text.ToString();
+                        string selectedTableName = DatabaseTreeView.SelectedNode.Text.ToString();
+                        Database database = dbContext.SchemaQuery.GetDatabase(selectedDbName);
+
+                        DataTable resultTable = dbContext.Query.Select(database, selections, joins, filters);
+
+                        resultDataGridView.DataSource = resultTable;
+                        resultDataGridView.Refresh();
+
                         queryTabControl.SelectedIndex = 1;
                     }
                     catch (NullReferenceException exception)
@@ -434,12 +443,23 @@ namespace PseudoDb.ClientDesktop.Forms
         {
             var selections = new List<Selection>();
 
+            var tableSelections = new Dictionary<string, List<string>>();
+
             for (int i = 0; i < selectDataGridView.Rows.Count - 1; i++)
             {
                 var tableName = selectDataGridView.Rows[i].Cells[0].Value.ToString();
                 var columnName = selectDataGridView.Rows[i].Cells[1].Value.ToString();
 
-                var selection = new Selection(tableName, columnName);
+                if (!tableSelections.ContainsKey(tableName))
+                {
+                    tableSelections.Add(tableName, new List<string>());
+                }
+                tableSelections[tableName].Add(columnName);
+            }
+
+            foreach (var tableAsKey in tableSelections.Keys)
+            {
+                var selection = new Selection(tableAsKey, tableSelections[tableAsKey]);
                 selections.Add(selection);
             }
 
@@ -474,8 +494,9 @@ namespace PseudoDb.ClientDesktop.Forms
                 var leftColumnName = joinDataGridView.Rows[i].Cells[1].Value.ToString();
                 var rightTableName = joinDataGridView.Rows[i].Cells[2].Value.ToString();
                 var rightColumnName = joinDataGridView.Rows[i].Cells[3].Value.ToString();
+                var operatorType = OperatorConverter.ToOperator(filterDataGridView.Rows[i].Cells[4].Value.ToString());
 
-                var join = new Join(leftTableName, leftColumnName, rightTableName, rightColumnName);
+                var join = new Join(leftTableName, leftColumnName, rightTableName, rightColumnName, operatorType);
                 joins.Add(join);
             }
 
@@ -484,7 +505,9 @@ namespace PseudoDb.ClientDesktop.Forms
 
         private void cancelToolStripButton_Click(object sender, EventArgs e)
         {
+            ClearSelectDataGridView();
             ClearFilterDataGridView();
+            ClearJoinDataGridView();
 
             executeToolStripButton.Enabled = false;
             cancelToolStripButton.Enabled = false;

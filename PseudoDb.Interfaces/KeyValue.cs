@@ -15,6 +15,11 @@ namespace PseudoDb.Interfaces
 
         public static IEnumerable<string> Split(string value)
         {
+            if (string.Empty.Equals(value))
+            {
+                return new List<string>();
+            }
+
             return value.Split('#');
         }
 

@@ -1,4 +1,6 @@
-﻿namespace PseudoDb.Interfaces.Query
+﻿using System.Collections.Generic;
+
+namespace PseudoDb.Interfaces.Query
 {
     public class Selection
     {
@@ -9,17 +11,17 @@
             get { return table; }
         }
 
-        private string column;
+        private ICollection<string> columns;
 
-        public string Column
+        public ICollection<string> Columns
         {
-            get { return column; }
+            get { return columns; }
         }
 
-        public Selection(string table, string column)
+        public Selection(string table, ICollection<string> columns)
         {
             this.table = table;
-            this.column = column;
+            this.columns = columns;
         }
     }
 }

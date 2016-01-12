@@ -38,12 +38,17 @@
             this.queryDesignerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.queryDesignerTabControl = new System.Windows.Forms.TabControl();
             this.SelectTabPage = new System.Windows.Forms.TabPage();
+            this.selectDataGridView = new System.Windows.Forms.DataGridView();
+            this.SelectTable = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.SelectField = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.FilterTabPage = new System.Windows.Forms.TabPage();
             this.filterDataGridView = new System.Windows.Forms.DataGridView();
             this.Table = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Column = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Operator = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.joinTabPage = new System.Windows.Forms.TabPage();
+            this.joinDataGridView = new System.Windows.Forms.DataGridView();
             this.queryGroupBox = new System.Windows.Forms.GroupBox();
             this.queryTabControl = new System.Windows.Forms.TabControl();
             this.sqlQueryTabPage = new System.Windows.Forms.TabPage();
@@ -57,15 +62,11 @@
             this.cancelToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.joinTabPage = new System.Windows.Forms.TabPage();
-            this.selectDataGridView = new System.Windows.Forms.DataGridView();
-            this.joinDataGridView = new System.Windows.Forms.DataGridView();
-            this.SelectTable = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.SelectField = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.LeftTable = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.LeftColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.RightTable = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.RightColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.JoinOperator = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -82,8 +83,11 @@
             this.queryDesignerSplitContainer.SuspendLayout();
             this.queryDesignerTabControl.SuspendLayout();
             this.SelectTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.selectDataGridView)).BeginInit();
             this.FilterTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filterDataGridView)).BeginInit();
+            this.joinTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.joinDataGridView)).BeginInit();
             this.queryGroupBox.SuspendLayout();
             this.queryTabControl.SuspendLayout();
             this.sqlQueryTabPage.SuspendLayout();
@@ -91,9 +95,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.resultDataGridView)).BeginInit();
             this.messagesTabPage.SuspendLayout();
             this.toolStrip.SuspendLayout();
-            this.joinTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectDataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.joinDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer
@@ -215,6 +216,28 @@
             this.SelectTabPage.Text = "Select";
             this.SelectTabPage.UseVisualStyleBackColor = true;
             // 
+            // selectDataGridView
+            // 
+            this.selectDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.selectDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SelectTable,
+            this.SelectField});
+            this.selectDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.selectDataGridView.Name = "selectDataGridView";
+            this.selectDataGridView.Size = new System.Drawing.Size(636, 249);
+            this.selectDataGridView.TabIndex = 0;
+            // 
+            // SelectTable
+            // 
+            this.SelectTable.HeaderText = "Table";
+            this.SelectTable.Name = "SelectTable";
+            // 
+            // SelectField
+            // 
+            this.SelectField.HeaderText = "Column";
+            this.SelectField.Name = "SelectField";
+            // 
             // FilterTabPage
             // 
             this.FilterTabPage.Controls.Add(this.filterDataGridView);
@@ -266,6 +289,32 @@
             // 
             this.Value.HeaderText = "Value";
             this.Value.Name = "Value";
+            // 
+            // joinTabPage
+            // 
+            this.joinTabPage.Controls.Add(this.joinDataGridView);
+            this.joinTabPage.Location = new System.Drawing.Point(4, 22);
+            this.joinTabPage.Name = "joinTabPage";
+            this.joinTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.joinTabPage.Size = new System.Drawing.Size(642, 255);
+            this.joinTabPage.TabIndex = 2;
+            this.joinTabPage.Text = "Join";
+            this.joinTabPage.UseVisualStyleBackColor = true;
+            // 
+            // joinDataGridView
+            // 
+            this.joinDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.joinDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LeftTable,
+            this.LeftColumn,
+            this.RightTable,
+            this.RightColumn,
+            this.JoinOperator});
+            this.joinDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.joinDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.joinDataGridView.Name = "joinDataGridView";
+            this.joinDataGridView.Size = new System.Drawing.Size(636, 249);
+            this.joinDataGridView.TabIndex = 0;
             // 
             // queryGroupBox
             // 
@@ -407,53 +456,6 @@
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "He&lp";
             // 
-            // joinTabPage
-            // 
-            this.joinTabPage.Controls.Add(this.joinDataGridView);
-            this.joinTabPage.Location = new System.Drawing.Point(4, 22);
-            this.joinTabPage.Name = "joinTabPage";
-            this.joinTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.joinTabPage.Size = new System.Drawing.Size(642, 255);
-            this.joinTabPage.TabIndex = 2;
-            this.joinTabPage.Text = "Join";
-            this.joinTabPage.UseVisualStyleBackColor = true;
-            // 
-            // selectDataGridView
-            // 
-            this.selectDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.selectDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.SelectTable,
-            this.SelectField});
-            this.selectDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.selectDataGridView.Location = new System.Drawing.Point(3, 3);
-            this.selectDataGridView.Name = "selectDataGridView";
-            this.selectDataGridView.Size = new System.Drawing.Size(636, 249);
-            this.selectDataGridView.TabIndex = 0;
-            // 
-            // joinDataGridView
-            // 
-            this.joinDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.joinDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.LeftTable,
-            this.LeftColumn,
-            this.RightTable,
-            this.RightColumn});
-            this.joinDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.joinDataGridView.Location = new System.Drawing.Point(3, 3);
-            this.joinDataGridView.Name = "joinDataGridView";
-            this.joinDataGridView.Size = new System.Drawing.Size(636, 249);
-            this.joinDataGridView.TabIndex = 0;
-            // 
-            // SelectTable
-            // 
-            this.SelectTable.HeaderText = "Table";
-            this.SelectTable.Name = "SelectTable";
-            // 
-            // SelectField
-            // 
-            this.SelectField.HeaderText = "Column";
-            this.SelectField.Name = "SelectField";
-            // 
             // LeftTable
             // 
             this.LeftTable.HeaderText = "Left Table";
@@ -475,6 +477,18 @@
             this.RightColumn.HeaderText = "Right Table Column";
             this.RightColumn.Name = "RightColumn";
             this.RightColumn.Width = 130;
+            // 
+            // JoinOperator
+            // 
+            this.JoinOperator.HeaderText = "Operator";
+            this.JoinOperator.Items.AddRange(new object[] {
+            "=",
+            "<>",
+            "<",
+            ">",
+            "<=",
+            ">="});
+            this.JoinOperator.Name = "JoinOperator";
             // 
             // MainForm
             // 
@@ -505,8 +519,11 @@
             this.queryDesignerSplitContainer.ResumeLayout(false);
             this.queryDesignerTabControl.ResumeLayout(false);
             this.SelectTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.selectDataGridView)).EndInit();
             this.FilterTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.filterDataGridView)).EndInit();
+            this.joinTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.joinDataGridView)).EndInit();
             this.queryGroupBox.ResumeLayout(false);
             this.queryTabControl.ResumeLayout(false);
             this.sqlQueryTabPage.ResumeLayout(false);
@@ -517,9 +534,6 @@
             this.messagesTabPage.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
-            this.joinTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.selectDataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.joinDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -559,10 +573,11 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn SelectTable;
         private System.Windows.Forms.DataGridViewComboBoxColumn SelectField;
         private System.Windows.Forms.DataGridView joinDataGridView;
-        private System.Windows.Forms.DataGridViewComboBoxColumn LeftTable;
-        private System.Windows.Forms.DataGridViewComboBoxColumn LeftColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn RightTable;
+        private System.Windows.Forms.DataGridViewComboBoxColumn JoinOperator;
         private System.Windows.Forms.DataGridViewComboBoxColumn RightColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn RightTable;
+        private System.Windows.Forms.DataGridViewComboBoxColumn LeftColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn LeftTable;
     }
 }
 

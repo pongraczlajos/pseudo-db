@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +45,11 @@
   <ItemGroup>
     <Compile Include="ExecutionPlan\FilterOperation.cs" />
     <Compile Include="ExecutionPlan\FullScanOperation.cs" />
+    <Compile Include="ExecutionPlan\HashJoinOperation.cs" />
     <Compile Include="ExecutionPlan\IExecutionPlanner.cs" />
     <Compile Include="ExecutionPlan\IndexedScanOperation.cs" />
+    <Compile Include="ExecutionPlan\NestedLoopJoinOperation.cs" />
+    <Compile Include="ExecutionPlan\SelectOperation.cs" />
     <Compile Include="ExecutionPlan\SimpleExecutionPlanner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
@@ -53,6 +60,9 @@
       <Project>{b92d794f-3567-448a-bc80-c5c625663731}</Project>
       <Name>PseudoDb.Interfaces</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

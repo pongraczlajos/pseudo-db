@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PseudoDb.QueryProcessor.ExecutionPlan
 {
-    class FilterOperation : IExecutionPlanOperation
+    class NestedLoopJoinOperation : IExecutionPlanOperation
     {
         public IExecutionPlanOperation Predecessor { get; set; }
 
@@ -17,7 +17,7 @@ namespace PseudoDb.QueryProcessor.ExecutionPlan
 
         private ILog log;
 
-        public FilterOperation(IExecutionPlanOperation predecessor, Filter filter)
+        public NestedLoopJoinOperation(IExecutionPlanOperation predecessor, Filter filter)
         {
             Predecessor = predecessor;
             this.filter = filter;
@@ -29,9 +29,6 @@ namespace PseudoDb.QueryProcessor.ExecutionPlan
 
         public IEnumerable<KeyValuePair<string, string>> Execute()
         {
-            log.Info(string.Format("Filter operation for '{0}', filter: '{1}' {2} '{3}'.", filter.Table, filter.Column,
-                OperatorConverter.ToComboString(filter.Operator).ToString(), filter.Value));
-
             // Determine where the filtered column is (is it part of the key, or is it part of the value).
             var primaryKey = KeyValue.Split(metadata.Key).ToArray();
             var columns = KeyValue.Split(metadata.Value).ToArray();

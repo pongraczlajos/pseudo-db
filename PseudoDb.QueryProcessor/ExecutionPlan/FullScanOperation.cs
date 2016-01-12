@@ -1,4 +1,5 @@
-﻿using PseudoDb.Interfaces;
+﻿using log4net;
+using PseudoDb.Interfaces;
 using PseudoDb.Interfaces.Metadata;
 using PseudoDb.Interfaces.Query;
 using PseudoDb.Interfaces.Storage;
@@ -22,16 +23,23 @@ namespace PseudoDb.QueryProcessor.ExecutionPlan
 
         private string tableName;
 
+        private ILog log;
+
         public FullScanOperation(Table table, IRepository repository, string databaseFile, string tableName)
         {
             this.table = table;
             this.repository = repository;
             this.databaseFile = databaseFile;
             this.tableName = tableName;
+
+            log4net.Config.XmlConfigurator.Configure();
+            log = LogManager.GetLogger("ExecutionPlan");
         }
 
         public IEnumerable<KeyValuePair<string, string>> Execute()
         {
+            log.Info(string.Format("Full scan operation for '{0}'.", tableName));
+
             foreach (var row in repository.GetAll(databaseFile, tableName))
             {
                 yield return row;
